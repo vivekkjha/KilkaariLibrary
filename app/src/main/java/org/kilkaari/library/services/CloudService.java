@@ -9,13 +9,6 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.eylog.practitioner.application.EyLogApplication;
-import com.eylog.practitioner.application.Prefs;
-import com.eylog.practitioner.constants.Constants;
-import com.eylog.practitioner.utils.HttpClientFactory;
-import com.eylog.practitioner.utils.HttpDeleteWithBody;
-import com.eylog.practitioner.utils.IOUtil;
-import com.eylog.practitioner.utils.LogUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -30,6 +23,8 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.kilkaari.library.application.Prefs;
+import org.kilkaari.library.utils.HttpClientFactory;
 
 
 import java.io.BufferedInputStream;
@@ -65,9 +60,9 @@ public class CloudService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-       Messenger messenger = (Messenger) intent.getParcelableExtra(Constants.Extras.INTENT_EXTRA_MESSENGER);
+      // Messenger messenger = (Messenger) intent.getParcelableExtra(Constants.Extras.INTENT_EXTRA_MESSENGER);
         String action = intent.getAction();
-
+/*
         if (action.equals(Constants.Actions.INTENT_ACTION_INSTALLATION)){
             String url = Constants.Urls.URL_API_INSTALLATION;
             HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
@@ -161,10 +156,10 @@ public class CloudService extends IntentService {
             HttpUriRequest httpUriRequest = createRequestObject(true,url,getSummativeReportRequestJson().toString());
             CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
             sendResponse(cloudResponse,messenger);
-        }
+        }*/
     }
 
-    private JSONObject getAuthenticationJson()
+    /*private JSONObject getAuthenticationJson()
     {
         JSONObject object = new JSONObject();
         try {
@@ -288,10 +283,10 @@ public class CloudService extends IntentService {
 
                             //  we have no variable here to verify success of the service call
 
-                    /*if (jsonObject.has("success")) {
+                    *//*if (jsonObject.has("success")) {
                         status = jsonObject.getBoolean("success");
 
-                    }*/
+                    }*//*
                             if(jsonObject.has("success"))
                             {
                                 status = true;
@@ -457,6 +452,6 @@ public class CloudService extends IntentService {
         delete.setEntity(stringEntity);
         request = delete;
         return request;
-    }
+    }*/
 
 }
