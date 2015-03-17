@@ -11,7 +11,7 @@
     <!--general margin -->
     <dimen name="smallMargin">5dp</dimen>
     <dimen name="mediumMargin">10dp</dimen>
-    <dimen name="largeMargin">150dp</dimen>
+    <dimen name="largeMargin">15dp</dimen>
 
     <!--top bar-->
     <dimen name="topBarTextSize">20sp</dimen>
@@ -20,5 +20,9 @@
     <dimen name="navigation_drawer_width">250dp</dimen>
 
     <dimen name="booksCategoriesWidth">150dp</dimen>
+
+    <dimen name="alertPopupWidth">320dp</dimen>
+    <dimen name="alertBtnTextSize">18sp</dimen>
+    <dimen name="alertTextSize">18sp</dimen>
 
 </resources>

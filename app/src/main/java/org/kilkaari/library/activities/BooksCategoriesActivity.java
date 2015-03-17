@@ -1,5 +1,6 @@
 package org.kilkaari.library.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -54,8 +55,9 @@ public class BooksCategoriesActivity extends BaseActivity {
     }
     public void onClick(View v)
     {
-        if(v.getId() == R.id.img_menu)
+        if(v.getId() == R.id.lin_topDone)
         {
+            startActivity(new Intent(this,AlertActivity.class));
 
         }
     }

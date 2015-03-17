@@ -43,6 +43,6 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:textColor="@color/white"
-        android:background="@drawable/gradient_test"/>
+        android:background="@drawable/gradient_category_name"/>
 
 </RelativeLayout>
