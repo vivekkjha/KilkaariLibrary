@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="baseColor">#fe60d1ff</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="titleBottomBar">#ff58a2ca</color>
+    <color name="listViewSeparator">#ffe0e0e0</color>
+    <color name="blackOverlay">#55000000</color>
+    <color name="whiteOverlay">#55d2d2d2</color>
+
+
+</resources>

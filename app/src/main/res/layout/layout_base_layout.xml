@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:text="2"
+        android:gravity="center"
+        android:textColor="#FFFFFFFF"
+        android:shadowColor="#AA000000"
+        android:shadowDx="2"
+        android:shadowDy="1"
+        android:shadowRadius="3"
+        android:textSize="200sp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_category_name"
+        android:text="Button"/>
+
+</LinearLayout>
