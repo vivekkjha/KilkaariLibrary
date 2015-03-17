@@ -66,6 +66,7 @@
             android:id="@+id/txt_alertOk"
             android:textColor="@color/black"
             android:text="OK"
+            android:clickable="true"
             android:onClick="onClick"
             android:background="@drawable/alert_button_selector"
             android:textSize="@dimen/alertBtnTextSize"/>
@@ -84,6 +85,7 @@
             android:textColor="@color/black"
             android:text="Cancel"
             android:onClick="onClick"
+            android:clickable="true"
             android:background="@drawable/alert_button_selector"
             android:textSize="@dimen/alertBtnTextSize"/>
     </LinearLayout>
