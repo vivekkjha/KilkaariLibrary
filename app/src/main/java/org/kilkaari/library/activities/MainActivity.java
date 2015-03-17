@@ -1,6 +1,7 @@
 package org.kilkaari.library.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -65,6 +66,10 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         if(v.getId() == R.id.img_menu)
         {
             drawer.openDrawer(Gravity.START);
+        }
+        if(v.getId() == R.id.lin_topDone)
+        {
+            startActivity(new Intent(this,BooksCategoriesActivity.class));
         }
     }
 }
