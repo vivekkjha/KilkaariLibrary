@@ -100,11 +100,11 @@ public class NavigationDrawerFragment extends Fragment {
 
         //> count , item name , icon
         SlideItem[] slideItems = new SlideItem[]{
-                new SlideItem(4, getResources().getString(R.string.library), R.drawable.icon_back),
-                new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_menu),
-                new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_back),
-                new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_menu),
-                new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_back)
+                new SlideItem(4, getResources().getString(R.string.library), R.drawable.icon_library),
+                new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
+                new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
+                new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
+                new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read)
         };
 
 
