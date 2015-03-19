@@ -104,7 +104,8 @@ public class NavigationDrawerFragment extends Fragment {
                 new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
                 new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
                 new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
-                new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read)
+                new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read),
+                new SlideItem(-1, getResources().getString(R.string.librarian), R.drawable.icon_admin)
         };
 
 
