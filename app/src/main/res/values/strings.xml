@@ -15,5 +15,10 @@
     <string name="read">Read</string>
     <string name="librarian">Librarian</string>
 
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="issue">Issue</string>
+    <string name="returnn">Return</string>
+
 
 </resources>
