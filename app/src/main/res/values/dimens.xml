@@ -25,4 +25,9 @@
     <dimen name="alertBtnTextSize">18sp</dimen>
     <dimen name="alertTextSize">18sp</dimen>
 
+    <!-- book list item -->
+    <dimen name="availabilityHeightWidth">30dp</dimen>
+    <dimen name="bookImageHeightWidth">90dp</dimen>
+    <dimen name="bookNameTextSize">16sp</dimen>
+
 </resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/white"
+
+    android:padding="@dimen/smallPadding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_width="@dimen/bookImageHeightWidth"
+        android:layout_height="@dimen/bookImageHeightWidth"
+        android:id="@+id/img_bookIcon"
+        android:src="@drawable/icon_book_default"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/bookNameTextSize"
+                    android:textColor="@color/black"
+                    android:id="@+id/txt_bookName"
+                    android:singleLine="true"
+                    android:textAllCaps="true"
+                    android:text="Saheed Bhagat Sngh"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/smallPadding"
+                    android:id="@+id/txt_authorName"
+                    android:singleLine="true"
+                    android:text="Saheed Bhagat Singh"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="@dimen/availabilityHeightWidth"
+                    android:layout_height="@dimen/availabilityHeightWidth"
+                    android:background="@drawable/availability_round_bg"
+                    android:gravity="center"
+                    android:id="@+id/txt_availability"
+                    android:minHeight="@dimen/availabilityHeightWidth"
+                    android:minWidth="@dimen/availabilityHeightWidth"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smallPadding"
+                style="@style/ratingBar"
+                android:id="@+id/ratingBar" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="end">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/smallPadding"
+                    android:id="@+id/img_toread"
+                    android:clickable="true"
+                    android:layout_marginRight="@dimen/smallMargin"
+                    android:layout_marginLeft="@dimen/smallMargin"
+                    android:src="@drawable/icon_toread"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_alreadyRead"
+                    android:clickable="true"
+                    android:padding="@dimen/smallPadding"
+                    android:layout_marginRight="@dimen/smallMargin"
+                    android:layout_marginLeft="@dimen/smallMargin"
+                    android:src="@drawable/icon_already_read"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_requested"
+                    android:clickable="true"
+                    android:layout_marginRight="@dimen/smallMargin"
+                    android:layout_marginLeft="@dimen/smallMargin"
+                    android:padding="@dimen/smallPadding"
+                    android:src="@drawable/icon_requested"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
