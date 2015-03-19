@@ -24,4 +24,9 @@ public class BaseActivity extends FragmentActivity {
             super.onBackPressed();
         }
     }
+    public void onBottomClick(View v)
+    {
+
+
+    }
 }

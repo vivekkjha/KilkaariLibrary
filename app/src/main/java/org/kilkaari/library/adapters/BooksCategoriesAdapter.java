@@ -66,7 +66,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
         }
 
         viewHolder.txt_categoryName.setText(model);
-        viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.bhagat));
+        viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
         viewHolder.txt_categoryCount.setText("20");
 
 

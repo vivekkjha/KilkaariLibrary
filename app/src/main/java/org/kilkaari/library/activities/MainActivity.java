@@ -57,8 +57,14 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         }
         else if(position == 2){
 
+
         }
-        Toast.makeText(this, "Selected Index : " + position, Toast.LENGTH_SHORT).show();
+        else if(position == 5)
+        {
+            startActivity(new Intent(this,LibrarianActivity.class));
+        }
+
+        //Toast.makeText(this, "Selected Index : " + position, Toast.LENGTH_SHORT).show();
 
     }
     public void onClick(View v)
