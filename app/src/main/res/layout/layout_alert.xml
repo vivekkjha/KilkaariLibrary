@@ -68,7 +68,6 @@
             android:text="OK"
             android:clickable="true"
             android:onClick="onClick"
-            android:clickable="true"
             android:background="@drawable/alert_button_selector"
             android:textSize="@dimen/alertBtnTextSize"/>
         <View

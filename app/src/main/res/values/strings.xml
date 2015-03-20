@@ -20,5 +20,12 @@
     <string name="issue">Issue</string>
     <string name="returnn">Return</string>
 
+    <string name="bookName">Book Name</string>
+    <string name="authorName">Author Name</string>
+    <string name="language">Language</string>
+    <string name="pageCount">Page Count</string>
+    <string name="publisher">Publisher</string>
+    <string name="year">Year</string>
+
 
 </resources>

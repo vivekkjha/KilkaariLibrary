@@ -30,4 +30,9 @@
     <dimen name="bookImageHeightWidth">90dp</dimen>
     <dimen name="bookNameTextSize">16sp</dimen>
 
+    <!-- add book -->
+    <dimen name="edtBookTextSize">15sp</dimen>
+    <dimen name="addBookHeadTextSize">16sp</dimen>
+    <dimen name="edtAddBooksHeight">35dp</dimen>
+
 </resources>

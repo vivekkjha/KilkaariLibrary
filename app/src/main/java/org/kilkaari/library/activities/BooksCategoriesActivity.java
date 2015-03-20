@@ -57,7 +57,7 @@ public class BooksCategoriesActivity extends BaseActivity {
     {
         if(v.getId() == R.id.lin_topDone)
         {
-            startActivity(new Intent(this,AlertActivity.class));
+            startActivity(new Intent(this,BookDetailsActivity.class));
 
         }
     }

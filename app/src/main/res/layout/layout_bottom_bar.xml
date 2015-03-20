@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:id="@+id/lin_addBooks"
         android:onClick="onBottomClick"
         android:clickable="true"
         android:gravity="center"
@@ -36,6 +37,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:id="@+id/lin_updateBooks"
         android:onClick="onBottomClick"
         android:clickable="true"
         android:gravity="center"

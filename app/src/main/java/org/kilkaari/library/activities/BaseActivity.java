@@ -1,5 +1,6 @@
 package org.kilkaari.library.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -26,6 +27,14 @@ public class BaseActivity extends FragmentActivity {
     }
     public void onBottomClick(View v)
     {
+        if(v.getId() == R.id.lin_addBooks)
+        {
+            startActivity(new Intent(this,AddBooksActivity.class));
+        }
+        else if(v.getId() == R.id.lin_updateBooks)
+        {
+            startActivity(new Intent(this,AlertActivity.class));
+        }
 
 
     }

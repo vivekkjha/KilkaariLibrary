@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_title_bar"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/titleBottomBar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/smallPadding">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/icon_book_default"
+                android:background="@color/white"
+                android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_margin="@dimen/smallMargin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edtAddBooksHeight"
+                android:text="Basic Details"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/addBookHeadTextSize"
+                android:background="@color/baseColor"
+                android:padding="@dimen/smallPadding"
+                android:textColor="@color/white"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/titleBottomBar"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/edt_bookName"
+                android:hint="@string/bookName"
+                android:textSize="@dimen/edtBookTextSize"
+                android:paddingLeft="@dimen/mediumPadding"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/edtAddBooksHeight" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayBg"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/edt_authorName"
+                android:hint="@string/authorName"
+                android:textSize="@dimen/edtBookTextSize"
+                android:paddingLeft="@dimen/mediumPadding"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/edtAddBooksHeight" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayBg"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/edt_language"
+                android:hint="@string/language"
+                android:textSize="@dimen/edtBookTextSize"
+                android:paddingLeft="@dimen/mediumPadding"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:layout_height="@dimen/edtAddBooksHeight" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayBg"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/edt_publisher"
+                        android:hint="@string/publisher"
+                        android:textSize="@dimen/edtBookTextSize"
+                        android:paddingLeft="@dimen/mediumPadding"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:layout_height="@dimen/edtAddBooksHeight" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grayBg"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/smallMargin"
+                    android:orientation="vertical">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/edt_publishingYear"
+                        android:hint="@string/year"
+                        android:textSize="@dimen/edtBookTextSize"
+                        android:paddingLeft="@dimen/mediumPadding"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:layout_height="@dimen/edtAddBooksHeight" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grayBg"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayBg"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_margin="@dimen/smallMargin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edtAddBooksHeight"
+                android:text="Description"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/addBookHeadTextSize"
+                android:background="@color/baseColor"
+                android:padding="@dimen/smallPadding"
+                android:textColor="@color/white"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/titleBottomBar"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:padding="@dimen/mediumPadding"
+                android:hint="write here..."
+                android:gravity="top|left"
+                android:background="@color/white"
+                android:textSize="@dimen/edtBookTextSize"  />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayBg"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/titleBottomBar"/>
+    <include layout="@layout/layout_bottom_bar"/>
+
+</LinearLayout>

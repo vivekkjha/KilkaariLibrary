@@ -10,6 +10,7 @@
     <color name="whiteOverlay">#55d2d2d2</color>
     <color name="fadedBaseColor">#fecff8ff</color>
     <color name="lightGrayBg">#ffececec</color>
+    <color name="grayBg">#ffdbdbdb</color>
 
 
 </resources>
