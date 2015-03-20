@@ -109,8 +109,6 @@
                     android:padding="@dimen/smallPadding"
                     android:src="@drawable/icon_requested"/>
             </LinearLayout>
-
-
         </LinearLayout>
 
     </LinearLayout>

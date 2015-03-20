@@ -26,6 +26,10 @@
     <string name="pageCount">Page Count</string>
     <string name="publisher">Publisher</string>
     <string name="year">Year</string>
+    <string name="category">Category</string>
+    <string name="donorName">Donor Name</string>
+    <string name="dateAdded">Date Added</string>
+    <string name="viewInBrowser">View in Browser</string>
 
 
 </resources>

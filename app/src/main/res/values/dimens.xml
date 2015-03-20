@@ -35,4 +35,8 @@
     <dimen name="addBookHeadTextSize">16sp</dimen>
     <dimen name="edtAddBooksHeight">35dp</dimen>
 
+    <!-- saved Pages-->
+    <dimen name="savedPagesTitleTextSize">16sp</dimen>
+    <dimen name="savedPagesBrowserTextSize">17sp</dimen>
+
 </resources>

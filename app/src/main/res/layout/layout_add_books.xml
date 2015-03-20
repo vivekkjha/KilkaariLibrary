@@ -17,110 +17,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/smallPadding">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/icon_book_default"
-                android:background="@color/white"
-                android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_margin="@dimen/smallMargin"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edtAddBooksHeight"
-                android:text="Basic Details"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/addBookHeadTextSize"
-                android:background="@color/baseColor"
-                android:padding="@dimen/smallPadding"
-                android:textColor="@color/white"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/titleBottomBar"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/edt_bookName"
-                android:hint="@string/bookName"
-                android:textSize="@dimen/edtBookTextSize"
-                android:paddingLeft="@dimen/mediumPadding"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:layout_height="@dimen/edtAddBooksHeight" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayBg"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/edt_authorName"
-                android:hint="@string/authorName"
-                android:textSize="@dimen/edtBookTextSize"
-                android:paddingLeft="@dimen/mediumPadding"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:layout_height="@dimen/edtAddBooksHeight" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayBg"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:id="@+id/edt_language"
-                android:hint="@string/language"
-                android:textSize="@dimen/edtBookTextSize"
-                android:paddingLeft="@dimen/mediumPadding"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:layout_height="@dimen/edtAddBooksHeight" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayBg"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:padding="@dimen/smallPadding">
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/edt_publisher"
-                        android:hint="@string/publisher"
-                        android:textSize="@dimen/edtBookTextSize"
-                        android:paddingLeft="@dimen/mediumPadding"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:layout_height="@dimen/edtAddBooksHeight" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grayBg"/>
-                </LinearLayout>
+                    android:onClick="onClick"
+                    android:clickable="true"
+                    android:src="@drawable/icon_book_default"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"/>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:layout_marginLeft="@dimen/smallMargin"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edtAddBooksHeight"
+                        android:text="Donation Details"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/addBookHeadTextSize"
+                        android:background="@color/baseColor"
+                        android:padding="@dimen/smallPadding"
+                        android:textColor="@color/white"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/titleBottomBar"/>
                     <EditText
                         android:layout_width="match_parent"
-                        android:id="@+id/edt_publishingYear"
-                        android:hint="@string/year"
+                        android:id="@+id/edt_donorName"
+                        android:hint="@string/donorName"
+                        android:textSize="@dimen/edtBookTextSize"
+                        android:paddingLeft="@dimen/mediumPadding"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:layout_height="@dimen/edtAddBooksHeight" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grayBg"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/edt_date"
+                        android:hint="@string/dateAdded"
                         android:textSize="@dimen/edtBookTextSize"
                         android:paddingLeft="@dimen/mediumPadding"
                         android:background="@color/white"
@@ -131,51 +76,197 @@
                         android:layout_height="1dp"
                         android:background="@color/grayBg"/>
                 </LinearLayout>
-
             </LinearLayout>
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayBg"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_margin="@dimen/smallMargin"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edtAddBooksHeight"
-                android:text="Description"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/addBookHeadTextSize"
-                android:background="@color/baseColor"
-                android:padding="@dimen/smallPadding"
-                android:textColor="@color/white"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/titleBottomBar"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:padding="@dimen/mediumPadding"
-                android:hint="write here..."
-                android:gravity="top|left"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:textSize="@dimen/edtBookTextSize"  />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayBg"/>
+                android:layout_margin="@dimen/smallMargin"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edtAddBooksHeight"
+                    android:text="Basic Details"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/addBookHeadTextSize"
+                    android:background="@color/baseColor"
+                    android:padding="@dimen/smallPadding"
+                    android:textColor="@color/white"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/titleBottomBar"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/edt_bookName"
+                    android:hint="@string/bookName"
+                    android:textSize="@dimen/edtBookTextSize"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_height="@dimen/edtAddBooksHeight" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayBg"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/edt_authorName"
+                    android:hint="@string/authorName"
+                    android:textSize="@dimen/edtBookTextSize"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_height="@dimen/edtAddBooksHeight" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayBg"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/edt_language"
+                            android:hint="@string/language"
+                            android:textSize="@dimen/edtBookTextSize"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:layout_height="@dimen/edtAddBooksHeight" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grayBg"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/smallMargin"
+                        android:orientation="vertical">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/edt_pageCount"
+                            android:hint="@string/pageCount"
+                            android:textSize="@dimen/edtBookTextSize"
+                            android:inputType="number"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:layout_height="@dimen/edtAddBooksHeight" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grayBg"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/edt_publisher"
+                            android:hint="@string/publisher"
+                            android:textSize="@dimen/edtBookTextSize"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:layout_height="@dimen/edtAddBooksHeight" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grayBg"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/smallMargin"
+                        android:orientation="vertical">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/edt_publishingYear"
+                            android:hint="@string/year"
+                            android:textSize="@dimen/edtBookTextSize"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:inputType="number"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:layout_height="@dimen/edtAddBooksHeight" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grayBg"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/autoTxt_category"
+                    android:hint="@string/category"
+                    android:textSize="@dimen/edtBookTextSize"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:layout_height="@dimen/edtAddBooksHeight" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayBg"/>
+
+
+
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_margin="@dimen/smallMargin"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edtAddBooksHeight"
+                    android:text="Description"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/addBookHeadTextSize"
+                    android:background="@color/baseColor"
+                    android:padding="@dimen/smallPadding"
+                    android:textColor="@color/white"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/titleBottomBar"/>
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:padding="@dimen/mediumPadding"
+                    android:id="@+id/edt_description"
+                    android:hint="write here..."
+                    android:gravity="top|left"
+                    android:background="@color/white"
+                    android:textSize="@dimen/edtBookTextSize"  />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayBg"/>
+            </LinearLayout>
         </LinearLayout>
-
-        </ScrollView>
+    </ScrollView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
