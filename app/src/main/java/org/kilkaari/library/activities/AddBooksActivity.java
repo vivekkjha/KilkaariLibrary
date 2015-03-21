@@ -1,16 +1,21 @@
 package org.kilkaari.library.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.utils.LogUtil;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by vivek on 20/03/15.
@@ -49,18 +54,21 @@ public class AddBooksActivity extends BaseActivity {
     public void saveQuestion()
     {
         try {
-            ParseObject newBook = new ParseObject("Books");
-            newBook.put("donatedBy", edt_donorName.getText().toString());
-            newBook.put("addedOn", edt_date.getText().toString());
-            newBook.put("pageCount", Integer.parseInt(edt_pageCount.getText().toString()));
-            newBook.put("description", edt_description.getText().toString());
-            newBook.put("writer", edt_authorName.getText().toString());
-            newBook.put("category", autoTxt_category.getText().toString());
-            newBook.put("language", edt_language.getText().toString());
-            newBook.put("publisher", edt_publisher.getText().toString());
-            newBook.put("publicationYear", Integer.parseInt(edt_publishingYear.getText().toString()));
-            newBook.put("name", edt_bookName.getText().toString());
-            newBook.put("quantity", 1);
+
+
+
+            ParseObject newBook = new ParseObject(Constants.Table.TABLE_BOOKS);
+            newBook.put(Constants.DataColumns.BOOKS_DONATED_BY, edt_donorName.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_ADDED_ON, edt_date.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_PAGE_COUNT, Integer.parseInt(edt_pageCount.getText().toString()));
+            newBook.put(Constants.DataColumns.BOOKS_DESCRIPTION, edt_description.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_AUTHOR, edt_authorName.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_CATEGORY, autoTxt_category.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_LANGUAGE, edt_language.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_PUBLISHER, edt_publisher.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_PUBLICATION_YEAR, Integer.parseInt(edt_publishingYear.getText().toString()));
+            newBook.put(Constants.DataColumns.BOOKS_NAME, edt_bookName.getText().toString());
+            newBook.put(Constants.DataColumns.BOOKS_QUANTITY, 1);
             newBook.save();
             LogUtil.d("Books Row ", "Created");
 

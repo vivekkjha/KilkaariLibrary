@@ -1,7 +1,6 @@
 package org.kilkaari.library.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.models.BooksModel;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -23,12 +22,12 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
 
     private LayoutInflater inflater;
-    private List<String> listCategories;
+    private List<BooksModel> listBooks;
     private BooksCategoriesActivity context;
 
-    public BooksCategoriesAdapter(BaseActivity context, List<String> list){
+    public BooksCategoriesAdapter(BaseActivity context, List<BooksModel> list){
 
-        this.listCategories = list;
+        this.listBooks = list;
         this.context = (BooksCategoriesActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,7 +39,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listCategories.size();
+        return listBooks.size();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
 
         final ViewHolder viewHolder;
-        final String model = listCategories.get(position);
+        final BooksModel model = listBooks.get(position);
 
 
         if (convertView == null) {
@@ -65,7 +64,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.txt_categoryName.setText(model);
+        viewHolder.txt_categoryName.setText(model.getCategory());
         viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
         viewHolder.txt_categoryCount.setText("20");
 
@@ -76,7 +75,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return listCategories.get(position);
+        return listBooks.get(position);
     }
 
     @Override
