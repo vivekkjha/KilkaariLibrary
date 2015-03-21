@@ -5,6 +5,8 @@ package org.kilkaari.library.constants;
  */
 public interface Constants {
 
+    public String CATEGORIES_DELIMITER ="$%^";
+
     public interface Table
     {
         public String TABLE_BOOKS = "Books";
@@ -13,6 +15,7 @@ public interface Constants {
         public String TABLE_READ = "Read";
         public String TABLE_REQUEST_QUEUE = "RequestQueue";
         public String TABLE_SAVED_PAGES = "SavedPages";
+        public String TABLE_CATEGORIES = "Categories";
 
 
     }
@@ -31,7 +34,11 @@ public interface Constants {
         public String BOOKS_NAME = "name";
         public String BOOKS_AUTHOR = "author";
 
+        public String CATEGORIES_CATEGORY = "category";
 
-
+    }
+    public interface EXTRAS
+    {
+        public String EXTRAS_SELECTED_CATEGORY = "selectedCategory";
     }
 }

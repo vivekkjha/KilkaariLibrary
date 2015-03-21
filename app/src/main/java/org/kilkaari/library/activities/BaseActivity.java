@@ -6,16 +6,21 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.application.LibraryApplication;
+import org.kilkaari.library.application.Prefs;
 
 /**
  * Created by vk on 14-03-2015.
  */
 public class BaseActivity extends FragmentActivity {
 
+    public Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getPref();
+
     }
 
     public void onBackClick(View v)
@@ -35,7 +40,14 @@ public class BaseActivity extends FragmentActivity {
         {
             startActivity(new Intent(this,AlertActivity.class));
         }
+    }
+    // > get application in any child activity of base activity
+    public LibraryApplication getLibraryApplication() {
+        return ((LibraryApplication) getApplication());
+    }
 
-
+    // > get preferences in any child activity of base activity
+    public Prefs getPref() {
+        return getLibraryApplication().getPref();
     }
 }

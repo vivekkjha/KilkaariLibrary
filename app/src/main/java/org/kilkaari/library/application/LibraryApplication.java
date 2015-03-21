@@ -9,9 +9,12 @@ import com.parse.Parse;
  */
 public class LibraryApplication extends Application {
 
+    private Prefs prefs;
     @Override
     public void onCreate() {
         super.onCreate();
+
+        prefs = new Prefs(this);
 
         // Enable Local Datastore.
 
@@ -19,5 +22,8 @@ public class LibraryApplication extends Application {
         Parse.initialize(this, "wF57BFoc8Sge0vz1tWb6vrHEOSr6BffUWULKXjpF", "KojP7xdhyKwULJNT0TglZbKyfwDoBNDouqkVze1v");
 
 
+    }
+    public Prefs getPref() {
+        return prefs;
     }
 }

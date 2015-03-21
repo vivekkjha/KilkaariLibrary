@@ -1,11 +1,14 @@
 package org.kilkaari.library.activities;
 
 import android.content.Intent;
+import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -14,6 +17,7 @@ import com.parse.ParseQuery;
 import org.kilkaari.library.R;
 import org.kilkaari.library.adapters.BooksCategoriesAdapter;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.BookCategoriesModel;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
 
@@ -28,12 +32,19 @@ public class BooksCategoriesActivity extends BaseActivity {
 
     //> layout related objects
     private GridView gridViewCategories;
+    private LinearLayout lin_topDone;
 
     //> program objects
     private BooksCategoriesAdapter adapter;
 
     //> lists to get entries from Books table
-    private List<BooksModel> list_books;
+    public static List<BookCategoriesModel> list_CategoriesBooks;
+
+    //> list to get all the categories
+    private List<String> list_booksCategories;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +53,18 @@ public class BooksCategoriesActivity extends BaseActivity {
 
         //> layout initialization
         gridViewCategories = (GridView)findViewById(R.id.gridViewCategories);
+        lin_topDone = (LinearLayout)findViewById(R.id.lin_topDone);
+        lin_topDone.setVisibility(View.GONE);
 
         //> list initialization
-        list_books = new ArrayList<BooksModel>();
+        list_CategoriesBooks = new ArrayList<BookCategoriesModel>();
+        list_booksCategories =new ArrayList<String>();
 
-        //> get all books details
-        getBooksDetails();
+        //> getCategories from server
+        getCategories();
 
-        if(list_books.size()!=0) {
 
-            //> set gridview adapter
-            adapter = new BooksCategoriesAdapter(this,list_books);
-            gridViewCategories.setAdapter(adapter);
-        }
+
 
     }
     public void onClick(View v)
@@ -65,47 +75,70 @@ public class BooksCategoriesActivity extends BaseActivity {
 
         }
     }
-
-    //> get details of all the Books in local list
-    public void getBooksDetails()
+    public void setAdapter()
     {
+        if(list_CategoriesBooks.size()!=0) {
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
+            //> set gridView adapter
+            adapter = new BooksCategoriesAdapter(this,list_CategoriesBooks);
+            gridViewCategories.setAdapter(adapter);
+        }
+    }
+
+
+
+    public void getCategories()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Categories");
         query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> userList, ParseException e) {
+            public void done(List<ParseObject> categoryList, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.d("Book List ", "Retrieved " + userList.size() + " rows");
-                    if(userList.size()!=0)
+                    Log.d("Categories", "Retrieved " + categoryList.size() + " rows");
+
+                    if(categoryList.size()!=0)
                     {
-                        for (int i=0;i<userList.size();i++) {
-                            ParseObject parseObject = userList.get(i);
-                            LogUtil.w("Librarian Activity", "Object " + i + "Name: " + parseObject.get("name"));
+                        list_booksCategories.clear();
+                        for (int i=0;i<categoryList.size();i++)
+                        {
+                            list_booksCategories.add(categoryList.get(i).getString("category"));
 
-                            //> add data from sever into the list
-                            BooksModel model = new BooksModel();
-                            model.setAddedOn(parseObject.getString(Constants.DataColumns.BOOKS_ADDED_ON));
-                            model.setAuthor(parseObject.getString(Constants.DataColumns.BOOKS_AUTHOR));
-                            model.setCategory(parseObject.getString(Constants.DataColumns.BOOKS_CATEGORY));
-                            model.setDescription(parseObject.getString(Constants.DataColumns.BOOKS_CATEGORY));
-                            model.setDonatedBy(parseObject.getString(Constants.DataColumns.BOOKS_DONATED_BY));
-                            model.setLanguage(parseObject.getString(Constants.DataColumns.BOOKS_LANGUAGE));
-                            model.setName(parseObject.getString(Constants.DataColumns.BOOKS_NAME));
-                            model.setPageCount(parseObject.getInt(Constants.DataColumns.BOOKS_PAGE_COUNT));
-                            model.setPublisher(parseObject.getString(Constants.DataColumns.BOOKS_PUBLISHER));
-                            model.setPublicationYear(parseObject.getInt(Constants.DataColumns.BOOKS_PUBLICATION_YEAR));
-                            model.setQuantity(parseObject.getInt(Constants.DataColumns.BOOKS_QUANTITY));
-                            list_books.add(model);
-
+                            //> get data for all respective categories
+                            getCategoriesCountFromParse(categoryList.get(i).getString("category"));
+                            LogUtil.w("Books Categories","Category : "+ categoryList.get(i).getString("category"));
                         }
-                    }
-                    else {
-                        LogUtil.e("LibrarianActivity","Database returned 0 list ");
-                    }
 
+
+                    }
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("Categories", "Error: " + e.getMessage());
                 }
             }
         });
+    }
+    public void getCategoriesCountFromParse(final String category)
+    {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
+                query.whereEqualTo(Constants.DataColumns.BOOKS_CATEGORY, category);
+                query.countInBackground(new CountCallback() {
+                    @Override
+                    public void done(int i, ParseException e) {
+                            if (e == null) {
+
+                                        BookCategoriesModel model = new BookCategoriesModel();
+                                        model.setCategory(category);
+                                        model.setCount(i);
+                                        list_CategoriesBooks.add(model);
+
+                                //> setAdapter
+                                setAdapter();
+                            } else {
+                                Log.d("score", "Error: " + e.getMessage());
+                            }
+                        }
+
+                });
+
+
+
     }
 }

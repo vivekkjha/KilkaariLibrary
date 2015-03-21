@@ -1,6 +1,7 @@
 package org.kilkaari.library.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
+import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.BookCategoriesModel;
 import org.kilkaari.library.models.BooksModel;
 
 import java.util.List;
@@ -22,10 +26,10 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
 
     private LayoutInflater inflater;
-    private List<BooksModel> listBooks;
+    private List<BookCategoriesModel> listBooks;
     private BooksCategoriesActivity context;
 
-    public BooksCategoriesAdapter(BaseActivity context, List<BooksModel> list){
+    public BooksCategoriesAdapter(BaseActivity context, List<BookCategoriesModel> list){
 
         this.listBooks = list;
         this.context = (BooksCategoriesActivity)context;
@@ -35,7 +39,6 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
     }
 
-    // > selected children list is been fetched from application file to have central cntrol over it (both from grid and list views)
 
     @Override
     public int getCount() {
@@ -47,7 +50,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
 
         final ViewHolder viewHolder;
-        final BooksModel model = listBooks.get(position);
+        final BookCategoriesModel model = listBooks.get(position);
 
 
         if (convertView == null) {
@@ -66,9 +69,18 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
         viewHolder.txt_categoryName.setText(model.getCategory());
         viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
-        viewHolder.txt_categoryCount.setText("20");
+        viewHolder.txt_categoryCount.setText(Integer.toString(model.getCount()));
 
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(context, BookListActivity.class);
+                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY,model.getCategory());
+                context.startActivity(intent);
+
+            }
+        });
         return convertView;
 
     }

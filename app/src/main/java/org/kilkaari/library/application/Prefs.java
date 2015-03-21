@@ -13,7 +13,8 @@ public class Prefs {
     private static final String sharedPrefsName = "AppPrefs";
 
 
-    private static final String INSTALLATION_NURSERY_ID = "nurseryId";
+    private static final String BOOKS_CATEGORIES = "booksCategories";
+
 
 
     /*--- Application Preferences --*/
@@ -45,12 +46,12 @@ public class Prefs {
     }
 
 
-    public String getInstallationNurseryId() {
-        return get().getString(INSTALLATION_NURSERY_ID, null);
+    public String getBooksCategories() {
+        return get().getString(BOOKS_CATEGORIES, null);
     }
 
-    public void setInstallationNurseryId(String installationNurseryId) {
-        get().edit().putString(INSTALLATION_NURSERY_ID, installationNurseryId).commit();
+    public void setBooksCategories(String booksCategories) {
+        get().edit().putString(BOOKS_CATEGORIES, booksCategories).commit();
     }
 
 

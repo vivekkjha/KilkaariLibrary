@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
+import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.models.BooksModel;
 
 import java.util.List;
 
@@ -22,13 +24,13 @@ public class BooksListAdapter extends BaseAdapter {
 
 
     private LayoutInflater inflater;
-    private List<String> listCategories;
-    private BooksCategoriesActivity context;
+    private List<BooksModel> listBooks;
+    private BookListActivity context;
 
-    public BooksListAdapter(BaseActivity context, List<String> list){
+    public BooksListAdapter(BaseActivity context, List<BooksModel> list){
 
-        this.listCategories = list;
-        this.context = (BooksCategoriesActivity)context;
+        this.listBooks = list;
+        this.context = (BookListActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -39,7 +41,7 @@ public class BooksListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listCategories.size();
+        return listBooks.size();
     }
 
     @Override
@@ -47,7 +49,7 @@ public class BooksListAdapter extends BaseAdapter {
 
 
         final ViewHolder viewHolder;
-        final String model = listCategories.get(position);
+        final BooksModel model = listBooks.get(position);
 
 
         if (convertView == null) {
@@ -68,6 +70,8 @@ public class BooksListAdapter extends BaseAdapter {
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.txt_bookName.setText(model.getName());
+        viewHolder.txt_authorName.setText(model.getAuthor());
 
         return convertView;
 
@@ -75,7 +79,7 @@ public class BooksListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return listCategories.get(position);
+        return listBooks.get(position);
     }
 
     @Override
