@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallPadding"
                 style="@style/ratingBar"
+                android:rating="3.5"
                 android:id="@+id/ratingBar" />
             <LinearLayout
                 android:layout_width="0dp"
@@ -102,7 +103,7 @@
                     android:padding="@dimen/smallPadding"
                     android:layout_marginRight="@dimen/smallMargin"
                     android:layout_marginLeft="@dimen/smallMargin"
-                    android:src="@drawable/icon_already_read"/>
+                    android:src="@drawable/icon_already_read_inactive"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
