@@ -17,18 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/mediumPadding"
+            android:id="@+id/autoTxt_searchBooks"
             android:hint="Search books"/>
 
         </LinearLayout>
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scrollbars="none"
         android:id="@+id/listView_listBooks"
         android:cacheColorHint="@color/white"
         android:divider="@color/lightGrayBg"
         android:dividerHeight="1dp"
         />
+        <include layout="@layout/layout_loading"/>
+    </RelativeLayout>
 
 </LinearLayout>

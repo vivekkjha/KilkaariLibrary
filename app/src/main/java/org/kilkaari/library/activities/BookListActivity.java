@@ -2,7 +2,9 @@ package org.kilkaari.library.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -29,6 +31,7 @@ public class BookListActivity extends BaseActivity {
     private BooksListAdapter adapter;
 
     private ListView listView_listBooks;
+    private AutoCompleteTextView autoTxt_searchBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,14 @@ public class BookListActivity extends BaseActivity {
         setContentView(R.layout.activity_book_list);
 
         listView_listBooks = (ListView)findViewById(R.id.listView_listBooks);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        autoTxt_searchBooks = (AutoCompleteTextView)findViewById(R.id.autoTxt_searchBooks);
 
         list_books = new ArrayList<BooksModel>();
 
         String category = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
         if(category!=null)
         {
+            showProgressLayout();
             getBooksDetails(category);
         }
 
@@ -80,7 +84,16 @@ public class BookListActivity extends BaseActivity {
                             model.setPublicationYear(parseObject.getInt(Constants.DataColumns.BOOKS_PUBLICATION_YEAR));
                             model.setQuantity(parseObject.getInt(Constants.DataColumns.BOOKS_QUANTITY));
                             list_books.add(model);
+
+                            //> notify adapter whenever new row gets added
+                            if(adapter!=null)
+                            {
+                                adapter.notifyDataSetChanged();
+                            }
                         }
+                        //> hide progress layout when all the fetching operations gets completed
+                        hideProgressLayout();
+
                     }
                     else {
                         LogUtil.e("BooksCategories","Database returned 0 list ");
@@ -91,5 +104,10 @@ public class BookListActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    public void onClick(View v)
+    {
+
     }
 }

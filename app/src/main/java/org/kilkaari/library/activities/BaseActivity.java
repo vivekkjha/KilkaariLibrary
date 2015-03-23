@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.application.LibraryApplication;
@@ -15,12 +16,28 @@ import org.kilkaari.library.application.Prefs;
 public class BaseActivity extends FragmentActivity {
 
     public Prefs prefs;
+    private LinearLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getPref();
 
+    }
+
+    // > show progress layout
+    public void showProgressLayout(){
+        progressLayout = (LinearLayout)findViewById(R.id.progress_layout);
+        progressLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    // > hide progress layout
+    public void hideProgressLayout(){
+
+        if(progressLayout != null) {
+            progressLayout.setVisibility(View.GONE);
+        }
     }
 
     public void onBackClick(View v)

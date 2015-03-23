@@ -26,6 +26,7 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:clickable="true"
+                    android:id="@+id/img_bookImage"
                     android:src="@drawable/icon_book_default"
                     android:background="@color/white"
                     android:layout_height="match_parent"/>

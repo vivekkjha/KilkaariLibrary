@@ -2,13 +2,21 @@ package org.kilkaari.library.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -22,7 +30,11 @@ import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.utils.LogUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +42,22 @@ import java.util.List;
  */
 public class AddBooksActivity extends BaseActivity {
 
+    //> layout related objects
     private EditText edt_donorName,edt_date,edt_bookName,edt_authorName,edt_language,edt_pageCount,edt_publisher,edt_publishingYear,edt_description;
     private AutoCompleteTextView autoTxt_category;
+    private ImageView img_bookImage;
+
+    //> program objects
+    private String camera = "Camera";
+    private String gallery = "Gallery";
+    private int CAMERA_RESULT_CODE = 111;
+    private int GALLERY_RESULT_CODE = 222;
+    private boolean isFromGallery = false;
+
+    private Uri capturedFileUri = null;
+    private Bitmap bookBitmapImage = null;
+    public static byte[] imageBytes =  null;
+
 
     //> get categories from parse
     private List<String> list_booksCategories;
@@ -53,6 +79,9 @@ public class AddBooksActivity extends BaseActivity {
         edt_publishingYear = (EditText)findViewById(R.id.edt_publishingYear);
         edt_description = (EditText)findViewById(R.id.edt_description);
         autoTxt_category = (AutoCompleteTextView)findViewById(R.id.autoTxt_category);
+        img_bookImage = (ImageView)findViewById(R.id.img_bookImage);
+        registerForContextMenu(img_bookImage);
+
 
         list_booksCategories = new ArrayList<String>();
 
@@ -109,12 +138,64 @@ public class AddBooksActivity extends BaseActivity {
             //> save details of book entered
             saveBookDetails();
         }
+        else if(v.getId() == R.id.img_bookImage)
+        {
+            //> open Context menu for image
+            openContextMenu(img_bookImage);
+
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(camera);
+        menu.add(gallery);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        //> Open camera to take pics on selection of camera
+        if(item.getTitle().equals(camera))
+        {
+            //> open camera
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            capturedFileUri = getOutputMediaFileUri();
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, capturedFileUri);
+            startActivityForResult(intent, CAMERA_RESULT_CODE);
+
+        }
+        //> open gallery to take photos from gallery
+        else if(item.getTitle().equals(gallery))
+        {
+            //> open gallery
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Get photos from…"),GALLERY_RESULT_CODE);
+        }
+        else
+        {
+            return false;
+        }
+    return true;
     }
 
     // > save asked question
     public void saveBookDetails()
     {
         try {
+
+            //> file to store photo
+            ParseFile photo =null;
+            if(imageBytes!=null)
+            {
+                photo = new ParseFile("Book.png",imageBytes);
+            }
+
 
             ParseObject newBook = new ParseObject(Constants.Table.TABLE_BOOKS);
             newBook.put(Constants.DataColumns.BOOKS_DONATED_BY, edt_donorName.getText().toString());
@@ -127,6 +208,12 @@ public class AddBooksActivity extends BaseActivity {
             newBook.put(Constants.DataColumns.BOOKS_PUBLISHER, edt_publisher.getText().toString());
             newBook.put(Constants.DataColumns.BOOKS_PUBLICATION_YEAR, Integer.parseInt(edt_publishingYear.getText().toString()));
             newBook.put(Constants.DataColumns.BOOKS_NAME, edt_bookName.getText().toString());
+
+            //> check if the photo data is null or not
+            if(photo!=null) {
+                newBook.put(Constants.DataColumns.BOOKS_PHOTO, photo);
+            }
+
             newBook.put(Constants.DataColumns.BOOKS_QUANTITY, 1);
             newBook.save();
             LogUtil.d("Books Row ", "Created");
@@ -137,7 +224,7 @@ public class AddBooksActivity extends BaseActivity {
             ex.printStackTrace();
         }
     }
-
+    //> get categories from parse server
     public void getCategories()
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Categories");
@@ -161,6 +248,7 @@ public class AddBooksActivity extends BaseActivity {
             }
         });
     }
+    //> save categories on server
     public void saveCategories()
     {
         //> check if the category already exist or not
@@ -191,4 +279,95 @@ public class AddBooksActivity extends BaseActivity {
         });
     }
 
+    /*--- get uri from file saved----*/
+
+    /** Create a file Uri for saving an image or video */
+    private static Uri getOutputMediaFileUri(){
+        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    /** Create a File for saving an image from Camera*/
+
+    private static File getOutputMediaFile(){
+
+        String extr = Environment.getExternalStorageDirectory().toString();
+        File mFolder = new File(extr +File.separator + "Kilkaari" );
+
+        if (!mFolder.exists()) {
+            mFolder.mkdir();
+        }
+
+        String strF = mFolder.getAbsolutePath();
+        File mSubFolder = new File(strF);
+
+        if (! mSubFolder.exists()){
+            if (! mSubFolder.mkdirs()){
+                LogUtil.d("MKdirs", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile = new File(mSubFolder.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
+
+        return mediaFile;
+    }
+
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GALLERY_RESULT_CODE)
+        {
+            if(resultCode ==RESULT_OK) {
+                if (data != null) {
+                    isFromGallery = true;
+                    Uri galleryUri = data.getData();
+
+                    try {
+                        bookBitmapImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(galleryUri));
+                        img_bookImage.setImageBitmap(bookBitmapImage);
+                    } catch (FileNotFoundException fe) {
+                        fe.printStackTrace();
+                    }
+
+                    // Convert it to byte
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    // Compress image to lower quality scale 1 - 100
+                    bookBitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+                    imageBytes = stream.toByteArray();
+                }
+            }
+        }
+        else if(requestCode == CAMERA_RESULT_CODE)
+        {
+            if(resultCode == RESULT_OK)
+            {
+
+                    isFromGallery = false;
+                    Uri galleryUri = capturedFileUri;
+
+                    try {
+                        bookBitmapImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(galleryUri));
+                        img_bookImage.setImageBitmap(bookBitmapImage);
+                    } catch (FileNotFoundException fe) {
+                        fe.printStackTrace();
+                    }
+
+                    // Convert it to byte
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    // Compress image to lower quality scale 1 - 100
+                    bookBitmapImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+
+                   imageBytes = stream.toByteArray();
+
+            }
+        }
+    }
 }

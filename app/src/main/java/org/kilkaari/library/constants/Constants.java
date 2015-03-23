@@ -33,6 +33,7 @@ public interface Constants {
         public String BOOKS_QUANTITY = "quantity";
         public String BOOKS_NAME = "name";
         public String BOOKS_AUTHOR = "author";
+        public String BOOKS_PHOTO = "photo";
 
         public String CATEGORIES_CATEGORY = "category";
 

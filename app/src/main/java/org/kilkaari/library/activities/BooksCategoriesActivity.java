@@ -61,6 +61,7 @@ public class BooksCategoriesActivity extends BaseActivity {
         list_booksCategories =new ArrayList<String>();
 
         //> getCategories from server
+        showProgressLayout();
         getCategories();
 
 
@@ -101,13 +102,18 @@ public class BooksCategoriesActivity extends BaseActivity {
                         for (int i=0;i<categoryList.size();i++)
                         {
                             list_booksCategories.add(categoryList.get(i).getString("category"));
-
-                            //> get data for all respective categories
-                            getCategoriesCountFromParse(categoryList.get(i).getString("category"));
                             LogUtil.w("Books Categories","Category : "+ categoryList.get(i).getString("category"));
+
+                            //> if loop count is on last element , start fetching count of that category
+                            if(i== (categoryList.size()-1))
+                            {
+                                for(int j=0;j<list_booksCategories.size();j++)
+                                {
+                                    //> get data for all respective categories
+                                    getCategoriesCountFromParse(list_booksCategories.get(j));
+                                }
+                            }
                         }
-
-
                     }
                 } else {
                     Log.d("Categories", "Error: " + e.getMessage());
@@ -117,26 +123,34 @@ public class BooksCategoriesActivity extends BaseActivity {
     }
     public void getCategoriesCountFromParse(final String category)
     {
-                ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
-                query.whereEqualTo(Constants.DataColumns.BOOKS_CATEGORY, category);
-                query.countInBackground(new CountCallback() {
-                    @Override
-                    public void done(int i, ParseException e) {
-                            if (e == null) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
+        query.whereEqualTo(Constants.DataColumns.BOOKS_CATEGORY, category);
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int i, ParseException e) {
+                if (e == null) {
 
-                                        BookCategoriesModel model = new BookCategoriesModel();
-                                        model.setCategory(category);
-                                        model.setCount(i);
-                                        list_CategoriesBooks.add(model);
+                    BookCategoriesModel model = new BookCategoriesModel();
+                    model.setCategory(category);
+                    model.setCount(i);
+                    list_CategoriesBooks.add(model);
 
-                                //> setAdapter
-                                setAdapter();
-                            } else {
-                                Log.d("score", "Error: " + e.getMessage());
-                            }
-                        }
+                    //> setAdapter
+                    setAdapter();
 
-                });
+                    //> if the category is last element of of list_booksCategories List
+                    if(category.equals(list_booksCategories.get(list_booksCategories.size()-1)))
+                    {
+
+                        hideProgressLayout();
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+
+        });
 
 
 
