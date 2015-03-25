@@ -1,16 +1,21 @@
 package org.kilkaari.library.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.parse.CountCallback;
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -22,6 +27,7 @@ import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,6 +49,9 @@ public class BooksCategoriesActivity extends BaseActivity {
     //> list to get all the categories
     private List<String> list_booksCategories;
 
+    //> hash=map to get links of all the categories
+    private HashMap<String,String> hash_categoryPhoto;
+
 
 
 
@@ -59,6 +68,8 @@ public class BooksCategoriesActivity extends BaseActivity {
         //> list initialization
         list_CategoriesBooks = new ArrayList<BookCategoriesModel>();
         list_booksCategories =new ArrayList<String>();
+
+        hash_categoryPhoto =new HashMap<String,String>();
 
         //> getCategories from server
         showProgressLayout();
@@ -90,7 +101,7 @@ public class BooksCategoriesActivity extends BaseActivity {
 
     public void getCategories()
     {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Categories");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_CATEGORIES);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> categoryList, com.parse.ParseException e) {
                 if (e == null) {
@@ -99,10 +110,23 @@ public class BooksCategoriesActivity extends BaseActivity {
                     if(categoryList.size()!=0)
                     {
                         list_booksCategories.clear();
+                        hash_categoryPhoto.clear();
+
                         for (int i=0;i<categoryList.size();i++)
                         {
-                            list_booksCategories.add(categoryList.get(i).getString("category"));
-                            LogUtil.w("Books Categories","Category : "+ categoryList.get(i).getString("category"));
+                            //> add category name into the list
+                            list_booksCategories.add(categoryList.get(i).getString(Constants.DataColumns.CATEGORIES_CATEGORY));
+                            LogUtil.w("Books Categories","Category : "+ categoryList.get(i).getString(Constants.DataColumns.CATEGORIES_CATEGORY));
+
+                            //> add category name as key, and photo url as value
+                            if(categoryList.get(i).getParseFile(Constants.DataColumns.CATEGORIES_PHOTO)!=null) {
+                                hash_categoryPhoto.put(categoryList.get(i).getString(Constants.DataColumns.CATEGORIES_CATEGORY),
+                                        categoryList.get(i).getParseFile(Constants.DataColumns.CATEGORIES_PHOTO).getUrl());
+                                LogUtil.w("Books Categories","Category URl : "+ categoryList.get(i).getParseFile(Constants.DataColumns.CATEGORIES_PHOTO).getUrl());
+                            }
+
+
+
 
                             //> if loop count is on last element , start fetching count of that category
                             if(i== (categoryList.size()-1))
@@ -121,6 +145,7 @@ public class BooksCategoriesActivity extends BaseActivity {
             }
         });
     }
+
     public void getCategoriesCountFromParse(final String category)
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
@@ -132,6 +157,10 @@ public class BooksCategoriesActivity extends BaseActivity {
 
                     BookCategoriesModel model = new BookCategoriesModel();
                     model.setCategory(category);
+
+                    if(hash_categoryPhoto.get(category)!=null) {
+                        model.setPhotoUrl(hash_categoryPhoto.get(category));
+                    }
                     model.setCount(i);
                     list_CategoriesBooks.add(model);
 

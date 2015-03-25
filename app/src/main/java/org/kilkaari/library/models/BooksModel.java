@@ -5,6 +5,9 @@ package org.kilkaari.library.models;
  */
 public class BooksModel {
 
+
+
+    private String objectId;
     private String name;
     private String author;
     private String category;
@@ -16,7 +19,16 @@ public class BooksModel {
     private int publicationYear;
     private int pageCount;
     private int quantity;
+    private String photoUrl;
 
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
     public String getName() {
         return name;
     }
@@ -104,4 +116,39 @@ public class BooksModel {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return objectId.hashCode();
+    }
+
+    // > to compare two objects we need to override equals and hashCode default implementation
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BooksModel other = (BooksModel) obj;
+
+        // > comparing objectId of every object to detect if objects are equal
+        if (!(objectId.equals(other.objectId)))
+            return false;
+
+        return true;
+    }
+
+
+
 }

@@ -7,6 +7,12 @@ public interface Constants {
 
     public String CATEGORIES_DELIMITER ="$%^";
 
+    public interface Folders
+    {
+        public String FOLDER_KILKAARI = "Kilkaari";
+
+    }
+
     public interface Table
     {
         public String TABLE_BOOKS = "Books";
@@ -36,10 +42,13 @@ public interface Constants {
         public String BOOKS_PHOTO = "photo";
 
         public String CATEGORIES_CATEGORY = "category";
+        public String CATEGORIES_PHOTO = "photo";
 
     }
     public interface EXTRAS
     {
         public String EXTRAS_SELECTED_CATEGORY = "selectedCategory";
+        public String EXTRAS_OBJECT_ID = "objectId";
+        public String EXTRAS_SELECTED_BOOK_INDEX = "selectedBookIndex";
     }
 }

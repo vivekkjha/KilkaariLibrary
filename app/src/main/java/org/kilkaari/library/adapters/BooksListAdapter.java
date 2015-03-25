@@ -1,6 +1,7 @@
 package org.kilkaari.library.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
+import org.kilkaari.library.activities.BookDetailsActivity;
 import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
 
 import java.util.List;
@@ -26,6 +31,8 @@ public class BooksListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<BooksModel> listBooks;
     private BookListActivity context;
+    private DisplayImageOptions options;
+    private com.nostra13.universalimageloader.core.ImageLoader loader;
 
     public BooksListAdapter(BaseActivity context, List<BooksModel> list){
 
@@ -34,7 +41,8 @@ public class BooksListAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
+        options = context.getLibraryApplication().getImageLoaderOptions();
+        loader = context.getLibraryApplication().getImageLoader();
     }
 
     // > selected children list is been fetched from application file to have central cntrol over it (both from grid and list views)
@@ -45,7 +53,7 @@ public class BooksListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
 
         final ViewHolder viewHolder;
@@ -72,6 +80,24 @@ public class BooksListAdapter extends BaseAdapter {
         }
         viewHolder.txt_bookName.setText(model.getName());
         viewHolder.txt_authorName.setText(model.getAuthor());
+
+        if(model.getPhotoUrl()!=null) {
+            loader.displayImage(model.getPhotoUrl(), viewHolder.img_bookIcon, options);
+        }
+        else {
+
+            viewHolder.img_bookIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
+
+        }
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BookDetailsActivity.class);
+                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,position);
+                context.startActivity(intent);
+
+            }
+        });
 
         return convertView;
 

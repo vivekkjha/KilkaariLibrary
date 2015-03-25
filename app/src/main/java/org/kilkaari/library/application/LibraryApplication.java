@@ -1,8 +1,16 @@
 package org.kilkaari.library.application;
 
 import android.app.Application;
+import android.os.Environment;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
+
+import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.utils.LogUtil;
+
+import java.io.File;
 
 /**
  * Created by vk on 14-03-2015.
@@ -10,11 +18,26 @@ import com.parse.Parse;
 public class LibraryApplication extends Application {
 
     private Prefs prefs;
+    private DisplayImageOptions options;
+    private com.nostra13.universalimageloader.core.ImageLoader loader;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         prefs = new Prefs(this);
+
+        //> create kilkaari folder
+        createAppFolders();
+
+        // > Initializing image loader at application level
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
+        loader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+        loader.init(config);
 
         // Enable Local Datastore.
 
@@ -23,7 +46,27 @@ public class LibraryApplication extends Application {
 
 
     }
+
+    // >  Create new Folder for application
+    private void createAppFolders()
+    {
+
+        String extr = Environment.getExternalStorageDirectory().toString();
+        File mFolder = new File(extr +File.separator + Constants.Folders.FOLDER_KILKAARI );
+
+        if (!mFolder.exists()) {
+            boolean m = mFolder.mkdir();
+            LogUtil.w("Kilkaari Folder ?", (m) ? "True" : "false");
+        }
+    }
     public Prefs getPref() {
         return prefs;
     }
+    public DisplayImageOptions getImageLoaderOptions(){
+        return options;
+    }
+    public com.nostra13.universalimageloader.core.ImageLoader getImageLoader(){
+        return loader;
+    }
+
 }

@@ -72,6 +72,7 @@ public class BookListActivity extends BaseActivity {
 
                             //> add data from sever into the list
                             BooksModel model = new BooksModel();
+                            model.setObjectId(parseObject.getObjectId());
                             model.setAddedOn(parseObject.getString(Constants.DataColumns.BOOKS_ADDED_ON));
                             model.setAuthor(parseObject.getString(Constants.DataColumns.BOOKS_AUTHOR));
                             model.setCategory(parseObject.getString(Constants.DataColumns.BOOKS_CATEGORY));
@@ -83,6 +84,13 @@ public class BookListActivity extends BaseActivity {
                             model.setPublisher(parseObject.getString(Constants.DataColumns.BOOKS_PUBLISHER));
                             model.setPublicationYear(parseObject.getInt(Constants.DataColumns.BOOKS_PUBLICATION_YEAR));
                             model.setQuantity(parseObject.getInt(Constants.DataColumns.BOOKS_QUANTITY));
+
+                            //> add category name as key, and photo url as value
+                            if(parseObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO)!=null) {
+
+                                model.setPhotoUrl( parseObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
+                                LogUtil.w("Books Categories","Category URl : "+ parseObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
+                            }
                             list_books.add(model);
 
                             //> notify adapter whenever new row gets added

@@ -12,6 +12,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -50,6 +51,7 @@ public class AddBooksActivity extends BaseActivity {
     //> program objects
     private String camera = "Camera";
     private String gallery = "Gallery";
+    private String removeImage = "Remove";
     private int CAMERA_RESULT_CODE = 111;
     private int GALLERY_RESULT_CODE = 222;
     private boolean isFromGallery = false;
@@ -57,6 +59,7 @@ public class AddBooksActivity extends BaseActivity {
     private Uri capturedFileUri = null;
     private Bitmap bookBitmapImage = null;
     public static byte[] imageBytes =  null;
+    private boolean isCategoryImageSaved = false;
 
 
     //> get categories from parse
@@ -80,7 +83,9 @@ public class AddBooksActivity extends BaseActivity {
         edt_description = (EditText)findViewById(R.id.edt_description);
         autoTxt_category = (AutoCompleteTextView)findViewById(R.id.autoTxt_category);
         img_bookImage = (ImageView)findViewById(R.id.img_bookImage);
+
         registerForContextMenu(img_bookImage);
+        this.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN );
 
 
         list_booksCategories = new ArrayList<String>();
@@ -95,6 +100,7 @@ public class AddBooksActivity extends BaseActivity {
         }*/
 
         //> get Categories list from parse server
+        showProgressLayout();
         getCategories();
 
         //> add adapter for auto-complete
@@ -102,10 +108,11 @@ public class AddBooksActivity extends BaseActivity {
         ArrayAdapter adapter = new ArrayAdapter
                 (this, android.R.layout.simple_list_item_1, list_booksCategories);
         autoTxt_category.setAdapter(adapter);
+        autoTxt_category.setThreshold(1);
         autoTxt_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                autoTxt_category.setText(list_booksCategories.get(position));
+                autoTxt_category.setText(parent.getItemAtPosition(position).toString());
             }
         });
     }
@@ -152,6 +159,9 @@ public class AddBooksActivity extends BaseActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(camera);
         menu.add(gallery);
+        if(imageBytes !=null) {
+            menu.add(removeImage);
+        }
 
     }
 
@@ -177,6 +187,12 @@ public class AddBooksActivity extends BaseActivity {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Get photos from…"),GALLERY_RESULT_CODE);
         }
+        //> remove image from ImageView
+        else if(item.getTitle().equals(removeImage))
+        {
+          img_bookImage.setImageDrawable(getResources().getDrawable(R.drawable.icon_book_default));
+            imageBytes =null;
+        }
         else
         {
             return false;
@@ -187,13 +203,17 @@ public class AddBooksActivity extends BaseActivity {
     // > save asked question
     public void saveBookDetails()
     {
+        //show progress layout when uploading of data starts
+        showProgressLayout();
         try {
+            //> Delete whitespaces from image name and set it to string variable
+            String imageName = edt_bookName.getText().toString().replaceAll("\\s+","");
 
             //> file to store photo
             ParseFile photo =null;
             if(imageBytes!=null)
             {
-                photo = new ParseFile("Book.png",imageBytes);
+                photo = new ParseFile(imageName+".jpg",imageBytes);
             }
 
 
@@ -212,17 +232,30 @@ public class AddBooksActivity extends BaseActivity {
             //> check if the photo data is null or not
             if(photo!=null) {
                 newBook.put(Constants.DataColumns.BOOKS_PHOTO, photo);
+
             }
 
             newBook.put(Constants.DataColumns.BOOKS_QUANTITY, 1);
             newBook.save();
             LogUtil.d("Books Row ", "Created");
 
+            if(imageBytes!=null &&  isCategoryImageSaved)
+            {
+                //> after uploading set imageBytes to null , so that same image cannot be selected for different books
+                imageBytes = null;
+                isCategoryImageSaved = false;
+            }
+
+
+
         }
         catch (ParseException ex)
         {
             ex.printStackTrace();
+
         }
+        //> hide progress layout on complete
+        hideProgressLayout();
     }
     //> get categories from parse server
     public void getCategories()
@@ -230,6 +263,8 @@ public class AddBooksActivity extends BaseActivity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Categories");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> categoryList, com.parse.ParseException e) {
+                //> hide loading layout
+                hideProgressLayout();
                 if (e == null) {
                     Log.d("Categories", "Retrieved " + categoryList.size() + " rows");
 
@@ -241,6 +276,7 @@ public class AddBooksActivity extends BaseActivity {
                             list_booksCategories.add(categoryList.get(i).getString("category"));
                             LogUtil.w("Books Categories","Category : "+ categoryList.get(i).getString("category"));
                         }
+
                     }
                 } else {
                     Log.d("Categories", "Error: " + e.getMessage());
@@ -259,13 +295,36 @@ public class AddBooksActivity extends BaseActivity {
                 if (e == null) {
                     Log.d("Categories", "Retrieved " + categoryList.size() + " rows");
 
+                    //> Delete whitespaces from image name and set it to string variable
+                    String imageName = autoTxt_category.getText().toString().replaceAll("\\s+","");
                     if(categoryList.size()==0)
                     {
+                        //show progress layout when uploading of data starts
+                        showProgressLayout();
+
+                        //> file to store photo
+                        ParseFile photo =null;
+                        if(imageBytes!=null)
+                        {
+                            photo = new ParseFile(imageName+".jpg",imageBytes);
+                        }
+
                         try {
                             //> if category does not exist. insert in table
                             ParseObject newCategory = new ParseObject(Constants.Table.TABLE_CATEGORIES);
                             newCategory.put(Constants.DataColumns.CATEGORIES_CATEGORY, autoTxt_category.getText().toString());
+
+                            //> check if the photo data is null or not
+                            if(photo!=null) {
+                                newCategory.put(Constants.DataColumns.CATEGORIES_PHOTO, photo);
+                            }
                             newCategory.save();
+
+                            //> hide progress layout on complete
+                            hideProgressLayout();
+
+                            //> set CategoryImage flag to true;
+                            isCategoryImageSaved = true;
                         }
                         catch (ParseException pe)
                         {pe.printStackTrace();}
@@ -273,6 +332,8 @@ public class AddBooksActivity extends BaseActivity {
 
                     }
                 } else {
+                    //> if list size is not 0, then no need to store image for category
+                    isCategoryImageSaved = true;
                     Log.d("Categories", "Error: " + e.getMessage());
                 }
             }
@@ -291,7 +352,7 @@ public class AddBooksActivity extends BaseActivity {
     private static File getOutputMediaFile(){
 
         String extr = Environment.getExternalStorageDirectory().toString();
-        File mFolder = new File(extr +File.separator + "Kilkaari" );
+        File mFolder = new File(extr +File.separator + Constants.Folders.FOLDER_KILKAARI );
 
         if (!mFolder.exists()) {
             mFolder.mkdir();

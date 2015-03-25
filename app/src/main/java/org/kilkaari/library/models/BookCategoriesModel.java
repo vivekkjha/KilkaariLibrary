@@ -9,7 +9,8 @@ public class BookCategoriesModel {
 
     private String category;
     private int count;
-    private Bitmap photo;
+
+    private String photoUrl;
 
     public String getCategory() {
         return category;
@@ -27,11 +28,13 @@ public class BookCategoriesModel {
         this.count = count;
     }
 
-    public Bitmap getPhoto() {
-        return photo;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setPhoto(Bitmap photo) {
-        this.photo = photo;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
+
+
 }

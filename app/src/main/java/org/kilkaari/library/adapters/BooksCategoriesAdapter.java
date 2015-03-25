@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.BookListActivity;
@@ -28,6 +30,8 @@ public class BooksCategoriesAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<BookCategoriesModel> listBooks;
     private BooksCategoriesActivity context;
+    private DisplayImageOptions options;
+    private com.nostra13.universalimageloader.core.ImageLoader loader;
 
     public BooksCategoriesAdapter(BaseActivity context, List<BookCategoriesModel> list){
 
@@ -36,6 +40,9 @@ public class BooksCategoriesAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+
+        options = context.getLibraryApplication().getImageLoaderOptions();
+        loader = context.getLibraryApplication().getImageLoader();
 
     }
 
@@ -68,7 +75,15 @@ public class BooksCategoriesAdapter extends BaseAdapter {
         }
 
         viewHolder.txt_categoryName.setText(model.getCategory());
-        viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
+
+        if(model.getPhotoUrl()!=null) {
+            loader.displayImage(model.getPhotoUrl(), viewHolder.img_categoryImage, options);
+        }
+        else {
+
+            viewHolder.img_categoryImage.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
+
+        }
         viewHolder.txt_categoryCount.setText(Integer.toString(model.getCount()));
 
 

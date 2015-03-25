@@ -9,10 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/titleBottomBar"/>
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -268,6 +271,8 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+        <include layout="@layout/layout_loading"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

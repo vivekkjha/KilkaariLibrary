@@ -11,7 +11,7 @@
         android:scaleType="fitXY"
         android:id="@+id/img_categoryImage"
         android:layout_centerInParent="true"
-        android:src="@drawable/bhagat"/>
+        android:src="@drawable/icon_book_default"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/booksCategoriesWidth"
@@ -26,10 +26,10 @@
             android:id="@+id/txt_categoryCount"
             android:gravity="center"
             android:textColor="@color/white"
-            android:shadowColor="@color/black"
+            android:shadowColor="@color/titleBottomBar"
             android:shadowDx="2"
             android:shadowDy="2"
-            android:shadowRadius="2"/>
+            android:shadowRadius="5"/>
 
         </LinearLayout>
     <TextView

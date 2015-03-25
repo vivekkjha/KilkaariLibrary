@@ -15,6 +15,7 @@
     <ImageView
         android:layout_width="@dimen/bookImageHeightWidth"
         android:layout_height="@dimen/bookImageHeightWidth"
+        android:scaleType="centerCrop"
         android:id="@+id/img_bookIcon"
         android:src="@drawable/icon_book_default"/>
 
