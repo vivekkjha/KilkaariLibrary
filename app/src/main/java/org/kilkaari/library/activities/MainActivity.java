@@ -53,6 +53,7 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
 
         }
         else if(position == 1){
+            startActivity(new Intent(this,SavedPagesActivity.class));
 
         }
         else if(position == 2){

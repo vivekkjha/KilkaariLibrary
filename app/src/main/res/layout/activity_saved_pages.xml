@@ -8,15 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/titleBottomBar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_margin="@dimen/smallMargin"
         android:scrollbars="none"
         android:id="@+id/listView_savedPages"
         android:cacheColorHint="@color/white"
         android:divider="@color/lightGrayBg"
         android:dividerHeight="1dp"
         />
+        <include layout="@layout/layout_loading"/>
+    </RelativeLayout>
 
 </LinearLayout>

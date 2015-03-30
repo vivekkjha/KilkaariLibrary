@@ -15,10 +15,12 @@ import com.parse.ParseQuery;
 import org.kilkaari.library.R;
 import org.kilkaari.library.adapters.BooksListAdapter;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,6 +29,7 @@ import java.util.List;
 public class BookListActivity extends BaseActivity {
 
     public static List<BooksModel> list_books;
+    public HashMap<String,Boolean> hash_booksAvailability;
 
     private BooksListAdapter adapter;
 
@@ -42,6 +45,7 @@ public class BookListActivity extends BaseActivity {
         autoTxt_searchBooks = (AutoCompleteTextView)findViewById(R.id.autoTxt_searchBooks);
 
         list_books = new ArrayList<BooksModel>();
+        hash_booksAvailability = new HashMap<String,Boolean>();
 
         String category = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
         if(category!=null)
@@ -49,10 +53,6 @@ public class BookListActivity extends BaseActivity {
             showProgressLayout();
             getBooksDetails(category);
         }
-
-        adapter = new BooksListAdapter(this,list_books);
-        listView_listBooks.setAdapter(adapter);
-
     }
 
     //> get details of all the Books in local list
@@ -62,6 +62,7 @@ public class BookListActivity extends BaseActivity {
         query.whereEqualTo(Constants.DataColumns.BOOKS_CATEGORY,category);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> userList, ParseException e) {
+
                 if (e == null) {
                     Log.d("Book List ", "Retrieved " + userList.size() + " rows");
                     if(userList.size()!=0)
@@ -99,9 +100,51 @@ public class BookListActivity extends BaseActivity {
                                 adapter.notifyDataSetChanged();
                             }
                         }
-                        //> hide progress layout when all the fetching operations gets completed
-                        hideProgressLayout();
+                        //> get availability once all books list has been fetched
+                        getAvailability();
+                    }
+                    else {
+                        LogUtil.e("BooksCategories","Database returned 0 list ");
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
 
+    public void getAvailability()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_AVAILABILITY);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseList, ParseException e) {
+                if (e == null) {
+                    Log.d("Availability List ", "Retrieved " + parseList.size() + " rows");
+                    if(parseList.size()!=0)
+                    {
+                        for (int i=0;i<parseList.size();i++) {
+                            ParseObject parseObject = parseList.get(i);
+                            LogUtil.w("Availability BookListActivity", "Object " + i );
+
+                            //> add data from sever into the list
+                            boolean isAvailable  = parseObject.getBoolean(Constants.DataColumns.AVAILABLE_AVAILABLE);
+
+                            ParseObject po = parseObject.getParseObject(Constants.DataColumns.AVAILABLE_BOOK_POINT);
+
+                            hash_booksAvailability.put(po.getObjectId(),isAvailable);
+
+                            //> notify adapter whenever new row gets added
+                            if(adapter!=null)
+                            {
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        //> hide progress layout when all the fetching operations gets completed
+
+                        adapter = new BooksListAdapter(BookListActivity.this,list_books);
+                        listView_listBooks.setAdapter(adapter);
+                        hideProgressLayout();
                     }
                     else {
                         LogUtil.e("BooksCategories","Database returned 0 list ");

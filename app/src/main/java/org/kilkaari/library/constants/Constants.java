@@ -44,6 +44,16 @@ public interface Constants {
         public String CATEGORIES_CATEGORY = "category";
         public String CATEGORIES_PHOTO = "photo";
 
+        public String AVAILABLE_AVAILABLE = "available";
+        public String AVAILABLE_BOOK_ID = "bookId";
+        public String AVAILABLE_BOOK = "book";
+        public String AVAILABLE_BOOK_POINT = "bookPoint";
+        public String AVAILABLE_QUANTITY = "quantity";
+
+        public String SAVED_PAGES_TITLE = "title";
+        public String SAVED_PAGES_LINK = "link";
+        public String SAVED_PAGES_TIMESTAMP = "timestamp";
+
     }
     public interface EXTRAS
     {

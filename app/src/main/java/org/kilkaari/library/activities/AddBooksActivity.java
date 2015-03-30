@@ -236,7 +236,12 @@ public class AddBooksActivity extends BaseActivity {
             }
 
             newBook.put(Constants.DataColumns.BOOKS_QUANTITY, 1);
-            newBook.save();
+
+            ParseObject bookAvail = new ParseObject(Constants.Table.TABLE_AVAILABILITY);
+            bookAvail.put(Constants.DataColumns.AVAILABLE_BOOK_POINT,newBook);
+            bookAvail.put(Constants.DataColumns.AVAILABLE_AVAILABLE,true);
+            bookAvail.put(Constants.DataColumns.AVAILABLE_QUANTITY,1);
+            bookAvail.save();
             LogUtil.d("Books Row ", "Created");
 
             if(imageBytes!=null &&  isCategoryImageSaved)

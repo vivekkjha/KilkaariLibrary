@@ -2,6 +2,11 @@ package org.kilkaari.library.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +16,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
@@ -18,6 +28,7 @@ import org.kilkaari.library.activities.BookDetailsActivity;
 import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
 
 import java.util.List;
@@ -33,6 +44,7 @@ public class BooksListAdapter extends BaseAdapter {
     private BookListActivity context;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
+    private float px;
 
     public BooksListAdapter(BaseActivity context, List<BooksModel> list){
 
@@ -43,9 +55,12 @@ public class BooksListAdapter extends BaseAdapter {
 
         options = context.getLibraryApplication().getImageLoaderOptions();
         loader = context.getLibraryApplication().getImageLoader();
-    }
 
-    // > selected children list is been fetched from application file to have central cntrol over it (both from grid and list views)
+        // > convert 15 dp into pixels for rounded corners
+        Resources r = context.getResources();
+        px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, r.getDisplayMetrics());
+
+    }
 
     @Override
     public int getCount() {
@@ -89,12 +104,43 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_bookIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
 
         }
+
+        if(context.hash_booksAvailability.get(model.getObjectId())!=null)
+        {
+            if(context.hash_booksAvailability.get(model.getObjectId())) {
+                //> programmatically set rounded corners and background color
+                GradientDrawable shape =  new GradientDrawable();
+                shape.setCornerRadius(px);
+                shape.setColor(context.getResources().getColor(R.color.available));
+                viewHolder.txt_availability.setTextColor(Color.WHITE);
+                viewHolder.txt_availability.setText("A");
+                viewHolder.txt_availability.setBackgroundDrawable(shape);
+                viewHolder.txt_availability.setBackground(shape);
+            }
+            else {
+                GradientDrawable shape = new GradientDrawable();
+                shape.setCornerRadius(px);
+                shape.setColor(context.getResources().getColor(R.color.inQueue));
+                viewHolder.txt_availability.setTextColor(Color.WHITE);
+                viewHolder.txt_availability.setText("Q");
+                viewHolder.txt_availability.setBackgroundDrawable(shape);
+                viewHolder.txt_availability.setBackground(shape);
+            }
+        }
+        else {
+            GradientDrawable shape = new GradientDrawable();
+            shape.setCornerRadius(px);
+            shape.setColor(context.getResources().getColor(R.color.regret));
+            viewHolder.txt_availability.setTextColor(Color.WHITE);
+            viewHolder.txt_availability.setText("R");
+            viewHolder.txt_availability.setBackgroundDrawable(shape);
+            viewHolder.txt_availability.setBackground(shape);
+        }
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BookDetailsActivity.class);
-                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,position);
-                context.startActivity(intent);
+
 
             }
         });

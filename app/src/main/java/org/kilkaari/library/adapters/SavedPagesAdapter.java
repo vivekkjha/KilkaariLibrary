@@ -12,6 +12,8 @@ import android.widget.TextView;
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.activities.SavedPagesActivity;
+import org.kilkaari.library.models.SavedPagesModel;
 
 import java.util.List;
 
@@ -22,24 +24,21 @@ public class SavedPagesAdapter extends BaseAdapter {
 
 
     private LayoutInflater inflater;
-    private List<String> listCategories;
-    private BooksCategoriesActivity context;
+    private List<SavedPagesModel> listSavedPagesModel;
+    private SavedPagesActivity context;
 
-    public SavedPagesAdapter(BaseActivity context, List<String> list){
+    public SavedPagesAdapter(BaseActivity context, List<SavedPagesModel> list){
 
-        this.listCategories = list;
-        this.context = (BooksCategoriesActivity)context;
+        this.listSavedPagesModel = list;
+        this.context = (SavedPagesActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
     }
-
-    // > selected children list is been fetched from application file to have central cntrol over it (both from grid and list views)
 
     @Override
     public int getCount() {
-        return listCategories.size();
+        return listSavedPagesModel.size();
     }
 
     @Override
@@ -47,11 +46,11 @@ public class SavedPagesAdapter extends BaseAdapter {
 
 
         final ViewHolder viewHolder;
-        final String model = listCategories.get(position);
+        final SavedPagesModel model = listSavedPagesModel.get(position);
 
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.layout_book_list_item,null);
+            convertView = inflater.inflate(R.layout.adapter_saved_pages_item,null);
 
             viewHolder = new ViewHolder();
             viewHolder.txt_title = (TextView)convertView.findViewById(R.id.txt_title);
@@ -65,13 +64,23 @@ public class SavedPagesAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        return convertView;
+        viewHolder.txt_title.setText(model.getTitle());
+        viewHolder.txt_pageLink.setText(model.getLink());
+        viewHolder.txt_dateTime.setText(model.getTimestamp());
 
+        viewHolder.txt_viewInBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        return convertView;
     }
 
     @Override
     public Object getItem(int position) {
-        return listCategories.get(position);
+        return listSavedPagesModel.get(position);
     }
 
     @Override

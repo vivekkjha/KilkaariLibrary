@@ -13,5 +13,9 @@
     <color name="lightGrayBg">#ffececec</color>
     <color name="grayBg">#ffdbdbdb</color>
 
+    <color name="available">#ff009618</color>
+    <color name="inQueue">#ffff9138</color>
+    <color name="regret">#ffff2200</color>
+
 
 </resources>
