@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="facebook_app_id">960994970590912</string>
+    <string name="title_facebook_login">Facebook Login</string>
+
     <string name="app_name">Kilkaari Library</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -31,6 +34,10 @@
     <string name="donorName">Donor Name</string>
     <string name="dateAdded">Date Added</string>
     <string name="viewInBrowser">View in Browser</string>
+
+
+
+    <string name="couldNotLoginFB">Could not login through facebook.</string>
 
 
 </resources>

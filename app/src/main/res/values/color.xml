@@ -17,5 +17,8 @@
     <color name="inQueue">#ffff9138</color>
     <color name="regret">#ffff2200</color>
 
+    <color name="facebookSignIn">#ff354b8b</color>
+    <color name="twitterSignIn">#ff3781c8</color>
+
 
 </resources>

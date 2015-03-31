@@ -39,4 +39,8 @@
     <dimen name="savedPagesTitleTextSize">16sp</dimen>
     <dimen name="savedPagesBrowserTextSize">17sp</dimen>
 
+
+    <!--LoginActivity-->
+    <dimen name="titleTextSize">18sp</dimen>
+
 </resources>
