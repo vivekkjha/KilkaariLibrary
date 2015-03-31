@@ -15,6 +15,7 @@ public interface Constants {
 
     public interface Table
     {
+        public String TABLE_USER = "Books";
         public String TABLE_BOOKS = "Books";
         public String TABLE_AVAILABILITY = "Availability";
         public String TABLE_ISSUE = "Issue";
@@ -53,6 +54,9 @@ public interface Constants {
         public String SAVED_PAGES_TITLE = "title";
         public String SAVED_PAGES_LINK = "link";
         public String SAVED_PAGES_TIMESTAMP = "timestamp";
+
+        public String USER_EMAIL = "email";
+        public String USER_FACEBOOK_DATA = "facebookData";
 
     }
     public interface EXTRAS
