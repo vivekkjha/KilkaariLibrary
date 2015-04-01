@@ -145,6 +145,40 @@ public class BooksListAdapter extends BaseAdapter {
             }
         });
 
+        //> click listener on To_read icon
+        viewHolder.img_toread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(viewHolder.img_toread.getTag()== null)
+                {
+
+                    viewHolder.img_toread.setTag("Clicked");
+                    viewHolder.img_alreadyRead.setTag(null);
+                    viewHolder.img_toread.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_requested_selected));
+                    viewHolder.img_alreadyRead.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_already_read_inactive));
+                }
+
+            }
+        });
+
+        //> click listener on already_read icon
+        viewHolder.img_alreadyRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(viewHolder.img_alreadyRead.getTag() ==  null)
+                {
+
+                    viewHolder.img_alreadyRead.setTag("Clicked");
+                    viewHolder.img_toread.setTag(null);
+                    viewHolder.img_alreadyRead.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_already_read));
+                    viewHolder.img_toread.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_toread));
+                }
+
+            }
+        });
+
         return convertView;
 
     }

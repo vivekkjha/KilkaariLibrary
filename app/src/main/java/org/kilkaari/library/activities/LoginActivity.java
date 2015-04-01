@@ -1,5 +1,6 @@
 package org.kilkaari.library.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,15 @@ public class LoginActivity extends BaseActivity {
         //> initialize layout objects
         lin_loginFacebook = (LinearLayout)findViewById(R.id.lin_loginFacebook);
         lin_loginTwitter = (LinearLayout)findViewById(R.id.lin_loginTwitter);
+
+        //> check if the user is already logged in
+        if(ParseUser.getCurrentUser().isAuthenticated())
+        {
+            startActivity(new Intent(this,MainActivity.class));
+            this.finish();
+
+        }
+
     }
 
     public void onClick(View v)
@@ -65,16 +75,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if (user == null) {
-                    LogUtil.d("Login Activity", "Uh oh. The user cancelled the Facebook login.");
+                    LogUtil.e("Login Activity", "Uh oh. The user cancelled the Facebook login.");
                     Toast.makeText(LoginActivity.this, R.string.couldNotLoginFB, Toast.LENGTH_SHORT).show();
 
                 } else if (user.isNew()) {
-                    LogUtil.d("Login Activity", "User signed up and logged in through Facebook!");
+                    LogUtil.w("Login Activity", "User signed up and logged in through Facebook!");
                     pUser = user;
                     getFBData();
 
                 } else {
-                    LogUtil.d("Login Activity", "User logged in through Facebook!");
+                    LogUtil.w("Login Activity", "User logged in through Facebook!");
                     pUser = user;
                     getFBData();
                 }
@@ -122,6 +132,12 @@ public class LoginActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
     }
 
 

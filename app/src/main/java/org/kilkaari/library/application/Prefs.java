@@ -13,7 +13,7 @@ public class Prefs {
     private static final String sharedPrefsName = "AppPrefs";
 
 
-    private static final String BOOKS_CATEGORIES = "booksCategories";
+    private static final String USER_OBJECT_ID = "userObjectId";
 
 
 
@@ -46,12 +46,12 @@ public class Prefs {
     }
 
 
-    public String getBooksCategories() {
-        return get().getString(BOOKS_CATEGORIES, null);
+    public String getUserObjectId() {
+        return get().getString(USER_OBJECT_ID, null);
     }
 
-    public void setBooksCategories(String booksCategories) {
-        get().edit().putString(BOOKS_CATEGORIES, booksCategories).commit();
+    public void setUserObjectId(String userObjectId) {
+        get().edit().putString(USER_OBJECT_ID, userObjectId).commit();
     }
 
 
