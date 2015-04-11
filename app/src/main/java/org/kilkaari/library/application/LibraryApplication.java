@@ -45,6 +45,8 @@ public class LibraryApplication extends Application {
         Parse.initialize(this, "wF57BFoc8Sge0vz1tWb6vrHEOSr6BffUWULKXjpF", "KojP7xdhyKwULJNT0TglZbKyfwDoBNDouqkVze1v");
 
 
+
+
     }
 
     // >  Create new Folder for application

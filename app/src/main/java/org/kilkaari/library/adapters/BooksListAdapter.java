@@ -89,7 +89,7 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_requested  = (ImageView)convertView.findViewById(R.id.img_requested);
 
             convertView.setTag(viewHolder);
-        }
+    }
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }

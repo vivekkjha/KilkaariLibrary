@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.model.GraphUser;
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -49,11 +49,11 @@ public class LoginActivity extends BaseActivity {
         lin_loginTwitter = (LinearLayout)findViewById(R.id.lin_loginTwitter);
 
         //> check if the user is already logged in
-        if(ParseUser.getCurrentUser().isAuthenticated())
-        {
-            startActivity(new Intent(this,MainActivity.class));
-            this.finish();
-
+        if(ParseUser.getCurrentUser()!=null) {
+            if (ParseUser.getCurrentUser().isAuthenticated()) {
+                startActivity(new Intent(this, MainActivity.class));
+                this.finish();
+            }
         }
 
     }
@@ -121,6 +121,10 @@ public class LoginActivity extends BaseActivity {
                                     pUser.put(Constants.DataColumns.USER_EMAIL, email);
                                 }
                                 pUser.save();
+
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                LoginActivity.this.finish();
+
 
                             } catch (ParseException e) {
                                 e.printStackTrace();
