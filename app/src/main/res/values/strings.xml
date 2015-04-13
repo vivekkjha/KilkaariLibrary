@@ -35,6 +35,8 @@
     <string name="dateAdded">Date Added</string>
     <string name="viewInBrowser">View in Browser</string>
 
+    <string name="donatedBy">Donated by &#160;:&#160; </string>
+    <string name="addedOn">Added on&#160;&#160;&#160;&#160;&#160;:&#160; </string>
 
 
     <string name="couldNotLoginFB">Could not login through facebook.</string>

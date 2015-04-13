@@ -43,4 +43,10 @@
     <!--LoginActivity-->
     <dimen name="titleTextSize">18sp</dimen>
 
+    <!--book details activity-->
+    <dimen name="leftMarginBookDetails">170dp</dimen>
+    <dimen name="bookDetailsImageHeightWidth">150dp</dimen>
+    <dimen name="donorDetailsTextSize">13sp</dimen>
+    <dimen name="bookDetailsNameTextSize">18sp</dimen>
+
 </resources>
