@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/smallPadding"
     android:layout_width="match_parent"
@@ -29,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <LinearLayout
@@ -61,65 +62,83 @@
                 android:gravity="center"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="@dimen/availabilityHeightWidth"
-                    android:layout_height="@dimen/availabilityHeightWidth"
-                    android:background="@drawable/availability_round_bg"
-                    android:gravity="center"
-                    android:textSize="16sp"
 
-                    android:id="@+id/txt_availability"
-                    android:minHeight="@dimen/availabilityHeightWidth"
-                    android:minWidth="@dimen/availabilityHeightWidth"
-                    android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RatingBar
+            android:layout_height="0dp"
+            android:gravity="right|center_vertical"
+            android:layout_weight="1">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/smallPadding"
-                style="@style/ratingBar"
-                android:rating="3.5"
-                android:id="@+id/ratingBar" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_gravity="end">
-                <ImageView
+                android:orientation="vertical">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/smallPadding"
-                    android:id="@+id/img_toread"
-                    android:clickable="true"
-                    android:layout_marginRight="@dimen/smallMargin"
-                    android:layout_marginLeft="@dimen/smallMargin"
-                    android:src="@drawable/icon_toread"/>
-                <ImageView
+                    android:textColor="@color/titleBottomBar"
+                    android:text="Vivek jha"/>
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/img_alreadyRead"
-                    android:clickable="true"
-                    android:padding="@dimen/smallPadding"
-                    android:layout_marginRight="@dimen/smallMargin"
-                    android:layout_marginLeft="@dimen/smallMargin"
-                    android:src="@drawable/icon_already_read_inactive"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/img_requested"
-                    android:clickable="true"
-                    android:layout_marginRight="@dimen/smallMargin"
-                    android:layout_marginLeft="@dimen/smallMargin"
-                    android:padding="@dimen/smallPadding"
-                    android:src="@drawable/icon_requested"/>
-            </LinearLayout>
+                    android:textColor="@color/titleBottomBar"
+                    android:text="vivekkjha9@gmail.com"/>
+                </LinearLayout>
+
+
+
+            <org.kilkaari.library.views.CircularImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="@dimen/smallMargin"
+                android:src="@drawable/user"
+                app:shadow="true" />
+
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/baseColor"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/mediumMargin"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_issue"
+            android:textColor="@color/black"
+            android:text="ISSUE"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:background="@drawable/alert_button_selector"/>
+        <View
+            android:layout_width="1dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:background="@color/baseColor"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/smallPadding"
+            android:id="@+id/txt_alertCancel"
+            android:textColor="@color/black"
+            android:text="Cancel"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:background="@drawable/alert_button_selector"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

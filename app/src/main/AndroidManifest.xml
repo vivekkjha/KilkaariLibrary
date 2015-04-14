@@ -27,7 +27,7 @@
         <activity android:name=".activities.BooksCategoriesActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.AlertActivity"
-            android:theme="@style/Theme.DoDim"
+            android:theme="@style/alertTheme"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.LibrarianActivity"
             android:screenOrientation="portrait"/>

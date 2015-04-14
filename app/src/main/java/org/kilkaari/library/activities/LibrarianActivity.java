@@ -26,7 +26,6 @@ public class LibrarianActivity extends BaseActivity {
         setContentView(R.layout.activity_librarian);
 
 
-
     }
 
 
