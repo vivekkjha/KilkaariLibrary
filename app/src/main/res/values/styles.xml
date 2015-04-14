@@ -55,7 +55,7 @@
     </style>
 
     <style name="ratingBarLarge" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/star_rating</item>
+        <item name="android:progressDrawable">@drawable/star_rating_large</item>
         <item name="android:minHeight">30dip</item>
         <item name="android:maxHeight">30dip</item>
     </style>

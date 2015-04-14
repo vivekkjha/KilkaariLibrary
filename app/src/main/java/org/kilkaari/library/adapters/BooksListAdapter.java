@@ -141,6 +141,9 @@ public class BooksListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+                Intent intent  = new Intent(context, BookDetailsActivity.class);
+                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,position);
+                context.startActivity(intent);
 
             }
         });
