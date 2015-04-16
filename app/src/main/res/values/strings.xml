@@ -40,6 +40,7 @@
 
 
     <string name="couldNotLoginFB">Could not login through facebook.</string>
+    <string name="addOfflineRequest">ADD OFFLINE REQUEST</string>
 
 
 </resources>

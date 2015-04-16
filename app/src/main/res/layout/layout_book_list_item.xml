@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,14 +61,21 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="top|right"
+                android:orientation="horizontal"
                 android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="@dimen/optionsIconWidthHeight"
+                    android:layout_height="@dimen/optionsIconWidthHeight"
+                    android:src="@drawable/icon_menu_active"/>
 
                 <TextView
                     android:layout_width="@dimen/availabilityHeightWidth"
                     android:layout_height="@dimen/availabilityHeightWidth"
                     android:background="@drawable/availability_round_bg"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:textSize="16sp"
 
                     android:id="@+id/txt_availability"
@@ -121,6 +131,15 @@
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/availabilityIconWidth"
+            android:layout_height="@dimen/availabilityIconHeight"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/availabilityIconRightMargin"
+            android:layout_marginTop="@dimen/availabilityIconTopMargin"
+            android:src="@drawable/icon_queue"/>
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

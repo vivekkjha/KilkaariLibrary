@@ -29,6 +29,11 @@
     <dimen name="availabilityHeightWidth">30dp</dimen>
     <dimen name="bookImageHeightWidth">90dp</dimen>
     <dimen name="bookNameTextSize">16sp</dimen>
+    <dimen name="optionsIconWidthHeight">30dp</dimen>
+    <dimen name="availabilityIconHeight">40dp</dimen>
+    <dimen name="availabilityIconWidth">30dp</dimen>
+    <dimen name="availabilityIconTopMargin">-2dp</dimen>
+    <dimen name="availabilityIconRightMargin">35dp</dimen>
 
     <!-- add book -->
     <dimen name="edtBookTextSize">15sp</dimen>
@@ -49,4 +54,9 @@
     <dimen name="donorDetailsTextSize">13sp</dimen>
     <dimen name="bookDetailsNameTextSize">18sp</dimen>
 
+    <!--Books issues list -->
+    <dimen name="circularImageHeightWidth">40dp</dimen>
+
+    <!--issue layout-->
+    <dimen name="addOfflineRequestHeight">40dp</dimen>
 </resources>
