@@ -15,7 +15,7 @@ public interface Constants {
 
     public interface Table
     {
-        public String TABLE_USER = "Books";
+        public String TABLE_USER = "_User";
         public String TABLE_BOOKS = "Books";
         public String TABLE_AVAILABILITY = "Availability";
         public String TABLE_ISSUE = "Issue";

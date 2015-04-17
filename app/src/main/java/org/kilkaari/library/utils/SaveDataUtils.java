@@ -120,14 +120,15 @@ public class SaveDataUtils {
     }
 
     //> delete from request queue
-    public void deleteRequestQueue(String bookObjectId)
+    public void deleteRequestQueueLibrarian(String bookObjectId,String userObjectId)
     {
         //> make parse object for book with its object id
-        ParseObject bookObject = new ParseObject(Constants.Table.TABLE_BOOKS);
-        bookObject.setObjectId(bookObjectId);
+        ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
+        ParseObject userObject = ParseObject.createWithoutData(Constants.Table.TABLE_USER,userObjectId);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_REQUEST_QUEUE);
         query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_BOOK,bookObject);
+        query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_USER,userObject);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> requestList, ParseException e) {
 
