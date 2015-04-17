@@ -30,6 +30,7 @@ import org.kilkaari.library.activities.BooksCategoriesActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
+import org.kilkaari.library.utils.SaveDataUtils;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class BooksListAdapter extends BaseAdapter {
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
     private float px;
+    private SaveDataUtils saveDataUtils;
 
     public BooksListAdapter(BaseActivity context, List<BooksModel> list){
 
@@ -52,6 +54,8 @@ public class BooksListAdapter extends BaseAdapter {
         this.context = (BookListActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        saveDataUtils = new SaveDataUtils(context);
 
         options = context.getLibraryApplication().getImageLoaderOptions();
         loader = context.getLibraryApplication().getImageLoader();
@@ -177,6 +181,29 @@ public class BooksListAdapter extends BaseAdapter {
                     viewHolder.img_toread.setTag(null);
                     viewHolder.img_alreadyRead.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_already_read));
                     viewHolder.img_toread.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_toread));
+                }
+
+            }
+        });
+
+        //> click listener on request icon
+        viewHolder.img_requested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(viewHolder.img_requested.getTag() == null)
+                {
+                    //> save request data with isRequest == true
+                    saveDataUtils.saveRequest(model.getObjectId(),true,"12/05/2015","2 weeks");
+
+
+                    viewHolder.img_requested.setTag("Requested");
+                }
+                else
+                {
+                    //> save request data with isRequest = false;
+                    saveDataUtils.saveRequest(model.getObjectId(),false,"12/05/2015","2 weeks");
+                    viewHolder.img_requested.setTag(null);
+
                 }
 
             }

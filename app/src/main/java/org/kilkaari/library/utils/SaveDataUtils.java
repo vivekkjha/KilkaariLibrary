@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -29,20 +30,19 @@ public class SaveDataUtils {
     }
 
     //> save request when prompted by user click on request button / update Table in parse
-    public void saveRequest(String bookObjectId,boolean isRequest,String timestamp,String timePeriod )
+    public  void saveRequest(String bookObjectId,boolean isRequest,String timestamp,String timePeriod )
     {
         //> check if current user is null
         if(ParseUser.getCurrentUser() != null) {
 
             //> make parse object for book with its object id
-            ParseObject bookObject = new ParseObject(Constants.Table.TABLE_BOOKS);
-            bookObject.setObjectId(bookObjectId);
+            ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
 
             if (isRequest)//> create new row in RequestQueue table
             {
                 ParseObject newRequest = new ParseObject(Constants.Table.TABLE_REQUEST_QUEUE);
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_USER, ParseUser.getCurrentUser());
-                newRequest.put(Constants.DataColumns.REQUEST_QUEUE_USER, ParseUser.getCurrentUser());
+                newRequest.put(Constants.DataColumns.REQUEST_QUEUE_BOOK, bookObject);
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_TIMESTAMP, timestamp);
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_TIME_PERIOD, timePeriod);
                 newRequest.saveInBackground();
