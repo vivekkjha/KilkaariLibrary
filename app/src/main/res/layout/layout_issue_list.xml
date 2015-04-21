@@ -70,6 +70,7 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:layout_width="@dimen/optionsIconWidthHeight"
+                    android:id="@+id/img_moreOptions"
                     android:layout_height="@dimen/optionsIconWidthHeight"
                     android:src="@drawable/icon_menu_active"/>
 
@@ -88,11 +89,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/txt_userName"
                     android:textColor="@color/titleBottomBar"
                     android:text="Vivek jha"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/txt_userEmail"
                     android:textColor="@color/titleBottomBar"
                     android:text="vivekkjha9@gmail.com"/>
                 </LinearLayout>
@@ -100,10 +103,11 @@
 
 
             <org.kilkaari.library.views.CircularImageView
-                android:layout_width="@dimen/circularImageHeightWidth"
-                android:layout_height="@dimen/circularImageHeightWidth"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
+                android:id="@+id/img_userImage"
                 android:layout_marginLeft="@dimen/smallMargin"
                 android:src="@drawable/user"
                 app:shadow="true" />
@@ -154,6 +158,7 @@
     <ImageView
         android:layout_width="@dimen/availabilityIconWidth"
         android:layout_height="@dimen/availabilityIconHeight"
+        android:id="@+id/img_availability"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/availabilityIconRightMargin"
         android:layout_marginTop="@dimen/availabilityIconTopMargin"

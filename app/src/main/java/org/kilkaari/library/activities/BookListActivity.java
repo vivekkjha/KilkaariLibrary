@@ -29,6 +29,8 @@ import java.util.List;
 public class BookListActivity extends BaseActivity {
 
     public static List<BooksModel> list_books;
+
+    //> hash to store availability of books with Object id as key and boolean as value
     public HashMap<String,Boolean> hash_booksAvailability;
 
     private BooksListAdapter adapter;

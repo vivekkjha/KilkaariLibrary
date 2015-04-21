@@ -150,4 +150,46 @@ public class SaveDataUtils {
             }
         });
     }
+
+    //> method to update Availability table in Parse
+    public void updateAvailability(String objectId, final boolean availability)
+    {
+        ParseObject object = new ParseObject(Constants.Table.TABLE_BOOKS);
+        object.setObjectId(objectId);
+
+        //> check if the category already exist or not
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_AVAILABILITY);
+        query.whereEqualTo(Constants.DataColumns.AVAILABLE_BOOK_POINT,object);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("Available", "Retrieved " + list.size() + " rows");
+                    if(list.size()!=0)
+                    {
+                        LogUtil.e("Availability", "isAvailable ? " + list.get(0).get(Constants.DataColumns.AVAILABLE_AVAILABLE));
+
+                        // > update row
+                        ParseObject parseObject = list.get(0);
+                        try {
+
+                            parseObject.put(Constants.DataColumns.AVAILABLE_AVAILABLE,availability);
+                            parseObject.save();
+                            LogUtil.d("SaveDataUtils","Availability Table updated");
+
+                        }
+                        catch (ParseException pe)
+                        {
+                            pe.printStackTrace();
+                        }
+
+                    }
+
+                } else {
+
+                    Log.d("Categories", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+    }
 }
