@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -17,7 +18,9 @@ import org.kilkaari.library.adapters.BooksListAdapter;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
+import org.kilkaari.library.models.RequestQueueModel;
 import org.kilkaari.library.utils.LogUtil;
+import org.kilkaari.library.utils.SaveDataUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +37,7 @@ public class BookListActivity extends BaseActivity {
     public HashMap<String,Boolean> hash_booksAvailability;
 
     private BooksListAdapter adapter;
+    private SaveDataUtils saveDataUtils;
 
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
@@ -48,6 +52,7 @@ public class BookListActivity extends BaseActivity {
 
         list_books = new ArrayList<BooksModel>();
         hash_booksAvailability = new HashMap<String,Boolean>();
+        saveDataUtils  = new SaveDataUtils(this);
 
         String category = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
         if(category!=null)
@@ -129,7 +134,7 @@ public class BookListActivity extends BaseActivity {
                             LogUtil.w("Availability BookListActivity", "Object " + i );
 
                             //> add data from sever into the list
-                            boolean isAvailable  = parseObject.getBoolean(Constants.DataColumns.AVAILABLE_AVAILABLE);
+                            boolean isAvailable  = (parseObject.getInt(Constants.DataColumns.AVAILABLE_QUANTITY)!=0);
 
                             ParseObject po = parseObject.getParseObject(Constants.DataColumns.AVAILABLE_BOOK_POINT);
 
@@ -158,6 +163,7 @@ public class BookListActivity extends BaseActivity {
             }
         });
     }
+
 
     public void onClick(View v)
     {

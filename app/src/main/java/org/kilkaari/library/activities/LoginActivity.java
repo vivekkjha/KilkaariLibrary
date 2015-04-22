@@ -110,8 +110,12 @@ public class LoginActivity extends BaseActivity {
                             facebookResponse = new JSONObject(response.getRawResponse());
 
                             String email = null;
+                            String name = null;
                             if (facebookResponse.has("email")) {
                                 email = facebookResponse.getString("email");
+                            }
+                            if (facebookResponse.has("name")) {
+                                name = facebookResponse.getString("name");
                             }
 
                             try {
@@ -119,6 +123,7 @@ public class LoginActivity extends BaseActivity {
                                 pUser.put(Constants.DataColumns.USER_FACEBOOK_DATA, facebookResponse.toString());
                                 if (email != null) {
                                     pUser.put(Constants.DataColumns.USER_EMAIL, email);
+                                    pUser.put(Constants.DataColumns.USER_NAME, name);
                                 }
                                 pUser.save();
 

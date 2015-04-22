@@ -133,7 +133,6 @@
             android:textColor="@color/black"
             android:text="ISSUE"
             android:clickable="true"
-            android:onClick="onClick"
             android:background="@drawable/alert_button_selector"/>
         <View
             android:layout_width="1dp"
@@ -150,7 +149,6 @@
             android:id="@+id/txt_alertCancel"
             android:textColor="@color/black"
             android:text="Cancel"
-            android:onClick="onClick"
             android:clickable="true"
             android:background="@drawable/alert_button_selector"/>
     </LinearLayout>

@@ -6,6 +6,8 @@ package org.kilkaari.library.constants;
 public interface Constants {
 
     public String CATEGORIES_DELIMITER ="$%^";
+    public boolean IS_RETURNED = true;
+    public boolean IS_ISSUED = false;
 
     public interface Folders
     {
@@ -56,12 +58,22 @@ public interface Constants {
         public String SAVED_PAGES_TIMESTAMP = "timestamp";
 
         public String USER_EMAIL = "email";
+        public String USER_NAME = "name";
         public String USER_FACEBOOK_DATA = "facebookData";
 
         public String REQUEST_QUEUE_TIMESTAMP = "timestamp";
         public String REQUEST_QUEUE_BOOK = "book";
         public String REQUEST_QUEUE_USER = "user";
         public String REQUEST_QUEUE_TIME_PERIOD = "timePeriod";
+
+        public String ISSUE_ISSUE_TIMESTAMP = "issueTimestamp";
+        public String ISSUE_BOOK = "book";
+        public String ISSUE_USER = "user";
+        public String ISSUE_TIME_PERIOD = "timePeriod";
+        public String ISSUE_RETURN_TIMESTAMP = "returnTimestamp";
+        public String ISSUE_FEES = "fees";
+
+
 
 
 

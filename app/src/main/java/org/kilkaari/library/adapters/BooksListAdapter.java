@@ -132,6 +132,7 @@ public class BooksListAdapter extends BaseAdapter {
             }
         }
         else {
+            //> regret
             GradientDrawable shape = new GradientDrawable();
             shape.setCornerRadius(px);
             shape.setColor(context.getResources().getColor(R.color.regret));

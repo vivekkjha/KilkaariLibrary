@@ -120,11 +120,8 @@ public class SaveDataUtils {
     }
 
     //> delete from request queue
-    public void deleteRequestQueueLibrarian(String bookObjectId,String userObjectId)
+    public void deleteRequestQueueLibrarian(ParseObject bookObject,ParseObject userObject)
     {
-        //> make parse object for book with its object id
-        ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
-        ParseObject userObject = ParseObject.createWithoutData(Constants.Table.TABLE_USER,userObjectId);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_REQUEST_QUEUE);
         query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_BOOK,bookObject);
@@ -138,8 +135,14 @@ public class SaveDataUtils {
                     {
                         //> get first object as logiclly there should be only one with above request
                         //> delete that object in background
-                        ParseObject object = requestList.get(0);
-                        object.deleteInBackground();
+                        try {
+                            ParseObject object = requestList.get(0);
+                            object.delete();
+                        }
+                        catch (ParseException pe)
+                        {
+                            pe.printStackTrace();
+                        }
                     }
                     else {
                         LogUtil.e("Request Queue List","Database returned 0 list ");
@@ -151,31 +154,41 @@ public class SaveDataUtils {
         });
     }
 
-    //> method to update Availability table in Parse
-    public void updateAvailability(String objectId, final boolean availability)
+    //> method to update Availability table in Parse  with status value as "returned" or "issued"
+    public void updateAvailability(String bookObjectId, final boolean isReturned)
     {
-        ParseObject object = new ParseObject(Constants.Table.TABLE_BOOKS);
-        object.setObjectId(objectId);
+        //> make parse object for book with its object id
+        ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
 
         //> check if the category already exist or not
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_AVAILABILITY);
-        query.whereEqualTo(Constants.DataColumns.AVAILABLE_BOOK_POINT,object);
+        query.whereEqualTo(Constants.DataColumns.AVAILABLE_BOOK_POINT,bookObject);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> list, com.parse.ParseException e) {
                 if (e == null) {
                     Log.d("Available", "Retrieved " + list.size() + " rows");
                     if(list.size()!=0)
                     {
-                        LogUtil.e("Availability", "isAvailable ? " + list.get(0).get(Constants.DataColumns.AVAILABLE_AVAILABLE));
+
+                        //> get quantity of the book from server
+                        int quantity = list.get(0).getInt(Constants.DataColumns.AVAILABLE_QUANTITY);
 
                         // > update row
                         ParseObject parseObject = list.get(0);
+
+                            if(isReturned)
+                            {   quantity++;
+
+                            }
+                            else
+                            {
+                                quantity--;
+                            }
                         try {
 
-                            parseObject.put(Constants.DataColumns.AVAILABLE_AVAILABLE,availability);
+                            parseObject.put(Constants.DataColumns.AVAILABLE_QUANTITY, quantity);
                             parseObject.save();
-                            LogUtil.d("SaveDataUtils","Availability Table updated");
-
+                            LogUtil.d("SaveDataUtils", "Availability Table updated");
                         }
                         catch (ParseException pe)
                         {
