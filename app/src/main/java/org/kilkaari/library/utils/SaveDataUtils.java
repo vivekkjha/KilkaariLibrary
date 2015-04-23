@@ -3,6 +3,7 @@ package org.kilkaari.library.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -10,6 +11,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
@@ -130,19 +132,27 @@ public class SaveDataUtils {
             public void done(List<ParseObject> requestList, ParseException e) {
 
                 if (e == null) {
-                    Log.d("Request Queue List ", "Retrieved " + requestList.size() + " rows");
+                    Log.d("Request Queue List ", "Retrieved " + requestList.size() + " row(s)");
                     if(requestList.size()!=0)
                     {
                         //> get first object as logiclly there should be only one with above request
                         //> delete that object in background
-                        try {
+
                             ParseObject object = requestList.get(0);
-                            object.delete();
-                        }
-                        catch (ParseException pe)
-                        {
-                            pe.printStackTrace();
-                        }
+                            object.deleteInBackground(new DeleteCallback() {
+                                @Override
+                                public void done(ParseException e) {
+
+                                    if(e == null)
+                                    {
+                                        LogUtil.e("SaveDataUtils","object deleted successfully ");
+
+                                    }
+
+                                }
+                            });
+
+
                     }
                     else {
                         LogUtil.e("Request Queue List","Database returned 0 list ");
@@ -166,15 +176,14 @@ public class SaveDataUtils {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> list, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.d("Available", "Retrieved " + list.size() + " rows");
+                    Log.d("Available", "Retrieved " + list.size() + " row(s)");
                     if(list.size()!=0)
                     {
+                    // > update row
+                        ParseObject parseObject = list.get(0);
 
                         //> get quantity of the book from server
-                        int quantity = list.get(0).getInt(Constants.DataColumns.AVAILABLE_QUANTITY);
-
-                        // > update row
-                        ParseObject parseObject = list.get(0);
+                        int quantity = parseObject.getInt(Constants.DataColumns.AVAILABLE_QUANTITY);
 
                             if(isReturned)
                             {   quantity++;
@@ -184,16 +193,15 @@ public class SaveDataUtils {
                             {
                                 quantity--;
                             }
-                        try {
 
                             parseObject.put(Constants.DataColumns.AVAILABLE_QUANTITY, quantity);
-                            parseObject.save();
-                            LogUtil.d("SaveDataUtils", "Availability Table updated");
-                        }
-                        catch (ParseException pe)
-                        {
-                            pe.printStackTrace();
-                        }
+                            parseObject.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    LogUtil.d("SaveDataUtils", "Availability Table updated");
+                                }
+                            });
+
 
                     }
 

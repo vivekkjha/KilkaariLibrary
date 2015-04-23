@@ -61,6 +61,10 @@ public class BaseActivity extends FragmentActivity {
         {
             startActivity(new Intent(this,IssueActivity.class));
         }
+        else if(v.getId() == R.id.lin_returnBooks)
+        {
+            startActivity(new Intent(this,ReturnActivity.class));
+        }
     }
     // > get application in any child activity of base activity
     public LibraryApplication getLibraryApplication() {

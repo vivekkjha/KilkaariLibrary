@@ -91,6 +91,7 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_toread  = (ImageView)convertView.findViewById(R.id.img_toread);
             viewHolder.img_alreadyRead  = (ImageView)convertView.findViewById(R.id.img_alreadyRead);
             viewHolder.img_requested  = (ImageView)convertView.findViewById(R.id.img_requested);
+            viewHolder.img_moreOptions  = (ImageView)convertView.findViewById(R.id.img_moreOptions);
 
             convertView.setTag(viewHolder);
     }
@@ -146,9 +147,9 @@ public class BooksListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent  = new Intent(context, BookDetailsActivity.class);
+            /*    Intent intent  = new Intent(context, BookDetailsActivity.class);
                 intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,position);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
 
             }
         });
@@ -210,6 +211,16 @@ public class BooksListAdapter extends BaseAdapter {
             }
         });
 
+        //> click listener on icon for more options
+        viewHolder.img_moreOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //> start Activity from BookListActivity
+                context.showPopupWindow(v,position);
+
+            }
+        });
         return convertView;
 
     }
@@ -233,6 +244,7 @@ public class BooksListAdapter extends BaseAdapter {
         ImageView img_toread;
         ImageView img_alreadyRead;
         ImageView img_requested;
+        ImageView img_moreOptions;
 
 
     }

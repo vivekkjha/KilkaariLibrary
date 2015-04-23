@@ -42,5 +42,8 @@
     <string name="couldNotLoginFB">Could not login through facebook.</string>
     <string name="addOfflineRequest">ADD OFFLINE REQUEST</string>
 
+    <string name="bookDetails">Book Details</string>
+    <string name="userDetails">User Details</string>
+
 
 </resources>

@@ -1,11 +1,18 @@
 package org.kilkaari.library.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -38,9 +45,11 @@ public class BookListActivity extends BaseActivity {
 
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
-
+    private PopupMenu popupDetails;
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,7 @@ public class BookListActivity extends BaseActivity {
 
         listView_listBooks = (ListView)findViewById(R.id.listView_listBooks);
         autoTxt_searchBooks = (AutoCompleteTextView)findViewById(R.id.autoTxt_searchBooks);
+
 
         list_books = new ArrayList<BooksModel>();
         hash_booksAvailability = new HashMap<String,Boolean>();
@@ -123,6 +133,7 @@ public class BookListActivity extends BaseActivity {
     public void getAvailability()
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_AVAILABILITY);
+
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseList, ParseException e) {
                 if (e == null) {
@@ -169,4 +180,26 @@ public class BookListActivity extends BaseActivity {
     {
 
     }
+
+    //> Show popup on click of option icon , and click listener on its item
+    public void showPopupWindow(View view, final int pos)
+    {
+        popupDetails = new PopupMenu(this,view);
+
+        popupDetails.getMenuInflater().inflate(R.menu.menu_book_details,  popupDetails.getMenu());
+
+        popupDetails.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Intent intent  = new Intent(BookListActivity.this, BookDetailsActivity.class);
+                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,pos);
+                startActivity(intent);
+
+                return true;
+            }
+        });
+        popupDetails.show();
+
+    }
+
 }

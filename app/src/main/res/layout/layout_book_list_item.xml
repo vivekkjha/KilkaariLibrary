@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="@dimen/smallPadding"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/smallPadding">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -11,24 +11,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="@dimen/smallPadding"
-        android:background="@color/white">
+        android:padding="@dimen/smallPadding">
 
     <ImageView
+        android:id="@+id/img_bookIcon"
         android:layout_width="@dimen/bookImageHeightWidth"
         android:layout_height="@dimen/bookImageHeightWidth"
         android:scaleType="centerCrop"
-        android:id="@+id/img_bookIcon"
         android:src="@drawable/icon_book_default"/>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/smallMargin"
+        android:layout_weight="1"
         android:gravity="center_vertical"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -37,94 +37,95 @@
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
                 <TextView
+                    android:id="@+id/txt_bookName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/bookNameTextSize"
-                    android:textColor="@color/black"
-                    android:id="@+id/txt_bookName"
                     android:singleLine="true"
+                    android:text="Saheed Bhagat Sngh"
                     android:textAllCaps="true"
-                    android:text="Saheed Bhagat Sngh"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/bookNameTextSize"/>
                 <TextView
+                    android:id="@+id/txt_authorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/smallPadding"
-                    android:id="@+id/txt_authorName"
                     android:singleLine="true"
                     android:text="Saheed Bhagat Singh"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="top|right"
-                android:orientation="horizontal"
-                android:layout_height="match_parent">
+                android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/img_moreOptions"
                     android:layout_width="@dimen/optionsIconWidthHeight"
                     android:layout_height="@dimen/optionsIconWidthHeight"
                     android:src="@drawable/icon_menu_active"/>
 
                 <TextView
+                    android:id="@+id/txt_availability"
                     android:layout_width="@dimen/availabilityHeightWidth"
                     android:layout_height="@dimen/availabilityHeightWidth"
                     android:background="@drawable/availability_round_bg"
                     android:gravity="center"
-                    android:visibility="gone"
-                    android:textSize="16sp"
-
-                    android:id="@+id/txt_availability"
                     android:minHeight="@dimen/availabilityHeightWidth"
+
                     android:minWidth="@dimen/availabilityHeightWidth"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallPadding"
-                style="@style/ratingBar"
-                android:rating="3.5"
-                android:id="@+id/ratingBar" />
+                android:rating="3.5" />
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_gravity="end">
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="center">
                 <ImageView
+                    android:id="@+id/img_toread"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/smallPadding"
-                    android:id="@+id/img_toread"
-                    android:clickable="true"
-                    android:layout_marginRight="@dimen/smallMargin"
                     android:layout_marginLeft="@dimen/smallMargin"
+                    android:layout_marginRight="@dimen/smallMargin"
+                    android:clickable="true"
+                    android:padding="@dimen/smallPadding"
                     android:src="@drawable/icon_toread"/>
                 <ImageView
+                    android:id="@+id/img_alreadyRead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/img_alreadyRead"
+                    android:layout_marginLeft="@dimen/smallMargin"
+                    android:layout_marginRight="@dimen/smallMargin"
                     android:clickable="true"
                     android:padding="@dimen/smallPadding"
-                    android:layout_marginRight="@dimen/smallMargin"
-                    android:layout_marginLeft="@dimen/smallMargin"
                     android:src="@drawable/icon_already_read_inactive"/>
                 <ImageView
+                    android:id="@+id/img_requested"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/img_requested"
-                    android:clickable="true"
-                    android:layout_marginRight="@dimen/smallMargin"
                     android:layout_marginLeft="@dimen/smallMargin"
+                    android:layout_marginRight="@dimen/smallMargin"
+                    android:clickable="true"
                     android:padding="@dimen/smallPadding"
                     android:src="@drawable/icon_requested"/>
             </LinearLayout>

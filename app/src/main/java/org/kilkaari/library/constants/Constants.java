@@ -69,6 +69,7 @@ public interface Constants {
         public String ISSUE_ISSUE_TIMESTAMP = "issueTimestamp";
         public String ISSUE_BOOK = "book";
         public String ISSUE_USER = "user";
+        public String ISSUE_IS_RETURNED = "isReturned";
         public String ISSUE_TIME_PERIOD = "timePeriod";
         public String ISSUE_RETURN_TIMESTAMP = "returnTimestamp";
         public String ISSUE_FEES = "fees";

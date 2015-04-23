@@ -10,6 +10,11 @@ import android.os.RemoteException;
 import android.util.Log;
 
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -24,7 +29,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kilkaari.library.application.Prefs;
+import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.HttpClientFactory;
+import org.kilkaari.library.utils.LogUtil;
 
 
 import java.io.BufferedInputStream;
@@ -35,6 +43,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 /**
  * Created by vaibhav on 29/05/14.
@@ -61,102 +70,8 @@ public class CloudService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
       // Messenger messenger = (Messenger) intent.getParcelableExtra(Constants.Extras.INTENT_EXTRA_MESSENGER);
-        String action = intent.getAction();
-/*
-        if (action.equals(Constants.Actions.INTENT_ACTION_INSTALLATION)){
-            String url = Constants.Urls.URL_API_INSTALLATION;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
 
-        }
-       else if (action.equals(Constants.Actions.INTENT_ACTION_GET_PRACTITIONERS_PHOTOS)){
 
-            String zipPath = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_ZIP_PATH);
-            String url = Constants.Urls.URL_GET_PRACTITIONERS_ZIP_PHOTOS;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,true,zipPath);
-            sendResponse(cloudResponse,messenger);
-
-        }
-       else if (action.equals(Constants.Actions.INTENT_ACTION_GET_CHILDREN_PHOTOS)){
-
-            String zipPath = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_ZIP_PATH);
-            String url = Constants.Urls.URL_GET_CHILDREN_ZIP_PHOTOS;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,true,zipPath);
-            sendResponse(cloudResponse,messenger);
-       }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_EYFS_FRAMEWORK)){
-
-            String url = Constants.Urls.URL_GET_EYFS_FRAMEWORK;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_COEL_FRAMEWORK)){
-
-            String url = Constants.Urls.URL_GET_COEL_FRAMEWORK;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_ECAT_FRAMEWORK)){
-
-            String url = Constants.Urls.URL_GET_ECAT_FRAMEWORK;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_LEUVEN_SCALE)){
-
-            String url = Constants.Urls.URL_GET_LEUVEN_SCALE;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_MONTESSORI_FRAMEWORK)){
-
-            String url = Constants.Urls.URL_GET_MONTESSORI_FRAMEWORK;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getAuthenticationJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_DRAFT_OBSERVATIONS)){
-
-            String url = Constants.Urls.URL_GET_DRAFT_OBSERVATIONS;
-            String type = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_DRAFT_TYPE);
-            String filter_type = "practitioner"; // TODO : change hard code
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getDraftListRequestJson(type,filter_type).toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_DELETE_DRAFT_OBSERVATIONS)){
-
-            String id = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_OBSERVATION_ID);
-            String url = Constants.Urls.URL_UPLOAD_OBSERVATIONS + "/" + id;
-
-            HttpUriRequest httpUriRequest = createRequestObjectDelete(url,getRequestJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_CURRENT_ASSESSMENTS)){
-
-            String url = Constants.Urls.URL_GET_CURRENT_ASSESSMENTS;
-            String child_id = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_OBSERVATION_CHILD_ID);
-            String type = intent.getStringExtra(Constants.Extras.INTENT_EXTRA_OBSERVATION_TYPE);
-
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getRequestJson(Integer.parseInt(child_id),type).toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }
-        else if (action.equals(Constants.Actions.INTENT_ACTION_GET_SUMMATIVE_REPORTS)){
-
-            String url = Constants.Urls.URL_GET_SUMMATIVE_REPORTS;
-            HttpUriRequest httpUriRequest = createRequestObject(true,url,getSummativeReportRequestJson().toString());
-            CloudResponse cloudResponse = getCloudResponse(httpUriRequest,false,null);
-            sendResponse(cloudResponse,messenger);
-        }*/
     }
 
     /*private JSONObject getAuthenticationJson()

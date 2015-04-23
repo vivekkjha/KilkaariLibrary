@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
         android:id="@+id/lin_addBooks"
-        android:onClick="onBottomClick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/lin_bottom_selector"
         android:clickable="true"
         android:gravity="center"
-        android:background="@drawable/lin_bottom_selector"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:onClick="onBottomClick"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -24,26 +24,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/smallPadding"
-            android:paddingLeft="@dimen/smallPadding"
+            android:gravity="center"
             android:paddingBottom="@dimen/smallPadding"
-            android:text="@string/add"
-            android:gravity="center"/>
+            android:paddingLeft="@dimen/smallPadding"
+            android:paddingRight="@dimen/smallPadding"
+            android:text="@string/add"/>
         </LinearLayout>
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@color/titleBottomBar"/>
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
         android:id="@+id/lin_updateBooks"
-        android:onClick="onBottomClick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/lin_bottom_selector"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/lin_bottom_selector"
-        android:layout_height="wrap_content">
+        android:onClick="onBottomClick"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,26 +53,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/smallPadding"
-            android:paddingLeft="@dimen/smallPadding"
+            android:gravity="center"
             android:paddingBottom="@dimen/smallPadding"
-            android:text="@string/update"
-            android:gravity="center"/>
+            android:paddingLeft="@dimen/smallPadding"
+            android:paddingRight="@dimen/smallPadding"
+            android:text="@string/update"/>
     </LinearLayout>
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@color/titleBottomBar"/>
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
         android:id="@+id/lin_issueBooks"
-        android:onClick="onBottomClick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/lin_bottom_selector"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/lin_bottom_selector"
-        android:layout_height="wrap_content">
+        android:onClick="onBottomClick"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -82,25 +82,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/smallPadding"
-            android:paddingLeft="@dimen/smallPadding"
+            android:gravity="center"
             android:paddingBottom="@dimen/smallPadding"
-            android:text="@string/issue"
-            android:gravity="center"/>
+            android:paddingLeft="@dimen/smallPadding"
+            android:paddingRight="@dimen/smallPadding"
+            android:text="@string/issue"/>
     </LinearLayout>
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@color/titleBottomBar"/>
     <LinearLayout
+        android:id="@+id/lin_returnBooks"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:onClick="onBottomClick"
+        android:background="@drawable/lin_bottom_selector"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/lin_bottom_selector"
-        android:layout_height="wrap_content">
+        android:onClick="onBottomClick"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -110,11 +111,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/smallPadding"
-            android:paddingLeft="@dimen/smallPadding"
+            android:gravity="center"
             android:paddingBottom="@dimen/smallPadding"
-            android:text="@string/returnn"
-            android:gravity="center"/>
+            android:paddingLeft="@dimen/smallPadding"
+            android:paddingRight="@dimen/smallPadding"
+            android:text="@string/returnn"/>
     </LinearLayout>
 
     </LinearLayout>
