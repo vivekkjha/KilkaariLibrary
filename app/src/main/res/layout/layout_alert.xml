@@ -17,13 +17,17 @@
             android:layout_marginLeft="@dimen/mediumMargin"
             android:id="@+id/img_alertIcon"
             android:src="@drawable/icon_back"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_margin="@dimen/mediumPadding"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/topBarTextSize"
             android:text="Gallery"
             android:padding="@dimen/mediumPadding"
-            android:layout_marginLeft="@dimen/mediumMargin"
             android:id="@+id/txt_alertTitle"
             android:textColor="@color/white"/>
     </LinearLayout>
