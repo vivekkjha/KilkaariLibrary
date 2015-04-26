@@ -1,82 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="@dimen/smallPadding"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/smallPadding">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/smallPadding"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="@dimen/bookImageHeightWidth"
-            android:layout_height="@dimen/bookImageHeightWidth"
-            android:scaleType="centerCrop"
-            android:id="@+id/img_bookIcon"
-            android:src="@drawable/icon_book_default"/>
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginLeft="@dimen/smallMargin"
-            android:gravity="center_vertical"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/smallPadding">
+
+            <ImageView
+                android:id="@+id/img_bookIcon"
+                android:layout_width="@dimen/bookImageHeightWidth"
+                android:layout_height="@dimen/bookImageHeightWidth"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_book_default"/>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/smallMargin"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:gravity="center_vertical"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/bookNameTextSize"
-                        android:textColor="@color/black"
-                        android:id="@+id/txt_bookName"
-                        android:singleLine="true"
-                        android:textAllCaps="true"
-                        android:text="Saheed Bhagat Sngh"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/smallPadding"
-                        android:id="@+id/txt_authorName"
-                        android:singleLine="true"
-                        android:text="Saheed Bhagat Singh"/>
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txt_bookName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="Saheed Bhagat Sngh"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/bookNameTextSize"/>
+                        <TextView
+                            android:id="@+id/txt_authorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/smallPadding"
+                            android:singleLine="true"
+                            android:text="Saheed Bhagat Singh"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="top|right"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_moreOptions"
+                            android:layout_width="@dimen/optionsIconWidthHeight"
+                            android:layout_height="@dimen/optionsIconWidthHeight"
+                            android:src="@drawable/icon_menu_active"/>
+
+                        <TextView
+                            android:id="@+id/txt_availability"
+                            android:layout_width="@dimen/availabilityHeightWidth"
+                            android:layout_height="@dimen/availabilityHeightWidth"
+                            android:background="@drawable/availability_round_bg"
+                            android:gravity="center"
+                            android:minHeight="@dimen/availabilityHeightWidth"
+
+                            android:minWidth="@dimen/availabilityHeightWidth"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <RatingBar
+                        android:id="@+id/ratingBarLarge"
+                        style="@style/ratingBarLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/smallPadding"
-                        style="@style/ratingBarLarge"
-                        android:rating="3.5"
-                        android:id="@+id/ratingBar" />
+                        android:rating="3.5" />
+
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:src="@drawable/icon_menu_active"/>
-                    </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
