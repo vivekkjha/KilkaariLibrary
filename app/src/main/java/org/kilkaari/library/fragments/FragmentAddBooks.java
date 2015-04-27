@@ -2,6 +2,7 @@ package org.kilkaari.library.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -45,7 +47,7 @@ import java.util.List;
 /**
  * Created by vivek on 27/04/15.
  */
-public class FragmentAddBooks extends android.support.v4.app.Fragment{
+public class FragmentAddBooks extends android.support.v4.app.Fragment implements View.OnClickListener{
 
     public static byte[] imageBytes =  null;
     //> layout related objects
@@ -142,6 +144,8 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment{
         edt_description = (EditText)rootView.findViewById(R.id.edt_description);
         autoTxt_category = (AutoCompleteTextView)rootView.findViewById(R.id.autoTxt_category);
         img_bookImage = (ImageView)rootView.findViewById(R.id.img_bookImage);
+        img_bookImage.setOnClickListener(this);
+
 
         registerForContextMenu(img_bookImage);
         this.getActivity().getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN );
@@ -177,7 +181,6 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
 
     }
@@ -227,6 +230,25 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.img_bookImage)
+        {
+            //> open Context menu for image
+            activity.openContextMenu(img_bookImage);
+
+        }
+        else if(v.getId() == R.id.lin_topDone)
+        {
+
+            //> save entered category ind atabase
+            saveCategories();
+
+            //> save details of book entered
+            saveBookDetails();
+        }
     }
 
     // > save asked question
@@ -429,4 +451,6 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment{
             }
         }
     }
+
+
 }

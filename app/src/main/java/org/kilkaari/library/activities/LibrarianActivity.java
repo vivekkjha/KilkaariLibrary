@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class LibrarianActivity extends BaseActivity {
 
+    //> linear layout to add fragments in activity
     private LinearLayout lin_fragments;
 
     //> fragments objects
@@ -35,6 +36,9 @@ public class LibrarianActivity extends BaseActivity {
     private FragmentAddBooks fragmentAddBooks;
     private FragmentIssueBooks fragmentIssueBooks;
     private FragmentReturnBooks fragmentReturnBooks;
+
+    //> flags to prevent same fragment to load again and again
+    private boolean isAddBooks  = true,isUpdate = true, isIssue = true, isReturn = true;
 
 
 
@@ -72,11 +76,17 @@ public class LibrarianActivity extends BaseActivity {
     {
         if(v.getId() == R.id.lin_addBooks)
         {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.lin_fragments, fragmentAddBooks);
-            fragmentTransaction.addToBackStack("AddBooks");
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+            if(isAddBooks) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.lin_fragments, fragmentAddBooks);
+                fragmentTransaction.addToBackStack("AddBooks");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+
+                isAddBooks = false;
+                isIssue = true;
+                isReturn =  true;
+            }
 
         }
         else if(v.getId() == R.id.lin_updateBooks)
@@ -85,21 +95,42 @@ public class LibrarianActivity extends BaseActivity {
         }
         else if(v.getId() == R.id.lin_issueBooks)
         {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.lin_fragments,fragmentIssueBooks);
-            fragmentTransaction.addToBackStack("IssueBooks");
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+            if(isIssue) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.lin_fragments, fragmentIssueBooks);
+                fragmentTransaction.addToBackStack("IssueBooks");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+
+                isAddBooks = true;
+                isIssue = false;
+                isReturn =  true;
+            }
         }
         else if(v.getId() == R.id.lin_returnBooks)
         {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.lin_fragments,fragmentReturnBooks);
-            fragmentTransaction.addToBackStack("ReturnBooks");
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+            if(isReturn) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.lin_fragments, fragmentReturnBooks);
+                fragmentTransaction.addToBackStack("ReturnBooks");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+
+                isAddBooks = true;
+                isIssue = true;
+                isReturn =  false;
+
+            }
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+        isAddBooks = true;
+        isIssue = true;
+        isReturn =  true;
+
+    }
 }
