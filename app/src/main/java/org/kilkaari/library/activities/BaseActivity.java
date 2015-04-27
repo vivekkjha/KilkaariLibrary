@@ -47,25 +47,7 @@ public class BaseActivity extends FragmentActivity {
             super.onBackPressed();
         }
     }
-    public void onBottomClick(View v)
-    {
-        if(v.getId() == R.id.lin_addBooks)
-        {
-            startActivity(new Intent(this,AddBooksActivity.class));
-        }
-        else if(v.getId() == R.id.lin_updateBooks)
-        {
-            startActivity(new Intent(this,AlertActivity.class));
-        }
-        else if(v.getId() == R.id.lin_issueBooks)
-        {
-            startActivity(new Intent(this,IssueActivity.class));
-        }
-        else if(v.getId() == R.id.lin_returnBooks)
-        {
-            startActivity(new Intent(this,ReturnActivity.class));
-        }
-    }
+
     // > get application in any child activity of base activity
     public LibraryApplication getLibraryApplication() {
         return ((LibraryApplication) getApplication());

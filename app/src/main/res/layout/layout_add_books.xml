@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/titleBottomBar"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,56 +20,56 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/smallPadding">
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:onClick="onClick"
-                    android:clickable="true"
                     android:id="@+id/img_bookImage"
-                    android:src="@drawable/icon_book_default"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@color/white"
-                    android:layout_height="match_parent"/>
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:src="@drawable/icon_book_default"/>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginLeft="@dimen/smallMargin"
+                    android:layout_weight="2"
+                    android:background="@color/white"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edtAddBooksHeight"
-                        android:text="Donation Details"
-                        android:gravity="center_vertical"
-                        android:textSize="@dimen/addBookHeadTextSize"
                         android:background="@color/baseColor"
+                        android:gravity="center_vertical"
                         android:padding="@dimen/smallPadding"
-                        android:textColor="@color/white"/>
+                        android:text="Donation Details"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/addBookHeadTextSize"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/titleBottomBar"/>
                     <EditText
-                        android:layout_width="match_parent"
                         android:id="@+id/edt_donorName"
-                        android:hint="@string/donorName"
-                        android:textSize="@dimen/edtBookTextSize"
-                        android:paddingLeft="@dimen/mediumPadding"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edtAddBooksHeight"
                         android:background="@color/white"
                         android:gravity="center_vertical"
-                        android:layout_height="@dimen/edtAddBooksHeight" />
+                        android:hint="@string/donorName"
+                        android:paddingLeft="@dimen/mediumPadding"
+                        android:textSize="@dimen/edtBookTextSize" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/grayBg"/>
                     <EditText
-                        android:layout_width="match_parent"
                         android:id="@+id/edt_date"
-                        android:hint="@string/dateAdded"
-                        android:textSize="@dimen/edtBookTextSize"
-                        android:paddingLeft="@dimen/mediumPadding"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edtAddBooksHeight"
                         android:background="@color/white"
                         android:gravity="center_vertical"
-                        android:layout_height="@dimen/edtAddBooksHeight" />
+                        android:hint="@string/dateAdded"
+                        android:paddingLeft="@dimen/mediumPadding"
+                        android:textSize="@dimen/edtBookTextSize" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -84,66 +79,66 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:layout_margin="@dimen/smallMargin"
+                android:background="@color/white"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edtAddBooksHeight"
-                    android:text="Basic Details"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/addBookHeadTextSize"
                     android:background="@color/baseColor"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/smallPadding"
-                    android:textColor="@color/white"/>
+                    android:text="Basic Details"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/addBookHeadTextSize"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/titleBottomBar"/>
                 <EditText
-                    android:layout_width="match_parent"
                     android:id="@+id/edt_bookName"
-                    android:hint="@string/bookName"
-                    android:textSize="@dimen/edtBookTextSize"
-                    android:paddingLeft="@dimen/mediumPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edtAddBooksHeight"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:layout_height="@dimen/edtAddBooksHeight" />
+                    android:hint="@string/bookName"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:textSize="@dimen/edtBookTextSize" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/grayBg"/>
                 <EditText
-                    android:layout_width="match_parent"
                     android:id="@+id/edt_authorName"
-                    android:hint="@string/authorName"
-                    android:textSize="@dimen/edtBookTextSize"
-                    android:paddingLeft="@dimen/mediumPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edtAddBooksHeight"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:layout_height="@dimen/edtAddBooksHeight" />
+                    android:hint="@string/authorName"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:textSize="@dimen/edtBookTextSize" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/grayBg"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
                         <EditText
-                            android:layout_width="match_parent"
                             android:id="@+id/edt_language"
-                            android:hint="@string/language"
-                            android:textSize="@dimen/edtBookTextSize"
-                            android:paddingLeft="@dimen/mediumPadding"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edtAddBooksHeight"
                             android:background="@color/white"
                             android:gravity="center_vertical"
-                            android:layout_height="@dimen/edtAddBooksHeight" />
+                            android:hint="@string/language"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -151,20 +146,20 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/smallMargin"
+                        android:layout_weight="1"
                         android:orientation="vertical">
                         <EditText
-                            android:layout_width="match_parent"
                             android:id="@+id/edt_pageCount"
-                            android:hint="@string/pageCount"
-                            android:textSize="@dimen/edtBookTextSize"
-                            android:inputType="number"
-                            android:paddingLeft="@dimen/mediumPadding"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edtAddBooksHeight"
                             android:background="@color/white"
                             android:gravity="center_vertical"
-                            android:layout_height="@dimen/edtAddBooksHeight" />
+                            android:hint="@string/pageCount"
+                            android:inputType="number"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -174,22 +169,22 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
                         <EditText
-                            android:layout_width="match_parent"
                             android:id="@+id/edt_publisher"
-                            android:hint="@string/publisher"
-                            android:textSize="@dimen/edtBookTextSize"
-                            android:paddingLeft="@dimen/mediumPadding"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edtAddBooksHeight"
                             android:background="@color/white"
                             android:gravity="center_vertical"
-                            android:layout_height="@dimen/edtAddBooksHeight" />
+                            android:hint="@string/publisher"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -197,20 +192,20 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/smallMargin"
+                        android:layout_weight="1"
                         android:orientation="vertical">
                         <EditText
-                            android:layout_width="match_parent"
                             android:id="@+id/edt_publishingYear"
-                            android:hint="@string/year"
-                            android:textSize="@dimen/edtBookTextSize"
-                            android:paddingLeft="@dimen/mediumPadding"
-                            android:inputType="number"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/edtAddBooksHeight"
                             android:background="@color/white"
                             android:gravity="center_vertical"
-                            android:layout_height="@dimen/edtAddBooksHeight" />
+                            android:hint="@string/year"
+                            android:inputType="number"
+                            android:paddingLeft="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -219,14 +214,14 @@
 
                 </LinearLayout>
                 <AutoCompleteTextView
-                    android:layout_width="match_parent"
                     android:id="@+id/autoTxt_category"
-                    android:hint="@string/category"
-                    android:textSize="@dimen/edtBookTextSize"
-                    android:paddingLeft="@dimen/mediumPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edtAddBooksHeight"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:layout_height="@dimen/edtAddBooksHeight" />
+                    android:hint="@string/category"
+                    android:paddingLeft="@dimen/mediumPadding"
+                    android:textSize="@dimen/edtBookTextSize" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -238,31 +233,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:layout_margin="@dimen/smallMargin"
+                android:background="@color/white"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edtAddBooksHeight"
-                    android:text="Description"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/addBookHeadTextSize"
                     android:background="@color/baseColor"
+                    android:gravity="center_vertical"
                     android:padding="@dimen/smallPadding"
-                    android:textColor="@color/white"/>
+                    android:text="Description"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/addBookHeadTextSize"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/titleBottomBar"/>
 
                 <EditText
+                    android:id="@+id/edt_description"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:padding="@dimen/mediumPadding"
-                    android:id="@+id/edt_description"
-                    android:hint="write here..."
-                    android:gravity="top|left"
                     android:background="@color/white"
+                    android:gravity="top|left"
+                    android:hint="write here..."
+                    android:padding="@dimen/mediumPadding"
                     android:textSize="@dimen/edtBookTextSize"  />
                 <View
                     android:layout_width="match_parent"
@@ -273,10 +268,6 @@
     </ScrollView>
         <include layout="@layout/layout_loading"/>
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/titleBottomBar"/>
-    <include layout="@layout/layout_bottom_bar"/>
+
 
 </LinearLayout>
