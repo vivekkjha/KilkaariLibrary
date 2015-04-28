@@ -60,6 +60,7 @@ public interface Constants {
         public String USER_EMAIL = "email";
         public String USER_NAME = "name";
         public String USER_FACEBOOK_DATA = "facebookData";
+        public String USER_IS_LIBRARIAN = "isLibrarian";
 
         public String REQUEST_QUEUE_TIMESTAMP = "timestamp";
         public String REQUEST_QUEUE_BOOK = "book";

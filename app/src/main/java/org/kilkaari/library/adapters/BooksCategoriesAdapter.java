@@ -15,6 +15,7 @@ import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
+import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BookCategoriesModel;
 import org.kilkaari.library.models.BooksModel;
@@ -29,14 +30,14 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<BookCategoriesModel> listBooks;
-    private BooksCategoriesActivity context;
+    private MainActivity context;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
 
     public BooksCategoriesAdapter(BaseActivity context, List<BookCategoriesModel> list){
 
         this.listBooks = list;
-        this.context = (BooksCategoriesActivity)context;
+        this.context = (MainActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -90,7 +91,8 @@ public class BooksCategoriesAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(context, BookListActivity.class);
+
+                Intent intent = new Intent(context, BookListActivity.class);
                 intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY,model.getCategory());
                 context.startActivity(intent);
 

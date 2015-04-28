@@ -19,7 +19,9 @@ public class Prefs {
 
     /*--- Application Preferences --*/
 
+
     private static final String IS_LOGGED_IN = "isLogggedIn";
+    private static final String IS_LIBRARIAN = "isLibrarian";
 
     /**
      * The m_context.
@@ -61,6 +63,14 @@ public class Prefs {
 
     public void setIsLoggedIn(boolean isLoggedIn) {
         get().edit().putBoolean(IS_LOGGED_IN, isLoggedIn).commit();
+    }
+
+    public boolean isLibrarian() {
+        return get().getBoolean(IS_LIBRARIAN,false);
+    }
+
+    public void setIsLibrarian(boolean isLibrarian) {
+        get().edit().putBoolean(IS_LIBRARIAN, isLibrarian).commit();
     }
 
 }

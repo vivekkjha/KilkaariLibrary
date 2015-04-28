@@ -52,7 +52,7 @@ public class IssueActivity extends BaseActivity {
         requestQueueList = new ArrayList<RequestQueueModel>();
         hash_booksAvailability = new HashMap<String,Boolean>();
 
-        listView_issue = (ListView)findViewById(R.id.listView_issue);
+        //listView_issue = (ListView)findViewById(R.id.listView_issue);
         saveDataUtils = new SaveDataUtils(this);
 
         //> get Request Queue Data

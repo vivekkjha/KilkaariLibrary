@@ -71,7 +71,7 @@ public class SavedPagesActivity extends BaseActivity {
                         LogUtil.e("Saved pages List ","Database returned 0 list ");
                     }
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("Score", "Error: " + e.getMessage());
                 }
             }
         });

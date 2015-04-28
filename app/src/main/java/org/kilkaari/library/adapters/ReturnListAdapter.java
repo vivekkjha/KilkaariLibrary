@@ -15,6 +15,7 @@ import com.parse.ParseObject;
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.IssueActivity;
+import org.kilkaari.library.activities.LibrarianActivity;
 import org.kilkaari.library.activities.ReturnActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.IssueListModel;
@@ -30,7 +31,7 @@ public class ReturnListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<IssueListModel> issueList;
-    private ReturnActivity context;
+    private LibrarianActivity context;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
     private SaveDataUtils saveDataUtils;
@@ -38,7 +39,7 @@ public class ReturnListAdapter extends BaseAdapter {
     public ReturnListAdapter(BaseActivity context, List<IssueListModel> list){
 
         this.issueList = list;
-        this.context = (ReturnActivity)context;
+        this.context = (LibrarianActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -114,7 +115,7 @@ public class ReturnListAdapter extends BaseAdapter {
 
                if(!model.isReturned())
                {
-                   context.updateIssueList(model,"24/04/2015","5.0");
+                   context.getFragmentReturnBooks().updateIssueList(model,"24/04/2015","5.0");
                }
             }
         });

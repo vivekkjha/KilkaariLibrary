@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include layout="@layout/layout_title_bar"/>
-    <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/titleBottomBar"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <GridView
+        android:id="@+id/gridViewCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3"
-        android:id="@+id/gridViewCategories"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"
         android:background="@color/white"
         android:cacheColorHint="@color/white"
-        android:scrollbars="none"
-        android:gravity="center"
         android:choiceMode="singleChoice"
+        android:gravity="center"
+        android:horizontalSpacing="1dp"
+        android:numColumns="3"
+        android:scrollbars="none"
         android:stretchMode="columnWidth"
+        android:verticalSpacing="1dp"
         android:visibility="visible"/>
 
         <include layout="@layout/layout_loading"/>

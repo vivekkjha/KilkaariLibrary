@@ -44,6 +44,7 @@
 
     <string name="bookDetails">Book Details</string>
     <string name="userDetails">User Details</string>
+    <string name="enterCorrectCode">Please enter correct code.</string>
 
 
 </resources>

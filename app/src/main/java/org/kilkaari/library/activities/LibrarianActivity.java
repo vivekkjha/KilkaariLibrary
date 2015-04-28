@@ -33,6 +33,8 @@ public class LibrarianActivity extends BaseActivity {
     //> fragments objects
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+
     private FragmentAddBooks fragmentAddBooks;
     private FragmentIssueBooks fragmentIssueBooks;
     private FragmentReturnBooks fragmentReturnBooks;
@@ -133,4 +135,17 @@ public class LibrarianActivity extends BaseActivity {
         isReturn =  true;
 
     }
+
+    public FragmentAddBooks getFragmentAddBooks() {
+        return fragmentAddBooks;
+    }
+
+    public FragmentIssueBooks getFragmentIssueBooks() {
+        return fragmentIssueBooks;
+    }
+
+    public FragmentReturnBooks getFragmentReturnBooks() {
+        return fragmentReturnBooks;
+    }
+
 }

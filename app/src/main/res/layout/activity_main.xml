@@ -13,17 +13,22 @@
         android:layout_height="match_parent">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <include layout="@layout/layout_title_home_bar"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/titleBottomBar"/>
+            <LinearLayout
+                android:id="@+id/lin_fragments"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-
-
+                </LinearLayout>
 
         </LinearLayout>
     </FrameLayout>

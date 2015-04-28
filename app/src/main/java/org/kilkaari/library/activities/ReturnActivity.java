@@ -43,7 +43,7 @@ public class ReturnActivity extends BaseActivity {
 
         issueList = new ArrayList<IssueListModel>();
 
-        listView_issue = (ListView)findViewById(R.id.listView_issue);
+       // listView_issue = (ListView)findViewById(R.id.listView_issue);
         saveDataUtils = new SaveDataUtils(this);
 
         //> get Request Queue Data

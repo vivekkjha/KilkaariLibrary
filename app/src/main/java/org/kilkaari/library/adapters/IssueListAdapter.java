@@ -24,6 +24,7 @@ import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.BookDetailsActivity;
 import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.IssueActivity;
+import org.kilkaari.library.activities.LibrarianActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.models.RequestQueueModel;
@@ -40,7 +41,7 @@ public class IssueListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<RequestQueueModel> listRequest;
-    private IssueActivity context;
+    private LibrarianActivity context;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
     private SaveDataUtils saveDataUtils;
@@ -48,7 +49,7 @@ public class IssueListAdapter extends BaseAdapter {
     public IssueListAdapter(BaseActivity context, List<RequestQueueModel> list){
 
         this.listRequest = list;
-        this.context = (IssueActivity)context;
+        this.context = (LibrarianActivity)context;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -118,8 +119,8 @@ public class IssueListAdapter extends BaseAdapter {
 
 
 
-        if(context.getHash_booksAvailability().get(model.getBookObject().getObjectId())!=null) {
-            if (context.getHash_booksAvailability().get(model.getBookObject().getObjectId())) {
+        if(context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())!=null) {
+            if (context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())) {
 
                 viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_admin));
             }
@@ -138,11 +139,11 @@ public class IssueListAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 //> issue books, only when the book is available
-                if(context.getHash_booksAvailability().get(model.getBookObject().getObjectId())!=null) {
+                if(context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())!=null) {
 
-                    if (context.getHash_booksAvailability().get(model.getBookObject().getObjectId())) {
+                    if (context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())) {
                         //> insert in issue list and update availability
-                        context.insertInIssueList(model, "12/02/2015");
+                        context.getFragmentIssueBooks().insertInIssueList(model, "12/02/2015");
 
                     }
                 }
@@ -153,7 +154,7 @@ public class IssueListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //> get popup menu on click of more icon
-                context.showPopupWindow(v,position);
+                context.getFragmentIssueBooks().showPopupWindow(v,position);
             }
         });
 

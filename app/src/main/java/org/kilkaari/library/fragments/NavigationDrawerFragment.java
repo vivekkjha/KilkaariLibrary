@@ -15,7 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.adapters.NavigationalDrawerAdapter;
+import org.kilkaari.library.application.LibraryApplication;
+import org.kilkaari.library.application.Prefs;
 import org.kilkaari.library.models.SlideItem;
 
 
@@ -56,6 +59,9 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private Prefs prefs;
+
+
     public NavigationDrawerFragment() {
     }
 
@@ -82,6 +88,8 @@ public class NavigationDrawerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
+
+
     }
 
     @Override
@@ -97,22 +105,46 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+        SlideItem[] slideItems;
 
-        //> count , item name , icon
-        SlideItem[] slideItems = new SlideItem[]{
-                new SlideItem(4, getResources().getString(R.string.library), R.drawable.icon_library),
-                new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
-                new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
-                new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
-                new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read),
-                new SlideItem(-1, getResources().getString(R.string.librarian), R.drawable.icon_admin)
-        };
+        prefs =((LibraryApplication)getActivity().getApplication()).getPref();
+
+        if(prefs.isLibrarian()) {
+            //> count , item name , icon
+            slideItems = new SlideItem[]{
+                    new SlideItem(4, getResources().getString(R.string.library), R.drawable.icon_library),
+                    new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
+                    new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
+                    new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
+                    new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read),
+                    new SlideItem(-1, getResources().getString(R.string.librarian), R.drawable.icon_admin)
+            };
+        }
+        else {
+            slideItems = new SlideItem[]{
+                    new SlideItem(4, getResources().getString(R.string.library), R.drawable.icon_library),
+                    new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
+                    new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
+                    new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
+                    new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read)
+
+            };
+
+        }
 
 
-                NavigationalDrawerAdapter navigationBarAdapter = new NavigationalDrawerAdapter(this.getActivity(), slideItems);
+        NavigationalDrawerAdapter navigationBarAdapter = new NavigationalDrawerAdapter(this.getActivity(), slideItems);
         mDrawerListView.setAdapter(navigationBarAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mainView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
     }
 
     public boolean isDrawerOpen() {

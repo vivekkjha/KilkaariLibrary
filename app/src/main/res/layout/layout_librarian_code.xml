@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,24 +11,24 @@
         android:gravity="center_vertical">
 
         <ImageView
+            android:id="@+id/img_alertIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/mediumMargin"
-            android:id="@+id/img_alertIcon"
             android:src="@drawable/icon_back"/>
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_margin="@dimen/mediumPadding"/>
+            android:layout_margin="@dimen/mediumPadding"
+            android:background="@color/white"/>
         <TextView
+            android:id="@+id/txt_alertTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/topBarTextSize"
-            android:text="Enter Code"
             android:padding="@dimen/mediumPadding"
-            android:id="@+id/txt_alertTitle"
-            android:textColor="@color/white"/>
+            android:text="Enter Code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/topBarTextSize"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -37,78 +37,86 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/white"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/mediumPadding"
-            android:textSize="20sp"
+            android:text="Enter you Library code"
             android:textColor="@color/black"
-            android:text="Enter you Library code"/>
+            android:textSize="20sp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/smallPadding"
-            android:layout_marginBottom="25dp"
-            android:gravity="center">
+            android:padding="@dimen/smallPadding">
 
            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/edt_safeCode1"
-                android:gravity="center"
-                android:singleLine="true"
-                android:padding="@dimen/mediumPadding"
-                android:maxLength="1"
-                android:inputType="number"
-                android:background="@drawable/code_edt_bg"
-                android:textSize="25sp"
-                android:text="1"
-                android:layout_margin="@dimen/smallMargin"/>
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smallMargin"
+                android:background="@drawable/code_edt_bg"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:padding="@dimen/mediumPadding"
+                android:singleLine="true"
+                android:text="1"
+                android:textSize="25sp"/>
+            <EditText
                 android:id="@+id/edt_safeCode2"
-                android:gravity="center"
-                android:singleLine="true"
-                android:padding="@dimen/mediumPadding"
-                android:maxLength="1"
-                android:inputType="number"
-                android:background="@drawable/code_edt_bg"
-                android:textSize="25sp"
-                android:text="1"
-                android:layout_margin="@dimen/smallMargin"/>
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smallMargin"
+                android:background="@drawable/code_edt_bg"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:padding="@dimen/mediumPadding"
+                android:singleLine="true"
+                android:text="1"
+                android:textSize="25sp"/>
+            <EditText
                 android:id="@+id/edt_safeCode3"
-                android:gravity="center"
-                android:singleLine="true"
-                android:padding="@dimen/mediumPadding"
-                android:maxLength="1"
-                android:inputType="number"
-                android:background="@drawable/code_edt_bg"
-                android:textSize="25sp"
-                android:text="1"
-                android:layout_margin="@dimen/smallMargin"/>
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/edt_safeCode4"
-                android:gravity="center"
-                android:singleLine="true"
-                android:padding="@dimen/mediumPadding"
-                android:maxLength="1"
-                android:inputType="number"
+                android:layout_margin="@dimen/smallMargin"
                 android:background="@drawable/code_edt_bg"
-                android:textSize="25sp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:padding="@dimen/mediumPadding"
+                android:singleLine="true"
                 android:text="1"
-                android:layout_margin="@dimen/smallMargin"/>
+                android:textSize="25sp"/>
+            <EditText
+                android:id="@+id/edt_safeCode4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smallMargin"
+                android:background="@drawable/code_edt_bg"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:padding="@dimen/mediumPadding"
+                android:singleLine="true"
+                android:text="1"
+                android:textSize="25sp"/>
             </LinearLayout>
+        <TextView
+            android:id="@+id/txt_enterCorrectCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mediumPadding"
+            android:text="@string/enterCorrectCode"
+            android:textColor="@color/regret"
+            android:textSize="14sp"
+            android:visibility="gone"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -118,36 +126,36 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/mediumPadding"
-                android:layout_height="wrap_content"
                 android:id="@+id/txt_alertOk"
-                android:textColor="@color/black"
-                android:text="OK"
-                android:clickable="true"
-                android:onClick="onClick"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/alert_button_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="@dimen/mediumPadding"
+                android:text="OK"
+                android:textColor="@color/black"
                 android:textSize="@dimen/alertBtnTextSize"/>
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/baseColor"/>
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:visibility="visible"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/mediumPadding"
                 android:id="@+id/txt_alertCancel"
-                android:textColor="@color/black"
-                android:text="Cancel"
-                android:onClick="onClick"
-                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/alert_button_selector"
-                android:textSize="@dimen/alertBtnTextSize"/>
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="@dimen/mediumPadding"
+                android:text="Cancel"
+                android:textColor="@color/black"
+                android:textSize="@dimen/alertBtnTextSize"
+                android:visibility="visible"/>
         </LinearLayout>
         </LinearLayout>
 
