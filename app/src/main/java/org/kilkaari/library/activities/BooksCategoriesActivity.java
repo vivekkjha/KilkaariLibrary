@@ -36,16 +36,13 @@ import java.util.List;
 public class BooksCategoriesActivity extends BaseActivity {
 
 
+    //> lists to get entries from Books table
+    public static List<BookCategoriesModel> list_CategoriesBooks;
     //> layout related objects
     private GridView gridViewCategories;
     private LinearLayout lin_topDone;
-
     //> program objects
     private BooksCategoriesAdapter adapter;
-
-    //> lists to get entries from Books table
-    public static List<BookCategoriesModel> list_CategoriesBooks;
-
     //> list to get all the categories
     private List<String> list_booksCategories;
 
@@ -92,7 +89,7 @@ public class BooksCategoriesActivity extends BaseActivity {
         if(list_CategoriesBooks.size()!=0) {
 
             //> set gridView adapter
-            adapter = new BooksCategoriesAdapter(this,list_CategoriesBooks);
+            adapter = new BooksCategoriesAdapter(this,list_CategoriesBooks,false);
             gridViewCategories.setAdapter(adapter);
         }
     }

@@ -15,6 +15,7 @@ import com.parse.ParseQuery;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.fragments.BookCategoriesFragment;
 import org.kilkaari.library.fragments.FragmentAddBooks;
 import org.kilkaari.library.fragments.FragmentIssueBooks;
 import org.kilkaari.library.fragments.FragmentReturnBooks;
@@ -38,6 +39,7 @@ public class LibrarianActivity extends BaseActivity {
     private FragmentAddBooks fragmentAddBooks;
     private FragmentIssueBooks fragmentIssueBooks;
     private FragmentReturnBooks fragmentReturnBooks;
+    private BookCategoriesFragment bookCategoriesFragment;
 
     //> flags to prevent same fragment to load again and again
     private boolean isAddBooks  = true,isUpdate = true, isIssue = true, isReturn = true;
@@ -54,6 +56,7 @@ public class LibrarianActivity extends BaseActivity {
         fragmentAddBooks = new FragmentAddBooks();
         fragmentIssueBooks = new FragmentIssueBooks();
         fragmentReturnBooks = new FragmentReturnBooks();
+        bookCategoriesFragment = new BookCategoriesFragment();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -93,7 +96,19 @@ public class LibrarianActivity extends BaseActivity {
         }
         else if(v.getId() == R.id.lin_updateBooks)
         {
-            startActivity(new Intent(this,AlertActivity.class));
+            //startActivity(new Intent(this,AlertActivity.class));
+
+            //> create bundle to transfer data to fragment
+            Bundle editBundle = new Bundle();
+            editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, false);
+
+            //> open Book Shelf means categories list
+            fragmentTransaction = fragmentManager.beginTransaction();
+            bookCategoriesFragment.setArguments(editBundle);
+            fragmentTransaction.replace(R.id.lin_fragments, bookCategoriesFragment,"BookCategories");
+            fragmentTransaction.addToBackStack("BookCategories");
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.commit();
         }
         else if(v.getId() == R.id.lin_issueBooks)
         {

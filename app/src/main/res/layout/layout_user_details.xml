@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,25 +11,29 @@
         android:gravity="center_vertical">
 
         <ImageView
+            android:id="@+id/img_alertIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/mediumMargin"
-            android:id="@+id/img_alertIcon"
             android:src="@drawable/icon_back"/>
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_margin="@dimen/mediumPadding"/>
+            android:layout_margin="@dimen/mediumPadding"
+            android:background="@color/white"/>
         <TextView
+            android:id="@+id/txt_alertTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/topBarTextSize"
-            android:text="User Details"
             android:padding="@dimen/mediumPadding"
-            android:id="@+id/txt_alertTitle"
-            android:textColor="@color/white"/>
+            android:text="User Details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/topBarTextSize"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/titleBottomBar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,40 +43,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/mediumPadding"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/mediumPadding">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
             <org.kilkaari.library.views.CircularImageView
+                android:id="@+id/img_userImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                android:id="@+id/img_userImage"
                 android:src="@drawable/user"
                 app:shadow="true" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:orientation="vertical"
                 android:gravity="center"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
                 <TextView
+                    android:id="@+id/txt_userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:padding="@dimen/smallPadding"
-                    android:text="USername"/>
+                    android:text="Vivek jha"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
                 <TextView
+                    android:id="@+id/txt_userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:padding="@dimen/smallPadding"
-                    android:text="Email"/>
+                    android:text="Email"
+                    android:textSize="16sp"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -81,38 +88,41 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/txt_phone"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:paddingRight="@dimen/smallMargin"
-                android:paddingTop="@dimen/smallMargin"
+                android:layout_weight="1"
                 android:paddingBottom="@dimen/smallMargin"
                 android:paddingLeft="@dimen/mediumPadding"
-                android:text="Phone"/>
+                android:paddingRight="@dimen/smallMargin"
+                android:paddingTop="@dimen/smallMargin"
+                android:text="Phone"
+                android:textSize="16sp"/>
             <TextView
+                android:id="@+id/txt_gender"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_weight="1"
                 android:padding="@dimen/smallMargin"
-                android:text="Gender"/>
+                android:text="Gender"
+                android:textSize="16sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/txt_address"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_weight="1"
                 android:minLines="3"
-                android:paddingRight="@dimen/smallMargin"
-                android:paddingTop="@dimen/smallMargin"
                 android:paddingBottom="@dimen/smallMargin"
                 android:paddingLeft="@dimen/mediumPadding"
-                android:text="Address"/>
+                android:paddingRight="@dimen/smallMargin"
+                android:paddingTop="@dimen/smallMargin"
+                android:text="Address"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 

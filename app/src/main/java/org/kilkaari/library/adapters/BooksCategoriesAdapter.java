@@ -30,14 +30,17 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<BookCategoriesModel> listBooks;
-    private MainActivity context;
+    private boolean isEdit;
+
+    private BaseActivity context;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
 
-    public BooksCategoriesAdapter(BaseActivity context, List<BookCategoriesModel> list){
+    public BooksCategoriesAdapter(BaseActivity context, List<BookCategoriesModel> list, boolean isEdit){
 
         this.listBooks = list;
-        this.context = (MainActivity)context;
+        this.context = context;
+        this.isEdit = isEdit;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -94,6 +97,7 @@ public class BooksCategoriesAdapter extends BaseAdapter {
 
                 Intent intent = new Intent(context, BookListActivity.class);
                 intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY,model.getCategory());
+                intent.putExtra(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,isEdit);
                 context.startActivity(intent);
 
             }

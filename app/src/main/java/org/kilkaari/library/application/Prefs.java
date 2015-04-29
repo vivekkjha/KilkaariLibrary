@@ -22,6 +22,7 @@ public class Prefs {
 
     private static final String IS_LOGGED_IN = "isLogggedIn";
     private static final String IS_LIBRARIAN = "isLibrarian";
+    private static final String USER_NAME = "userName";
 
     /**
      * The m_context.
@@ -71,6 +72,14 @@ public class Prefs {
 
     public void setIsLibrarian(boolean isLibrarian) {
         get().edit().putBoolean(IS_LIBRARIAN, isLibrarian).commit();
+    }
+
+    public String getUserName() {
+        return get().getString(USER_NAME, null);
+    }
+
+    public void setUserName(String userName) {
+        get().edit().putString(USER_NAME, userName).commit();
     }
 
 }

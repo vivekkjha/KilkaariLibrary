@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Request;
@@ -29,6 +31,7 @@ import org.kilkaari.library.application.LibraryApplication;
 import org.kilkaari.library.application.Prefs;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.utils.LogUtil;
+import org.kilkaari.library.utils.ValidationUtil;
 
 import java.util.Arrays;
 
@@ -40,6 +43,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     //> layout related objects
     private View rootView;
     private LinearLayout lin_loginFacebook;
+    private EditText edt_userEmail,edt_userPassword;
+    private TextView txt_login;
 
     //> program related objects
     private JSONObject facebookResponse;
@@ -60,6 +65,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         //> initialize layout objects
         lin_loginFacebook = (LinearLayout)rootView.findViewById(R.id.lin_loginFacebook);
+        edt_userEmail = (EditText)rootView.findViewById(R.id.edt_userEmail);
+        edt_userPassword = (EditText)rootView.findViewById(R.id.edt_userPassword);
+        txt_login = (TextView)rootView.findViewById(R.id.txt_login);
+        txt_login.setOnClickListener(this);
+
         lin_loginFacebook.setOnClickListener(this);
 
         return rootView;
@@ -92,6 +102,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             //> login with facebook
             loginWithFacebook();
         }
+        else if(v.getId() == R.id.txt_login)
+        {
+            //> apply validation on two
+            ValidationUtil.emptyValidation(activity, edt_userEmail,
+                    R.string.requiredErrorMessage);
+            ValidationUtil.emptyValidation(activity, edt_userPassword,
+                    R.string.requiredErrorMessage);
+            ValidationUtil.emailValidation(activity, edt_userEmail, R.string.emailErrorMessage);
+
+
+            if (ValidationUtil.isErrorPresent(edt_userEmail)
+                    || ValidationUtil.isErrorPresent(edt_userPassword)) {
+                return;
+            }
+            else
+            {
+                activity.showProgressLayout();
+                logInUser();
+            }
+        }
+
 
     }
 
@@ -179,6 +210,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     {
         if(pUser!=null)
         {
+            activity.showProgressLayout();
             pUser.fetchInBackground(new GetCallback<ParseObject>() {
                 @Override
                 public void done(ParseObject parseObject, ParseException e) {
@@ -188,10 +220,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                             prefs.setIsLibrarian(parseObject.getBoolean(Constants.DataColumns.USER_IS_LIBRARIAN));
                         }
+                        if(parseObject.get(Constants.DataColumns.USER_NAME)!=null)
+                        {
+                            prefs.setUserName(parseObject.getString(Constants.DataColumns.USER_NAME));
+                        }
                     }
                     //> Call MainActivity only after setting preference value / getting callback
                     startActivity(new Intent(activity, MainActivity.class));
                     activity.finish();
+                    activity.hideProgressLayout();
                 }
             });
 
@@ -203,6 +240,30 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+
+    }
+
+    //> login user
+    public void logInUser()
+    {
+        ParseUser.logInInBackground(edt_userEmail.getText().toString(),edt_userPassword.getText().toString(),new LogInCallback() {
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+                if(e== null)
+                {
+                    Toast.makeText(activity,"Successfully logged In",Toast.LENGTH_SHORT).show();
+
+                    //> get librarian authentication before starting main activity
+                    pUser = parseUser;
+                    getLibrarianAuthentication();
+                }
+                else
+                {
+                    Toast.makeText(activity,e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                activity.hideProgressLayout();
+            }
+        });
     }
 
 }

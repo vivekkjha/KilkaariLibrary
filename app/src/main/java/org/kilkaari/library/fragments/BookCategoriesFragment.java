@@ -1,5 +1,6 @@
 package org.kilkaari.library.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.adapters.BooksCategoriesAdapter;
 import org.kilkaari.library.constants.Constants;
@@ -34,18 +36,23 @@ public class BookCategoriesFragment extends Fragment {
 
     //> lists to get entries from Books table
     public static List<BookCategoriesModel> list_CategoriesBooks;
+
     //> layout related objects
     private View rootView;
     private GridView gridViewCategories;
     private LinearLayout lin_topDone;
+
     //> program objects
     private BooksCategoriesAdapter adapter;
-    private MainActivity activity;
+    private BaseActivity activity;
+
     //> list to get all the categories
     private List<String> list_booksCategories;
 
     //> hash=map to get links of all the categories
     private HashMap<String,String> hash_categoryPhoto;
+
+    private boolean isEdit = false;
 
 
     @Override
@@ -62,6 +69,9 @@ public class BookCategoriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //> get bundle from calling activity
+        isEdit = getArguments().getBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT);
+
         rootView = inflater.inflate(R.layout.activtity_books_categories,container,false);
 
         //> layout initialization
@@ -74,9 +84,9 @@ public class BookCategoriesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        activity = (MainActivity)getActivity();
+        activity = (BaseActivity)getActivity();
 
-        lin_topDone = (LinearLayout)activity.findViewById(R.id.lin_topDone);
+        lin_topDone = (LinearLayout)getActivity().findViewById(R.id.lin_topDone);
         //lin_topDone.setVisibility(View.GONE);
 
         //> getCategories from server
@@ -89,7 +99,6 @@ public class BookCategoriesFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-
     }
 
     public void setAdapter()
@@ -97,7 +106,7 @@ public class BookCategoriesFragment extends Fragment {
         if(list_CategoriesBooks.size()!=0) {
 
             //> set gridView adapter
-            adapter = new BooksCategoriesAdapter(activity,list_CategoriesBooks);
+            adapter = new BooksCategoriesAdapter(activity,list_CategoriesBooks,isEdit);
             gridViewCategories.setAdapter(adapter);
         }
     }

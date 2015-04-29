@@ -20,19 +20,26 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:src="@drawable/icon_kilkaari_logo"/>
+                android:src="@drawable/icon_book_default"/>
             </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
 
         <LinearLayout
             android:id="@+id/lin_fragmentsLogin"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
 
+        <include layout="@layout/layout_loading"/>
         </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

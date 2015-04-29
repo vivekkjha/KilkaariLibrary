@@ -61,6 +61,7 @@ public interface Constants {
         public String USER_NAME = "name";
         public String USER_FACEBOOK_DATA = "facebookData";
         public String USER_IS_LIBRARIAN = "isLibrarian";
+        public String USER_PHONE = "phone";
 
         public String REQUEST_QUEUE_TIMESTAMP = "timestamp";
         public String REQUEST_QUEUE_BOOK = "book";
@@ -85,5 +86,6 @@ public interface Constants {
         public String EXTRAS_SELECTED_CATEGORY = "selectedCategory";
         public String EXTRAS_OBJECT_ID = "objectId";
         public String EXTRAS_SELECTED_BOOK_INDEX = "selectedBookIndex";
+        public String EXTRAS_BOOK_IS_EDIT = "isEdit";
     }
 }

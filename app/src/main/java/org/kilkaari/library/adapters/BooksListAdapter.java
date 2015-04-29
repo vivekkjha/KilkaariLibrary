@@ -43,15 +43,17 @@ public class BooksListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<BooksModel> listBooks;
     private BookListActivity context;
+    private boolean isEdit = false;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
     private float px;
     private SaveDataUtils saveDataUtils;
 
-    public BooksListAdapter(BaseActivity context, List<BooksModel> list){
+    public BooksListAdapter(BaseActivity context, List<BooksModel> list, boolean isEdit){
 
         this.listBooks = list;
         this.context = (BookListActivity)context;
+        this.isEdit = isEdit;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -216,8 +218,16 @@ public class BooksListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                //> start Activity from BookListActivity
-                context.showPopupWindow(v,position);
+                if(!isEdit) {
+                    //> if called from Main Activity
+                    //> start Activity from BookListActivity
+                    context.showPopupWindow(v, position);
+                }
+                else
+                {
+                    //> if called from Librarian activity in EDIT MODE
+                    context.showPopupWindowEdit(v, position);
+                }
 
             }
         });

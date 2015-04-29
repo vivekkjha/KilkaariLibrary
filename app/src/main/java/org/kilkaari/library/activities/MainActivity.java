@@ -3,6 +3,7 @@ package org.kilkaari.library.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,9 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import org.kilkaari.library.R;
+import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.fragments.BookCategoriesFragment;
 import org.kilkaari.library.fragments.NavigationDrawerFragment;
+import org.kilkaari.library.fragments.UserDetailsFragment;
 
 
 public class MainActivity extends BaseActivity  implements NavigationDrawerFragment.NavigationDrawerCallbacks{
@@ -55,8 +60,13 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         fragmentManager = getSupportFragmentManager();
         bookCategoriesFragment = new BookCategoriesFragment();
 
+        //> create bundle to transfer data to fragment
+        Bundle editBundle = new Bundle();
+        editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, false);
+
         //> open Book Shelf means categories list
         fragmentTransaction = fragmentManager.beginTransaction();
+        bookCategoriesFragment.setArguments(editBundle);
         fragmentTransaction.replace(R.id.lin_fragments, bookCategoriesFragment,"BookCategories");
         fragmentTransaction.addToBackStack("BookCategories");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -95,7 +105,17 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         }
         else if(position == 5)
         {
-            startActivity(new Intent(this,LibrarianActivity.class));
+            if(prefs.isLibrarian()) {
+                startActivity(new Intent(this, LibrarianActivity.class));
+            }
+            else
+            {
+                logOutCurrentUser();
+            }
+        }
+        else if( position ==6)
+        {
+            logOutCurrentUser();
         }
 
         //Toast.makeText(this, "Selected Index : " + position, Toast.LENGTH_SHORT).show();
@@ -118,4 +138,50 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
     {
 
     }
+
+    public void logOutCurrentUser()
+    {
+        //> get current user
+        if(ParseUser.getCurrentUser()!= null)
+        {
+            //> log out the current user
+            ParseUser.logOut();
+
+            if(ParseUser.getCurrentUser() == null)
+            {
+                //> if logout successful , then clear back stack ans start Login Activity
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+   public void showUserDetailsDialog() {
+
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+
+
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment prev = fragmentManager.findFragmentByTag("UserDetailsDialog");
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+        fragmentTransaction.addToBackStack("UserDetailsDialog");
+/*
+        fragmentTransaction.replace(R.id.lin_fragment, dFragment,"DialogFragment");
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+
+        // Create and show the dialog.
+        DialogFragment dFragment =  new UserDetailsFragment();
+
+        // Show DialogFragment
+        dFragment.show(fragmentManager, "UserDetailsDialog");
+    }
+
 }

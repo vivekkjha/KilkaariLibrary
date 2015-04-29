@@ -49,6 +49,8 @@ public class BookListActivity extends BaseActivity {
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
 
+    private boolean isEdit = false;
+
 
 
     @Override
@@ -64,6 +66,7 @@ public class BookListActivity extends BaseActivity {
         hash_booksAvailability = new HashMap<String,Boolean>();
         saveDataUtils  = new SaveDataUtils(this);
 
+        isEdit = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,false);
         String category = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
         if(category!=null)
         {
@@ -160,7 +163,7 @@ public class BookListActivity extends BaseActivity {
 
                         //> hide progress layout when all the fetching operations gets completed
 
-                        adapter = new BooksListAdapter(BookListActivity.this,list_books);
+                        adapter = new BooksListAdapter(BookListActivity.this,list_books,isEdit);
                         listView_listBooks.setAdapter(adapter);
                         hideProgressLayout();
                     }
@@ -187,6 +190,27 @@ public class BookListActivity extends BaseActivity {
         popupDetails = new PopupMenu(this,view);
 
         popupDetails.getMenuInflater().inflate(R.menu.menu_book_details,  popupDetails.getMenu());
+
+        popupDetails.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Intent intent  = new Intent(BookListActivity.this, BookDetailsActivity.class);
+                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,pos);
+                startActivity(intent);
+
+                return true;
+            }
+        });
+        popupDetails.show();
+
+    }
+
+    //> Show popup on click of option icon , and click listener on its item
+    public void showPopupWindowEdit(View view, final int pos)
+    {
+        popupDetails = new PopupMenu(this,view);
+
+        popupDetails.getMenuInflater().inflate(R.menu.menu_book_edit,  popupDetails.getMenu());
 
         popupDetails.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {

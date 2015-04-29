@@ -12,7 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.MainActivity;
@@ -53,7 +62,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private View mainView;
     private ListView mDrawerListView;
+    private LinearLayout lin_userDetails;
     private View mFragmentContainerView;
+    private ImageView img_userImage;
+    private TextView txt_userName, txt_userEmail;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -95,8 +107,29 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //> get preference in fragment
+        prefs =((LibraryApplication)getActivity().getApplication()).getPref();
+
         mainView = (View) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
+        img_userImage = (ImageView)mainView.findViewById(R.id.img_userImage);
+        txt_userName = (TextView)mainView.findViewById(R.id.txt_userName);
+        txt_userEmail = (TextView)mainView.findViewById(R.id.txt_userEmail);
+        lin_userDetails = (LinearLayout)mainView.findViewById(R.id.lin_userDetails);
+
+        //> set user name from preferences
+        if(prefs.getUserName()!= null)
+        {
+            txt_userName.setText(prefs.getUserName());
+        }
+
+        //> set User email from parse user
+        if(ParseUser.getCurrentUser()!= null) {
+            txt_userEmail.setText(ParseUser.getCurrentUser().getEmail());
+        }
+
 
         mDrawerListView = (ListView) mainView.findViewById(R.id.menuList);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,7 +140,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
         SlideItem[] slideItems;
 
-        prefs =((LibraryApplication)getActivity().getApplication()).getPref();
+
 
         if(prefs.isLibrarian()) {
             //> count , item name , icon
@@ -117,7 +150,8 @@ public class NavigationDrawerFragment extends Fragment {
                     new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
                     new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
                     new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read),
-                    new SlideItem(-1, getResources().getString(R.string.librarian), R.drawable.icon_admin)
+                    new SlideItem(-1, getResources().getString(R.string.librarian), R.drawable.icon_admin),
+                    new SlideItem(-1, getResources().getString(R.string.logOut), R.drawable.icon_library)
             };
         }
         else {
@@ -126,7 +160,8 @@ public class NavigationDrawerFragment extends Fragment {
                     new SlideItem(-1, getResources().getString(R.string.savedLinks), R.drawable.icon_saved_pages),
                     new SlideItem(-1, getResources().getString(R.string.requestedBooks), R.drawable.icon_requested),
                     new SlideItem(3, getResources().getString(R.string.toRead), R.drawable.icon_toread),
-                    new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read)
+                    new SlideItem(3, getResources().getString(R.string.read), R.drawable.icon_already_read),
+                    new SlideItem(-1, getResources().getString(R.string.logOut), R.drawable.icon_library)
 
             };
 
@@ -138,6 +173,26 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return mainView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        lin_userDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //> close drawers
+                if(isDrawerOpen())
+                {
+                    mDrawerLayout.closeDrawers();
+                }
+
+                //> call show user details dialog for details dialog of current user details
+                ((MainActivity)getActivity()).showUserDetailsDialog();
+            }
+        });
     }
 
     @Override

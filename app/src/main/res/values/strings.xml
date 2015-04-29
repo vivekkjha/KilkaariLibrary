@@ -18,6 +18,7 @@
     <string name="toRead">To Read</string>
     <string name="read">Read</string>
     <string name="librarian">Librarian</string>
+    <string name="logOut">Log out</string>
 
     <string name="add">Add</string>
     <string name="update">Update</string>
@@ -44,7 +45,12 @@
 
     <string name="bookDetails">Book Details</string>
     <string name="userDetails">User Details</string>
+    <string name="editDetails">Edit details</string>
     <string name="enterCorrectCode">Please enter correct code.</string>
+    
+    <string name="requiredErrorMessage">Required field.</string>
+    <string name="emailErrorMessage">Incorrect email.</string>
+    <string name="passNoMatchErrorMessage">Passwords do not match.</string>
 
 
 </resources>
