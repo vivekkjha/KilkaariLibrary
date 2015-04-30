@@ -23,6 +23,8 @@ import org.kilkaari.library.R;
 import org.kilkaari.library.activities.LibrarianActivity;
 import org.kilkaari.library.adapters.IssueListAdapter;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.BookListModel;
+import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.models.RequestQueueModel;
 import org.kilkaari.library.utils.LogUtil;
 import org.kilkaari.library.utils.SaveDataUtils;
@@ -236,11 +238,44 @@ public class FragmentIssueBooks extends ListFragment{
 
                 if(item.getTitle().toString().equals(getString(R.string.userDetails)))
                 {
-                    Toast.makeText(activity, "Get user Details in popup", Toast.LENGTH_SHORT).show();
+                    ParseObject userObject = requestQueueList.get(pos).getUserObject();
+                    activity.showUserDetailsDialog(userObject);
                 }
                 else if(item.getTitle().toString().equals(getString(R.string.bookDetails)))
                 {
-                    Toast.makeText(activity,"Get Book Details in activity",Toast.LENGTH_SHORT).show();
+                    //> clear book list
+                    activity.getList_books().clear();
+
+                    //> get book parse object from received list
+                    ParseObject bookObject = requestQueueList.get(pos).getBookObject();
+
+                    //> set books model with details from Parse objects
+                    BooksModel model = new BooksModel();
+
+                    model.setObjectId(bookObject.getObjectId());
+                    model.setName(bookObject.getString(Constants.DataColumns.BOOKS_NAME));
+                    model.setAuthor(bookObject.getString(Constants.DataColumns.BOOKS_AUTHOR));
+                    model.setDonatedBy(bookObject.getString(Constants.DataColumns.BOOKS_DONATED_BY));
+                    model.setAddedOn(bookObject.getString(Constants.DataColumns.BOOKS_ADDED_ON));
+                    model.setLanguage(bookObject.getString(Constants.DataColumns.BOOKS_LANGUAGE));
+                    model.setPublisher(bookObject.getString(Constants.DataColumns.BOOKS_PUBLISHER));
+                    model.setPublicationYear(bookObject.getInt(Constants.DataColumns.BOOKS_PUBLICATION_YEAR));
+                    model.setPageCount(bookObject.getInt(Constants.DataColumns.BOOKS_PAGE_COUNT));
+                    model.setCategory(bookObject.getString(Constants.DataColumns.BOOKS_CATEGORY));
+                    model.setDescription(bookObject.getString(Constants.DataColumns.BOOKS_DESCRIPTION));
+
+                    //> set
+                    if(bookObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO)!=null) {
+
+                        model.setPhotoUrl( bookObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
+                        LogUtil.w("Books Categories","Category URl : "+ bookObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
+                    }
+
+                    activity.getList_books().add(model);
+
+                    activity.showBookDetails(0,false);
+
+
                 }
                 return true;
             }
@@ -248,5 +283,11 @@ public class FragmentIssueBooks extends ListFragment{
         popupDetails.show();
 
     }
+
+
+
+
+
+
 
 }

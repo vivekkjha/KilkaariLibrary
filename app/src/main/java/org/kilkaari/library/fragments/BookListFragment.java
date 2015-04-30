@@ -1,74 +1,95 @@
-package org.kilkaari.library.activities;
+package org.kilkaari.library.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.kilkaari.library.R;
+import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.adapters.BooksListAdapter;
 import org.kilkaari.library.constants.Constants;
-import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
-import org.kilkaari.library.models.RequestQueueModel;
 import org.kilkaari.library.utils.LogUtil;
 import org.kilkaari.library.utils.SaveDataUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by vk on 20-03-2015.
+ * Created by vivek on 29/04/15.
  */
-public class BookListActivity extends BaseActivity {
-
-
+public class BookListFragment extends Fragment {
 
     //> hash to store availability of books with Object id as key and boolean as value
-    public HashMap<String,Boolean> hash_booksAvailability;
+    private HashMap<String,Boolean> hash_booksAvailability;
 
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
     private PopupMenu popupDetails;
+
+
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
+    private View rootView;
+    private BaseActivity activity;
 
     private boolean isEdit = false;
-
+    private String category;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_list);
 
-        listView_listBooks = (ListView)findViewById(R.id.listView_listBooks);
-        autoTxt_searchBooks = (AutoCompleteTextView)findViewById(R.id.autoTxt_searchBooks);
+        //> get bundle from calling activity
+        isEdit = getArguments().getBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT);
+        category = getArguments().getString(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
 
         hash_booksAvailability = new HashMap<String,Boolean>();
-        saveDataUtils  = new SaveDataUtils(this);
+        saveDataUtils  = new SaveDataUtils(getActivity());
 
-        isEdit = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,false);
-        String category = getIntent().getStringExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        rootView = inflater.inflate(org.kilkaari.library.R.layout.activity_book_list,container,false);
+
+        listView_listBooks = (ListView)rootView.findViewById(org.kilkaari.library.R.id.listView_listBooks);
+        autoTxt_searchBooks = (AutoCompleteTextView)rootView.findViewById(org.kilkaari.library.R.id.autoTxt_searchBooks);
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        activity = (BaseActivity)getActivity();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        //> get Book's Details if category is not null
         if(category!=null)
         {
-            showProgressLayout();
+            activity.showProgressLayout();
             getBooksDetails(category);
         }
     }
@@ -77,7 +98,7 @@ public class BookListActivity extends BaseActivity {
     public void getBooksDetails(String category)
     {
         //> clear application list to store books details, when fetched for new category
-        getList_books().clear();
+        activity.getList_books().clear();
 
         //> parse query to get list of books for this category
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
@@ -114,7 +135,7 @@ public class BookListActivity extends BaseActivity {
                                 model.setPhotoUrl( parseObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
                                 LogUtil.w("Books Categories","Category URl : "+ parseObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
                             }
-                            getList_books().add(model);
+                            activity.getList_books().add(model);
 
                             //> notify adapter whenever new row gets added
                             if(adapter!=null)
@@ -136,7 +157,7 @@ public class BookListActivity extends BaseActivity {
     }
 
     public void getAvailability()
-    {
+     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_AVAILABILITY);
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -165,9 +186,9 @@ public class BookListActivity extends BaseActivity {
 
                         //> hide progress layout when all the fetching operations gets completed
 
-                        adapter = new BooksListAdapter(BookListActivity.this,hash_booksAvailability,isEdit);
+                        adapter = new BooksListAdapter(activity,hash_booksAvailability,isEdit);
                         listView_listBooks.setAdapter(adapter);
-                        hideProgressLayout();
+                        activity.hideProgressLayout();
                     }
                     else {
                         LogUtil.e("BooksCategories","Database returned 0 list ");
@@ -178,60 +199,6 @@ public class BookListActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-
-    public void onClick(View v)
-    {
-
-    }
-
-    //> Show popup on click of option icon , and click listener on its item
-    public void showPopupWindow(View view, final int pos)
-    {
-        popupDetails = new PopupMenu(this,view);
-
-        popupDetails.getMenuInflater().inflate(R.menu.menu_book_details,  popupDetails.getMenu());
-
-        popupDetails.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-
-                Intent intent  = new Intent(BookListActivity.this, BookDetailsActivity.class);
-                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,pos);
-                startActivity(intent);
-
-                return true;
-            }
-        });
-        popupDetails.show();
-
-    }
-
-    //> Show popup on click of option icon , and click listener on its item
-    public void showPopupWindowEdit(View view, final int pos)
-    {
-        popupDetails = new PopupMenu(this,view);
-
-        popupDetails.getMenuInflater().inflate(R.menu.menu_book_edit,  popupDetails.getMenu());
-
-        popupDetails.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-
-                if(item.getTitle().toString().equals(getString(R.string.bookDetails))) {
-                    Intent intent = new Intent(BookListActivity.this, BookDetailsActivity.class);
-                    intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX, pos);
-                    startActivity(intent);
-                }
-                else if(item.getTitle().toString().equals(getString(R.string.editDetails)))
-                {
-
-                }
-
-                return true;
-            }
-        });
-        popupDetails.show();
-
     }
 
 }

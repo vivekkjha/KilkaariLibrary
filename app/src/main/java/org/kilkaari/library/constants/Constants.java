@@ -62,6 +62,8 @@ public interface Constants {
         public String USER_FACEBOOK_DATA = "facebookData";
         public String USER_IS_LIBRARIAN = "isLibrarian";
         public String USER_PHONE = "phone";
+        public String USER_ADDRESS = "address";
+        public String USER_GENDER = "gender";
 
         public String REQUEST_QUEUE_TIMESTAMP = "timestamp";
         public String REQUEST_QUEUE_BOOK = "book";

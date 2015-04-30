@@ -27,7 +27,21 @@ public class UserDetailsFragment extends android.support.v4.app.DialogFragment {
 
     private Prefs prefs;
 
+    public static UserDetailsFragment newInstance(String name, String email, String phone,String address,String gender) {
+        UserDetailsFragment f = new UserDetailsFragment();
 
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putString("name",name);
+        args.putString("email",email);
+        args.putString("phone",phone);
+        args.putString("address",address);
+        args.putString("gender",gender);
+        f.setArguments(args);
+
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +67,12 @@ public class UserDetailsFragment extends android.support.v4.app.DialogFragment {
         txt_gender = (TextView)rootView.findViewById(R.id.txt_gender);
         txt_address = (TextView)rootView.findViewById(R.id.txt_address);
 
-        txt_userName.setText((prefs.getUserName()!=null)?prefs.getUserName():"Vivek jha");
-        txt_userEmail.setText(ParseUser.getCurrentUser().getEmail());
+
+        txt_userName.setText(this.getArguments().getString("name"));
+        txt_userEmail.setText(this.getArguments().getString("email"));
+        txt_phone.setText(this.getArguments().getString("phone"));
+        txt_gender.setText(this.getArguments().getString("gender"));
+        txt_address.setText(this.getArguments().getString("address"));
 
         return rootView;
     }

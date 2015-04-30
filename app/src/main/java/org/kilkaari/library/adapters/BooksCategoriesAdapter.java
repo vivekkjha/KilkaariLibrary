@@ -2,11 +2,13 @@ package org.kilkaari.library.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -17,6 +19,7 @@ import org.kilkaari.library.activities.BookListActivity;
 import org.kilkaari.library.activities.BooksCategoriesActivity;
 import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.fragments.BookListFragment;
 import org.kilkaari.library.models.BookCategoriesModel;
 import org.kilkaari.library.models.BooksModel;
 
@@ -95,10 +98,19 @@ public class BooksCategoriesAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, BookListActivity.class);
-                intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY,model.getCategory());
-                intent.putExtra(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,isEdit);
-                context.startActivity(intent);
+
+                //> bundle to pass data to next fragment
+                Bundle bundle =  new Bundle();
+                bundle.putString(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY,model.getCategory());
+                bundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,isEdit);
+
+                BookListFragment bookListFragment= new BookListFragment();
+                bookListFragment.setArguments(bundle);
+
+                context.getSupportFragmentManager().beginTransaction()
+                        .replace(context.getFragmentContainer().getId(),bookListFragment,"bookListFragment")
+                        .addToBackStack("bookListFragment")
+                        .commit();
 
             }
         });

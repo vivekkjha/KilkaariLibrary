@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/titleBottomBar"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,27 +16,27 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/smallPadding"
                 android:paddingRight="@dimen/smallPadding"
-                android:paddingTop="@dimen/smallPadding"
-                android:layout_height="wrap_content">
+                android:paddingTop="@dimen/smallPadding">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="@dimen/bookDetailsImageHeightWidth">
+                    android:layout_height="@dimen/bookDetailsImageHeightWidth"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:layout_height="60dp">
+                        android:layout_height="60dp"
+                        android:gravity="center">
                         <View
                             android:layout_width="170dp"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:id="@+id/txt_categoryNameDetails"
-                            android:gravity="center"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:text="Category"/>
                         </LinearLayout>
                     <View
@@ -49,28 +45,28 @@
                         android:background="@color/grayBg"/>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:layout_height="0dp">
+                        android:gravity="center">
 
                         <View
                             android:layout_width="@dimen/leftMarginBookDetails"
                             android:layout_height="wrap_content"/>
                         <LinearLayout
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
+                            android:orientation="vertical">
 
                             <RatingBar
+                                android:id="@+id/ratingBarDetails"
+                                style="@style/ratingBarLarge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/smallPadding"
-                                style="@style/ratingBarLarge"
-                                android:rating="5"
-                                android:id="@+id/ratingBarDetails" />
+                                android:rating="5" />
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -79,36 +75,36 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/donorDetailsTextSize"
                                     android:singleLine="true"
-                                    android:text="@string/donatedBy"/>
+                                    android:text="@string/donatedBy"
+                                    android:textSize="@dimen/donorDetailsTextSize"/>
                                 <TextView
+                                    android:id="@+id/txt_donatedBy"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/donorDetailsTextSize"
                                     android:singleLine="true"
-                                    android:id="@+id/txt_donatedBy"
-                                    android:text="@string/donatedBy"/>
+                                    android:text="@string/donatedBy"
+                                    android:textSize="@dimen/donorDetailsTextSize"/>
                                 </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/smallPadding"
                                 android:orientation="horizontal"
+                                android:paddingLeft="@dimen/smallPadding"
                                 android:paddingRight="@dimen/smallPadding">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/donorDetailsTextSize"
                                     android:singleLine="true"
-                                    android:text="@string/addedOn"/>
+                                    android:text="@string/addedOn"
+                                    android:textSize="@dimen/donorDetailsTextSize"/>
                                 <TextView
+                                    android:id="@+id/txt_addedOn"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txt_addedOn"
-                                    android:textSize="@dimen/donorDetailsTextSize"
                                     android:singleLine="true"
-                                    android:text="@string/addedOn"/>
+                                    android:text="@string/addedOn"
+                                    android:textSize="@dimen/donorDetailsTextSize"/>
                             </LinearLayout>
                             </LinearLayout>
                     </LinearLayout>
@@ -117,22 +113,22 @@
                     </LinearLayout>
                 <RelativeLayout
                     android:layout_width="@dimen/bookDetailsImageHeightWidth"
+                    android:layout_height="@dimen/bookDetailsImageHeightWidth"
                     android:layout_marginLeft="@dimen/largeMargin"
-                    android:padding="2dp"
                     android:background="@color/baseColor"
-                    android:layout_height="@dimen/bookDetailsImageHeightWidth">
+                    android:padding="2dp">
                     <ImageView
+                        android:id="@+id/img_bookDetailsImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/img_bookDetailsImage"
+                        android:background="@color/white"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_book_default"
-                        android:background="@color/white"/>
+                        android:src="@drawable/icon_book_default"/>
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="-3dp"
                         android:layout_alignParentRight="true"
+                        android:layout_marginTop="-3dp"
 
 
                         android:src="@drawable/icon_queue"/>
@@ -142,81 +138,82 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/smallPadding"
-                android:paddingRight="@dimen/smallPadding"
-                android:orientation="vertical">
+                android:paddingRight="@dimen/smallPadding">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="@dimen/mediumPadding"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/mediumPadding">
                     <TextView
+                        android:id="@+id/txt_bookNameDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_bookNameDetails"
-                        android:paddingTop="@dimen/smallPadding"
                         android:paddingBottom="@dimen/smallPadding"
-                        android:textSize="@dimen/bookDetailsNameTextSize"
+                        android:paddingTop="@dimen/smallPadding"
                         android:singleLine="true"
+                        android:text="fdfdf"
                         android:textColor="@color/black"
-                        android:text="fdfdf"/>
+                        android:textSize="@dimen/bookDetailsNameTextSize"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="2"
                             android:layout_height="wrap_content"
+                            android:layout_weight="2"
                             android:orientation="vertical">
                     <TextView
+                        android:id="@+id/txt_authorNameDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_authorNameDetails"
-                        android:paddingTop="@dimen/smallPadding"
                         android:paddingBottom="@dimen/smallPadding"
+                        android:paddingTop="@dimen/smallPadding"
                         android:singleLine="true"
                         android:text="fddfd"/>
                     <TextView
+                        android:id="@+id/txt_languageDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_languageDetails"
                         android:paddingBottom="@dimen/smallPadding"
                         android:singleLine="true"
                         android:text="idsdsd"/>
                         </LinearLayout>
                         <LinearLayout
+                            android:id="@+id/lin_bookOptions"
                             android:layout_width="0dp"
-                            android:layout_weight="1.2"
                             android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:layout_gravity="end">
+                            android:layout_gravity="end"
+                            android:layout_weight="1.2"
+                            android:gravity="center">
                             <ImageView
+                                android:id="@+id/img_toread"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/smallPadding"
-                                android:id="@+id/img_toread"
-                                android:clickable="true"
-                                android:layout_marginRight="@dimen/smallMargin"
                                 android:layout_marginLeft="@dimen/smallMargin"
+                                android:layout_marginRight="@dimen/smallMargin"
+                                android:clickable="true"
+                                android:padding="@dimen/smallPadding"
                                 android:src="@drawable/icon_toread"/>
                             <ImageView
+                                android:id="@+id/img_alreadyRead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/img_alreadyRead"
+                                android:layout_marginLeft="@dimen/smallMargin"
+                                android:layout_marginRight="@dimen/smallMargin"
                                 android:clickable="true"
                                 android:padding="@dimen/smallPadding"
-                                android:layout_marginRight="@dimen/smallMargin"
-                                android:layout_marginLeft="@dimen/smallMargin"
                                 android:src="@drawable/icon_already_read_inactive"/>
                             <ImageView
+                                android:id="@+id/img_requested"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/img_requested"
-                                android:clickable="true"
-                                android:layout_marginRight="@dimen/smallMargin"
                                 android:layout_marginLeft="@dimen/smallMargin"
+                                android:layout_marginRight="@dimen/smallMargin"
+                                android:clickable="true"
                                 android:padding="@dimen/smallPadding"
                                 android:src="@drawable/icon_requested"/>
                         </LinearLayout>
@@ -231,18 +228,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/smallPadding"
                 android:paddingRight="@dimen/smallPadding"
-                android:paddingTop="@dimen/mediumPadding"
-                android:orientation="vertical">
+                android:paddingTop="@dimen/mediumPadding">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edtAddBooksHeight"
-                    android:text="Details"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/addBookHeadTextSize"
                     android:background="@color/white"
-                    android:padding="@dimen/smallPadding"/>
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/smallPadding"
+                    android:text="Details"
+                    android:textSize="@dimen/addBookHeadTextSize"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -259,9 +256,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/donorDetailsTextSize"
                             android:padding="@dimen/smallPadding"
-                            android:text="PUBLISHER"/>
+                            android:text="PUBLISHER"
+                            android:textSize="@dimen/donorDetailsTextSize"/>
 
                         </LinearLayout>
                     <LinearLayout
@@ -272,8 +269,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/smallPadding"
-                            android:textSize="@dimen/donorDetailsTextSize"
-                            android:text="PUBLISHING YEAR"/>
+                            android:text="PUBLISHING YEAR"
+                            android:textSize="@dimen/donorDetailsTextSize"/>
 
                     </LinearLayout>
 
@@ -290,14 +287,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/txt_publisherDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/smallPadding"
                             android:paddingLeft="@dimen/smallPadding"
                             android:paddingRight="@dimen/smallPadding"
-                            android:paddingBottom="@dimen/smallPadding"
-                            android:textColor="@color/black"
-                            android:text="Westland"/>
+                            android:text="Westland"
+                            android:textColor="@color/black"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -305,14 +302,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/txt_publishingYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/smallPadding"
                             android:paddingLeft="@dimen/smallPadding"
                             android:paddingRight="@dimen/smallPadding"
-                            android:paddingBottom="@dimen/smallPadding"
-                            android:textColor="@color/black"
-                            android:text="2009"/>
+                            android:text="2009"
+                            android:textColor="@color/black"/>
 
                     </LinearLayout>
 
@@ -331,9 +328,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/donorDetailsTextSize"
                             android:padding="@dimen/smallPadding"
-                            android:text="PAGE COUNT"/>
+                            android:text="PAGE COUNT"
+                            android:textSize="@dimen/donorDetailsTextSize"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -343,8 +340,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/smallPadding"
-                            android:textSize="@dimen/donorDetailsTextSize"
-                            android:text="ISBN"/>
+                            android:text="ISBN"
+                            android:textSize="@dimen/donorDetailsTextSize"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -358,14 +355,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/txt_pageCountDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/smallPadding"
                             android:paddingLeft="@dimen/smallPadding"
                             android:paddingRight="@dimen/smallPadding"
-                            android:paddingBottom="@dimen/smallPadding"
-                            android:textColor="@color/black"
-                            android:text="219"/>
+                            android:text="219"
+                            android:textColor="@color/black"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -373,14 +370,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <TextView
+                            android:id="@+id/txt_isbnDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txt_isbnDetails"
+                            android:paddingBottom="@dimen/smallPadding"
                             android:paddingLeft="@dimen/smallPadding"
                             android:paddingRight="@dimen/smallPadding"
-                            android:paddingBottom="@dimen/smallPadding"
-                            android:textColor="@color/black"
-                            android:text="18245896524545"/>
+                            android:text="18245896524545"
+                            android:textColor="@color/black"/>
 
                     </LinearLayout>
 
@@ -396,32 +393,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/smallPadding"
                 android:paddingLeft="@dimen/smallPadding"
                 android:paddingRight="@dimen/smallPadding"
-                android:paddingBottom="@dimen/smallPadding"
-                android:paddingTop="@dimen/mediumPadding"
-                android:orientation="vertical">
+                android:paddingTop="@dimen/mediumPadding">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edtAddBooksHeight"
-                    android:text="Description"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/addBookHeadTextSize"
                     android:background="@color/white"
-                    android:padding="@dimen/smallPadding"/>
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/smallPadding"
+                    android:text="Description"
+                    android:textSize="@dimen/addBookHeadTextSize"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/baseColor"/>
                     <TextView
+                        android:id="@+id/txt_descriptionDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_descriptionDetails"
                         android:background="@color/white"
                         android:gravity="left|top"
                         android:padding="@dimen/mediumPadding"
-                        android:textColor="@color/black"
                         android:text="loren ispum loren ipsum loren ipsum loren ipsum ipsum loren ipsum loren ipsum ipsum loren ipsum loren ipsum "
+                        android:textColor="@color/black"
 
                         />
 
@@ -431,10 +428,6 @@
                     android:layout_height="2dp"
                     android:background="@color/grayBg"/>
             </LinearLayout>
-
-
-
-
         </LinearLayout>
     </ScrollView>
 

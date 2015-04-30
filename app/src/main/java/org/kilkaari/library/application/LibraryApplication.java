@@ -8,15 +8,20 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
 
 import org.kilkaari.library.constants.Constants;
+import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vk on 14-03-2015.
  */
 public class LibraryApplication extends Application {
 
+    //> List to get book list for specific category
+    private static List<BooksModel> list_books;
     private Prefs prefs;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
@@ -26,6 +31,7 @@ public class LibraryApplication extends Application {
         super.onCreate();
 
         prefs = new Prefs(this);
+        list_books = new ArrayList<BooksModel>();
 
         //> create kilkaari folder
         createAppFolders();
@@ -69,6 +75,10 @@ public class LibraryApplication extends Application {
     }
     public com.nostra13.universalimageloader.core.ImageLoader getImageLoader(){
         return loader;
+    }
+    public List<BooksModel> getList_books()
+    {
+        return  list_books;
     }
 
 }

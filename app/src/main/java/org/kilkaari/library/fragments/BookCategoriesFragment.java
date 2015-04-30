@@ -35,7 +35,7 @@ import java.util.List;
 public class BookCategoriesFragment extends Fragment {
 
     //> lists to get entries from Books table
-    public static List<BookCategoriesModel> list_CategoriesBooks;
+    public List<BookCategoriesModel> list_CategoriesBooks;
 
     //> layout related objects
     private View rootView;
@@ -71,7 +71,6 @@ public class BookCategoriesFragment extends Fragment {
 
         //> get bundle from calling activity
         isEdit = getArguments().getBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT);
-
         rootView = inflater.inflate(R.layout.activtity_books_categories,container,false);
 
         //> layout initialization
@@ -115,6 +114,10 @@ public class BookCategoriesFragment extends Fragment {
     //> get categories of books from parse server
     public void getCategories()
     {
+        //> clear categories list before loading data into it
+        list_CategoriesBooks.clear();
+
+        //> parse query to get categories from parse server
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_CATEGORIES);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> categoryList, com.parse.ParseException e) {
@@ -138,9 +141,6 @@ public class BookCategoriesFragment extends Fragment {
                                         categoryList.get(i).getParseFile(Constants.DataColumns.CATEGORIES_PHOTO).getUrl());
                                 LogUtil.w("Books Categories","Category URl : "+ categoryList.get(i).getParseFile(Constants.DataColumns.CATEGORIES_PHOTO).getUrl());
                             }
-
-
-
 
                             //> if loop count is on last element , start fetching count of that category
                             if(i== (categoryList.size()-1))
@@ -182,7 +182,7 @@ public class BookCategoriesFragment extends Fragment {
                     //> setAdapter
                     setAdapter();
 
-                    //> if the category is last element of of list_booksCategories List
+                    //> if the category is last element of list_booksCategories List
                     if(category.equals(list_booksCategories.get(list_booksCategories.size()-1)))
                     {
 

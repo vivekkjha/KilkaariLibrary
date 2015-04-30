@@ -75,7 +75,7 @@ public class BookDetailsActivity extends BaseActivity {
     }
     public void getBookDetails(int pos)
     {
-        BooksModel model = BookListActivity.list_books.get(pos);
+        BooksModel model = getList_books().get(pos);
         //> set different layouts elements with data in model
         LogUtil.w("BookDetailsActivity","Model object " + model);
 

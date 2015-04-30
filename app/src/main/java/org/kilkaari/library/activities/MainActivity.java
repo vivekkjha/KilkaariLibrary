@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
     //> fragments objects
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
     private BookCategoriesFragment bookCategoriesFragment;
 
     @Override
@@ -59,6 +60,10 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         lin_fragments = (LinearLayout)findViewById(R.id.lin_fragments);
         fragmentManager = getSupportFragmentManager();
         bookCategoriesFragment = new BookCategoriesFragment();
+
+        //> set Container Fragment and fragment Manager in BaseActivity
+        setFragmentContainer(lin_fragments);
+        setFragmentManagerActivity(fragmentManager);
 
         //> create bundle to transfer data to fragment
         Bundle editBundle = new Bundle();
@@ -134,10 +139,7 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
 
         }
     }
-    public void startBookListFragment()
-    {
 
-    }
 
     public void logOutCurrentUser()
     {
@@ -169,6 +171,7 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         Fragment prev = fragmentManager.findFragmentByTag("UserDetailsDialog");
         if (prev != null) {
             fragmentTransaction.remove(prev);
+            fragmentManager.popBackStack();
         }
         fragmentTransaction.addToBackStack("UserDetailsDialog");
 /*
@@ -178,10 +181,16 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         fragmentTransaction.commit();*/
 
         // Create and show the dialog.
-        DialogFragment dFragment =  new UserDetailsFragment();
+        DialogFragment dFragment =  UserDetailsFragment.newInstance(ParseUser.getCurrentUser().getString("name"),ParseUser.getCurrentUser().getEmail(),"0000","Rohni Delhi","Male");
 
         // Show DialogFragment
         dFragment.show(fragmentManager, "UserDetailsDialog");
     }
+
+
+    public BookCategoriesFragment getBookCategoriesFragment() {
+        return bookCategoriesFragment;
+    }
+
 
 }

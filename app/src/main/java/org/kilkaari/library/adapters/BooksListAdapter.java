@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ import org.kilkaari.library.models.Availability;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.SaveDataUtils;
 
+import java.util.BitSet;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,20 +42,24 @@ import java.util.List;
  */
 public class BooksListAdapter extends BaseAdapter {
 
-
-    private LayoutInflater inflater;
     private List<BooksModel> listBooks;
-    private BookListActivity context;
+    private HashMap<String,Boolean> hash_booksAvailability;
     private boolean isEdit = false;
-    private DisplayImageOptions options;
-    private com.nostra13.universalimageloader.core.ImageLoader loader;
     private float px;
+
+    private BaseActivity context;
+    private LayoutInflater inflater;
     private SaveDataUtils saveDataUtils;
 
-    public BooksListAdapter(BaseActivity context, List<BooksModel> list, boolean isEdit){
+    private DisplayImageOptions options;
+    private com.nostra13.universalimageloader.core.ImageLoader loader;
 
-        this.listBooks = list;
-        this.context = (BookListActivity)context;
+
+    public BooksListAdapter(BaseActivity context,HashMap<String,Boolean> hash_booksAvailability, boolean isEdit){
+
+        this.listBooks = context.getList_books();
+        this.hash_booksAvailability = hash_booksAvailability;
+        this.context = context;
         this.isEdit = isEdit;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -94,6 +101,7 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_alreadyRead  = (ImageView)convertView.findViewById(R.id.img_alreadyRead);
             viewHolder.img_requested  = (ImageView)convertView.findViewById(R.id.img_requested);
             viewHolder.img_moreOptions  = (ImageView)convertView.findViewById(R.id.img_moreOptions);
+            viewHolder.lin_bookOptions = (LinearLayout)convertView.findViewById(R.id.lin_bookOptions);
 
             convertView.setTag(viewHolder);
     }
@@ -103,6 +111,7 @@ public class BooksListAdapter extends BaseAdapter {
         viewHolder.txt_bookName.setText(model.getName());
         viewHolder.txt_authorName.setText(model.getAuthor());
 
+        //> set Photo Url if available , else set Default icon
         if(model.getPhotoUrl()!=null) {
             loader.displayImage(model.getPhotoUrl(), viewHolder.img_bookIcon, options);
         }
@@ -112,9 +121,19 @@ public class BooksListAdapter extends BaseAdapter {
 
         }
 
-        if(context.hash_booksAvailability.get(model.getObjectId())!=null)
+        //> if in edit Mode , librarian don't need to see all the book options for user
+        if(isEdit)
         {
-            if(context.hash_booksAvailability.get(model.getObjectId())) {
+            viewHolder.lin_bookOptions.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            viewHolder.lin_bookOptions.setVisibility(View.VISIBLE);
+        }
+
+        if(hash_booksAvailability.get(model.getObjectId())!=null)
+        {
+            if(hash_booksAvailability.get(model.getObjectId())) {
                 //> programmatically set rounded corners and background color
                 GradientDrawable shape =  new GradientDrawable();
                 shape.setCornerRadius(px);
@@ -218,16 +237,8 @@ public class BooksListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                if(!isEdit) {
-                    //> if called from Main Activity
-                    //> start Activity from BookListActivity
-                    context.showPopupWindow(v, position);
-                }
-                else
-                {
-                    //> if called from Librarian activity in EDIT MODE
-                    context.showPopupWindowEdit(v, position);
-                }
+                //> show popup window for more options resding in Base Actviity
+                context.showBookPopupList(v,position,isEdit);
 
             }
         });
@@ -255,6 +266,7 @@ public class BooksListAdapter extends BaseAdapter {
         ImageView img_alreadyRead;
         ImageView img_requested;
         ImageView img_moreOptions;
+        LinearLayout lin_bookOptions;
 
 
     }

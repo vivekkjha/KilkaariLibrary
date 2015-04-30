@@ -2,6 +2,8 @@ package org.kilkaari.library.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -19,6 +21,7 @@ import org.kilkaari.library.fragments.BookCategoriesFragment;
 import org.kilkaari.library.fragments.FragmentAddBooks;
 import org.kilkaari.library.fragments.FragmentIssueBooks;
 import org.kilkaari.library.fragments.FragmentReturnBooks;
+import org.kilkaari.library.fragments.UserDetailsFragment;
 import org.kilkaari.library.utils.LogUtil;
 
 import java.util.List;
@@ -41,8 +44,6 @@ public class LibrarianActivity extends BaseActivity {
     private FragmentReturnBooks fragmentReturnBooks;
     private BookCategoriesFragment bookCategoriesFragment;
 
-    //> flags to prevent same fragment to load again and again
-    private boolean isAddBooks  = true,isUpdate = true, isIssue = true, isReturn = true;
 
 
 
@@ -52,15 +53,16 @@ public class LibrarianActivity extends BaseActivity {
         setContentView(R.layout.activity_librarian);
 
         lin_fragments = (LinearLayout)findViewById(R.id.lin_fragments);
+        fragmentManager = getSupportFragmentManager();
+
+        //> set Container Fragment and Fragment Transaction in BaseActivity
+        setFragmentContainer(lin_fragments);
+        setFragmentManagerActivity(fragmentManager);
 
         fragmentAddBooks = new FragmentAddBooks();
         fragmentIssueBooks = new FragmentIssueBooks();
         fragmentReturnBooks = new FragmentReturnBooks();
         bookCategoriesFragment = new BookCategoriesFragment();
-
-        fragmentManager = getSupportFragmentManager();
-
-
 
     }
 
@@ -81,17 +83,19 @@ public class LibrarianActivity extends BaseActivity {
     {
         if(v.getId() == R.id.lin_addBooks)
         {
-            if(isAddBooks) {
+
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentAddBooks);
+
+                Fragment prev = fragmentManager.findFragmentByTag("AddBooks");
+                if (prev != null) {
+                    fragmentManager.popBackStack();
+                }
                 fragmentTransaction.addToBackStack("AddBooks");
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
 
-                isAddBooks = false;
-                isIssue = true;
-                isReturn =  true;
-            }
+
 
         }
         else if(v.getId() == R.id.lin_updateBooks)
@@ -100,56 +104,45 @@ public class LibrarianActivity extends BaseActivity {
 
             //> create bundle to transfer data to fragment
             Bundle editBundle = new Bundle();
-            editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, false);
+            editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, true);
 
             //> open Book Shelf means categories list
             fragmentTransaction = fragmentManager.beginTransaction();
             bookCategoriesFragment.setArguments(editBundle);
             fragmentTransaction.replace(R.id.lin_fragments, bookCategoriesFragment,"BookCategories");
+            Fragment prev = fragmentManager.findFragmentByTag("BookCategories");
+            if (prev != null) {
+                fragmentManager.popBackStack();
+            }
             fragmentTransaction.addToBackStack("BookCategories");
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.commit();
         }
         else if(v.getId() == R.id.lin_issueBooks)
         {
-            if(isIssue) {
+
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentIssueBooks);
                 fragmentTransaction.addToBackStack("IssueBooks");
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
 
-                isAddBooks = true;
-                isIssue = false;
-                isReturn =  true;
-            }
+
         }
         else if(v.getId() == R.id.lin_returnBooks)
         {
-            if(isReturn) {
+
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentReturnBooks);
                 fragmentTransaction.addToBackStack("ReturnBooks");
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
 
-                isAddBooks = true;
-                isIssue = true;
-                isReturn =  false;
 
-            }
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
 
-        isAddBooks = true;
-        isIssue = true;
-        isReturn =  true;
-
-    }
 
     public FragmentAddBooks getFragmentAddBooks() {
         return fragmentAddBooks;
@@ -162,5 +155,40 @@ public class LibrarianActivity extends BaseActivity {
     public FragmentReturnBooks getFragmentReturnBooks() {
         return fragmentReturnBooks;
     }
+
+    public void showUserDetailsDialog(ParseObject parseObject) {
+
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+
+
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment prev = fragmentManager.findFragmentByTag("UserDetailsDialog");
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+            fragmentManager.popBackStack();
+        }
+        fragmentTransaction.addToBackStack("UserDetailsDialog");
+/*
+        fragmentTransaction.replace(R.id.lin_fragment, dFragment,"DialogFragment");
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+
+        // Create and show the dialog.
+        String name  = parseObject.getString(Constants.DataColumns.USER_NAME);
+        String email  = parseObject.getString(Constants.DataColumns.USER_EMAIL);
+        String phone = parseObject.getString(Constants.DataColumns.USER_PHONE);
+        String address = parseObject.getString(Constants.DataColumns.USER_ADDRESS);
+        String gender = parseObject.getString(Constants.DataColumns.USER_GENDER);
+
+        DialogFragment dFragment =  UserDetailsFragment.newInstance((name!=null)?name:"",(email!= null)?email:"",
+                (phone!=null)?phone:"",(address!=null)?address:"",(gender!=null)?gender:"");
+
+        // Show DialogFragment
+        dFragment.show(fragmentManager, "UserDetailsDialog");
+    }
+
 
 }
