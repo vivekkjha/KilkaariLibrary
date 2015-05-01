@@ -271,9 +271,11 @@ public class FragmentIssueBooks extends ListFragment{
                         LogUtil.w("Books Categories","Category URl : "+ bookObject.getParseFile(Constants.DataColumns.BOOKS_PHOTO).getUrl());
                     }
 
+                    //> add details about book into model
                     activity.getList_books().add(model);
 
-                    activity.showBookDetails(0,false);
+                    //> show book details at the 0th position in application list with isEdit true to hide user options layout
+                    activity.showBookDetails(0,true);
 
 
                 }

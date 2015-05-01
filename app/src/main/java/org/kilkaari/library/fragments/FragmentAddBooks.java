@@ -55,6 +55,8 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
     private EditText edt_donorName,edt_date,edt_bookName,edt_authorName,edt_language,edt_pageCount,edt_publisher,edt_publishingYear,edt_description;
     private AutoCompleteTextView autoTxt_category;
     private ImageView img_bookImage;
+    private LinearLayout lin_topDone;
+
     //> program objects
     private LibrarianActivity activity;
     private String camera = "Camera";
@@ -145,6 +147,9 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
         autoTxt_category = (AutoCompleteTextView)rootView.findViewById(R.id.autoTxt_category);
         img_bookImage = (ImageView)rootView.findViewById(R.id.img_bookImage);
         img_bookImage.setOnClickListener(this);
+
+        lin_topDone = (LinearLayout)getActivity().findViewById(R.id.lin_topDone);
+        lin_topDone.setOnClickListener(this);
 
 
         registerForContextMenu(img_bookImage);

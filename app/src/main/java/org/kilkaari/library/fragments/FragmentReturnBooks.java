@@ -1,5 +1,6 @@
 package org.kilkaari.library.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -16,6 +18,7 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.activities.AlertActivity;
 import org.kilkaari.library.activities.LibrarianActivity;
 import org.kilkaari.library.adapters.ReturnListAdapter;
 import org.kilkaari.library.constants.Constants;
@@ -33,6 +36,7 @@ public class FragmentReturnBooks extends ListFragment{
 
     //> layout parameters
     private View rootView;
+    private LinearLayout lin_add;
     private LibrarianActivity activity;
     private TextView txt_empty;
 
@@ -54,7 +58,18 @@ public class FragmentReturnBooks extends ListFragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.layout_issue,container,false);
+
         txt_empty = (TextView)rootView.findViewById(R.id.txt_empty);
+        lin_add = (LinearLayout)rootView.findViewById(R.id.lin_add);
+        lin_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //> get activity result in fragment instead of activity associated
+                FragmentReturnBooks.this.startActivityForResult(new Intent(activity, AlertActivity.class),Constants.REQUEST_CODE.REQUEST_OPEN_ALERT);
+            }
+        });
+
         return rootView;
     }
 
@@ -140,6 +155,9 @@ public class FragmentReturnBooks extends ListFragment{
 
                         LogUtil.e("Issue List", "Database returned 0 list ");
                         txt_empty.setText("Sorry ! No Issued Books");
+
+
+
                     }
                 } else {
                     Log.d("Issue List", "Error: " + e.getMessage());
@@ -198,5 +216,13 @@ public class FragmentReturnBooks extends ListFragment{
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == Constants.REQUEST_CODE.REQUEST_OPEN_ALERT)
+        {
+            LogUtil.e("Return Books Fragment","Control returned");
+        }
+    }
 }

@@ -90,4 +90,9 @@ public interface Constants {
         public String EXTRAS_SELECTED_BOOK_INDEX = "selectedBookIndex";
         public String EXTRAS_BOOK_IS_EDIT = "isEdit";
     }
+
+    public interface REQUEST_CODE
+    {
+        public static int REQUEST_OPEN_ALERT = 111;
+    }
 }

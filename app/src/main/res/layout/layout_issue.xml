@@ -23,12 +23,13 @@
         </TextView>
         <include layout="@layout/layout_loading"/>
         <LinearLayout
+            android:id="@+id/lin_add"
             android:layout_width="match_parent"
             android:layout_height="@dimen/addOfflineRequestHeight"
             android:layout_alignParentBottom="true"
             android:background="@color/baseColor"
             android:gravity="center"
-            android:visibility="gone">
+            android:visibility="visible">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

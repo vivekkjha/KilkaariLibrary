@@ -68,15 +68,7 @@ public class LibrarianActivity extends BaseActivity {
 
     public void onClick(View v)
     {
-        if(v.getId() == R.id.lin_topDone)
-        {
 
-            //> save entered category ind atabase
-            fragmentAddBooks.saveCategories();
-
-            //> save details of book entered
-            fragmentAddBooks.saveBookDetails();
-        }
     }
 
     public void onBottomClick(View v)
@@ -190,5 +182,13 @@ public class LibrarianActivity extends BaseActivity {
         dFragment.show(fragmentManager, "UserDetailsDialog");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == Constants.REQUEST_CODE.REQUEST_OPEN_ALERT)
+        {
+            LogUtil.e("Librarian Activity","Control returned");
+        }
+    }
 }
