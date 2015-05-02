@@ -57,6 +57,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
     private PopupWindow popupWindow;
     private View popupView;
     private LinearLayout lin_overlay;
+    private TextView txt_filterSearch;
 
 
     private BaseActivity activity;
@@ -88,9 +89,13 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
         autoTxt_searchBooks = (AutoCompleteTextView)rootView.findViewById(org.kilkaari.library.R.id.autoTxt_searchBooks);
         img_filterSearch = (ImageView)rootView.findViewById(R.id.img_filterSearch);
         lin_overlay = (LinearLayout)rootView.findViewById(R.id.lin_overlay);
+        txt_filterSearch = (TextView)rootView.findViewById(R.id.txt_filterSearch);
+        txt_filterSearch.setOnClickListener(this);
         img_filterSearch.setOnClickListener(this);
         lin_overlay.setOnClickListener(this);
 
+        //> hide popup window when vieew loaded first time
+        hideFilterPopup();
         return rootView;
     }
 
@@ -128,7 +133,43 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
 
         if(v.getId() == R.id.lin_overlay)
         {
-
+            hideFilterPopup();
+            lin_overlay.setVisibility(View.GONE);
+        }
+        else if(v.getId() == R.id.txt_filterSearch)
+        {
+            //show filter popup
+            showFilterPopup(v);
+        }
+       else  if(v.getId() == R.id.lin_bookName)
+        {
+            txt_filterSearch.setText("N");
+            txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.regret));
+            autoTxt_searchBooks.setHint(R.string.hint_searchBookName);
+            hideFilterPopup();
+            lin_overlay.setVisibility(View.GONE);
+        }
+        else  if(v.getId() == R.id.lin_authorName)
+        {
+            txt_filterSearch.setText("A");
+            txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.available));
+            autoTxt_searchBooks.setHint(R.string.hint_searchAuthorName);
+            hideFilterPopup();
+            lin_overlay.setVisibility(View.GONE);
+        }
+        else  if(v.getId() == R.id.lin_publisher)
+        {
+            txt_filterSearch.setText("P");
+            txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.inQueue));
+            autoTxt_searchBooks.setHint(R.string.hint_searchPublisher);
+            hideFilterPopup();
+            lin_overlay.setVisibility(View.GONE);
+        }
+        else  if(v.getId() == R.id.lin_donor)
+        {
+            txt_filterSearch.setText("D");
+            txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.facebookSignIn));
+            autoTxt_searchBooks.setHint(R.string.hint_searchDonor);
             hideFilterPopup();
             lin_overlay.setVisibility(View.GONE);
         }
@@ -242,7 +283,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-    //> Show static popup on click of Practitioner Layout
+    //> Show static popup on click of Filter options
     public void showFilterPopup(View view)
     {
         if (popupWindow == null) {
@@ -251,12 +292,21 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
             LayoutInflater layoutInflater = (LayoutInflater)activity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             popupView = layoutInflater.inflate(R.layout.layout_search_filter, null);
 
+            LinearLayout bookName = (LinearLayout)popupView.findViewById(R.id.lin_bookName);
+            LinearLayout authorName = (LinearLayout)popupView.findViewById(R.id.lin_authorName);
+            LinearLayout publisher = (LinearLayout)popupView.findViewById(R.id.lin_publisher);
+            LinearLayout donor = (LinearLayout)popupView.findViewById(R.id.lin_donor);
+
+            bookName.setOnClickListener(this);
+            authorName.setOnClickListener(this);
+            publisher.setOnClickListener(this);
+            donor.setOnClickListener(this);
+
             // > draw a popup menu
             popupWindow = new PopupWindow(
                     popupView,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-
         }
 
         // > Toggle behaviour of popup window
@@ -273,9 +323,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
     private void hideFilterPopup() {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
-            popupWindow = null;
-           // img_dropdownPractitioner.setImageDrawable(getResources().getDrawable(R.drawable.icon_dropdown));
-            //lin_practitioner.setTag(null);
+            //popupWindow = null;
             lin_overlay.setVisibility(View.GONE);
 
         }

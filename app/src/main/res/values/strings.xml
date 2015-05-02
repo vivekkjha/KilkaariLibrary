@@ -62,5 +62,9 @@
     <string name="female">Female</string>
 
     <string name="hint_noContactDetails">(No Contact details)</string>
+    <string name="hint_searchBookName">Search books by book name</string>
+    <string name="hint_searchAuthorName">Search books by author name</string>
+    <string name="hint_searchPublisher">Search books by publisher</string>
+    <string name="hint_searchDonor">Search books by donor name</string>
 
 </resources>
