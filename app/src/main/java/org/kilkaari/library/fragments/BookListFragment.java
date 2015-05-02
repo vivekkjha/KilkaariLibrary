@@ -1,5 +1,6 @@
 package org.kilkaari.library.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -36,7 +39,7 @@ import java.util.List;
 /**
  * Created by vivek on 29/04/15.
  */
-public class BookListFragment extends Fragment {
+public class BookListFragment extends Fragment implements View.OnClickListener{
 
     //> hash to store availability of books with Object id as key and boolean as value
     private HashMap<String,Boolean> hash_booksAvailability;
@@ -45,12 +48,17 @@ public class BookListFragment extends Fragment {
 
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
-    private PopupMenu popupDetails;
 
 
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
     private View rootView;
+    private ImageView img_filterSearch;
+    private PopupWindow popupWindow;
+    private View popupView;
+    private LinearLayout lin_overlay;
+
+
     private BaseActivity activity;
 
     private boolean isEdit = false;
@@ -78,6 +86,10 @@ public class BookListFragment extends Fragment {
 
         listView_listBooks = (ListView)rootView.findViewById(org.kilkaari.library.R.id.listView_listBooks);
         autoTxt_searchBooks = (AutoCompleteTextView)rootView.findViewById(org.kilkaari.library.R.id.autoTxt_searchBooks);
+        img_filterSearch = (ImageView)rootView.findViewById(R.id.img_filterSearch);
+        lin_overlay = (LinearLayout)rootView.findViewById(R.id.lin_overlay);
+        img_filterSearch.setOnClickListener(this);
+        lin_overlay.setOnClickListener(this);
 
         return rootView;
     }
@@ -109,6 +121,18 @@ public class BookListFragment extends Fragment {
             activity.showProgressLayout();
             getBooksDetails(category);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId() == R.id.lin_overlay)
+        {
+
+            hideFilterPopup();
+            lin_overlay.setVisibility(View.GONE);
+        }
+
     }
 
     //> get details of all the Books in local list
@@ -218,6 +242,44 @@ public class BookListFragment extends Fragment {
         });
     }
 
+    //> Show static popup on click of Practitioner Layout
+    public void showFilterPopup(View view)
+    {
+        if (popupWindow == null) {
+
+            // > inflate given layout
+            LayoutInflater layoutInflater = (LayoutInflater)activity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            popupView = layoutInflater.inflate(R.layout.layout_search_filter, null);
+
+            // > draw a popup menu
+            popupWindow = new PopupWindow(
+                    popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        }
+
+        // > Toggle behaviour of popup window
+        if (!popupWindow.isShowing()) {
+            popupWindow.showAsDropDown(view,0,4);
+            lin_overlay.setVisibility(View.VISIBLE);
+
+        } else {
+            hideFilterPopup();
+        }
+
+    }
+    // > Hide Popup Window of groups
+    private void hideFilterPopup() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+            popupWindow = null;
+           // img_dropdownPractitioner.setImageDrawable(getResources().getDrawable(R.drawable.icon_dropdown));
+            //lin_practitioner.setTag(null);
+            lin_overlay.setVisibility(View.GONE);
+
+        }
+    }
 
 
 

@@ -30,6 +30,15 @@
             android:padding="@dimen/smallPadding"
             android:src="@drawable/icon_search"/>
 
+        <ImageView
+            android:id="@+id/img_filterSearch"
+            android:layout_width="@dimen/smallSizeIcon"
+            android:layout_height="@dimen/smallSizeIcon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/smallPadding"
+            android:src="@drawable/icon_settings"/>
+
         </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,6 +54,14 @@
         android:scrollbars="none"
         />
         <include layout="@layout/layout_loading"/>
+        <LinearLayout
+            android:id="@+id/lin_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"/>
+
+
     </RelativeLayout>
 
 </LinearLayout>
