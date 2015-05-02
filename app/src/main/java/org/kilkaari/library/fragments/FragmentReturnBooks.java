@@ -65,8 +65,8 @@ public class FragmentReturnBooks extends ListFragment{
             @Override
             public void onClick(View v) {
 
-                //> get activity result in fragment instead of activity associated
-                FragmentReturnBooks.this.startActivityForResult(new Intent(activity, AlertActivity.class),Constants.REQUEST_CODE.REQUEST_OPEN_ALERT);
+              /*  //> get activity result in fragment instead of activity associated
+                FragmentReturnBooks.this.startActivityForResult(new Intent(activity, AlertActivity.class),Constants.REQUEST_CODE.REQUEST_OPEN_ALERT);*/
             }
         });
 
@@ -78,6 +78,12 @@ public class FragmentReturnBooks extends ListFragment{
         super.onActivityCreated(savedInstanceState);
 
         activity = (LibrarianActivity)getActivity();
+
+
+
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Issued Books");
+        activity.showHideDone(false);
 
     }
 

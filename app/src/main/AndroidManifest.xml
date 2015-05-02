@@ -29,6 +29,9 @@
         <activity android:name=".activities.AlertActivity"
             android:screenOrientation="portrait"
             android:theme="@style/alertTheme"/>
+        <activity android:name=".activities.LibrarianCodeDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/alertTheme"/>
         <activity android:name=".activities.LibrarianActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.BookDetailsActivity"

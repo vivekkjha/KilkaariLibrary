@@ -48,66 +48,103 @@
             android:text="Enter you Library code"
             android:textColor="@color/black"
             android:textSize="20sp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/smallPadding">
+            android:padding="@dimen/smallPadding"
+            android:visibility="visible">
 
            <EditText
                 android:id="@+id/edt_safeCode1"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/edtCodeWidth"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallMargin"
                 android:background="@drawable/code_edt_bg"
                 android:gravity="center"
+                android:hint="*"
                 android:inputType="number"
-                android:maxLength="1"
+               android:maxLength="1"
                 android:padding="@dimen/mediumPadding"
                 android:singleLine="true"
-                android:text="1"
+                android:text=""
+                android:textColor="@color/black"
                 android:textSize="25sp"/>
             <EditText
                 android:id="@+id/edt_safeCode2"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/edtCodeWidth"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallMargin"
                 android:background="@drawable/code_edt_bg"
                 android:gravity="center"
+                android:hint="*"
                 android:inputType="number"
                 android:maxLength="1"
                 android:padding="@dimen/mediumPadding"
                 android:singleLine="true"
-                android:text="1"
+                android:text=""
+                android:textColor="@color/black"
                 android:textSize="25sp"/>
             <EditText
                 android:id="@+id/edt_safeCode3"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/edtCodeWidth"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallMargin"
                 android:background="@drawable/code_edt_bg"
                 android:gravity="center"
+                android:hint="*"
                 android:inputType="number"
                 android:maxLength="1"
                 android:padding="@dimen/mediumPadding"
                 android:singleLine="true"
-                android:text="1"
+                android:text=""
+                android:textColor="@color/black"
                 android:textSize="25sp"/>
             <EditText
                 android:id="@+id/edt_safeCode4"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/edtCodeWidth"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallMargin"
                 android:background="@drawable/code_edt_bg"
                 android:gravity="center"
+                android:hint="*"
                 android:inputType="number"
                 android:maxLength="1"
                 android:padding="@dimen/mediumPadding"
                 android:singleLine="true"
-                android:text="1"
+                android:text=""
+                android:textColor="@color/black"
                 android:textSize="25sp"/>
             </LinearLayout>
+           <LinearLayout
+               android:id="@+id/lin_loading"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+              android:background="#AAFFFFFF"
+               android:gravity="center"
+               android:orientation="vertical"
+               android:visibility="gone">
+               <ProgressBar
+                   android:id="@+id/progressBar1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/txt_plsWait"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/loading_authentication"
+                   android:textColor="@color/black"
+                   android:textStyle="bold|italic"/>
+
+               </LinearLayout>
+        </RelativeLayout>
         <TextView
             android:id="@+id/txt_enterCorrectCode"
             android:layout_width="wrap_content"
@@ -116,7 +153,7 @@
             android:text="@string/enterCorrectCode"
             android:textColor="@color/regret"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

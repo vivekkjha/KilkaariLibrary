@@ -10,9 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -21,6 +20,7 @@ import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.fragments.BookCategoriesFragment;
 import org.kilkaari.library.fragments.NavigationDrawerFragment;
 import org.kilkaari.library.fragments.UserDetailsFragment;
+import org.kilkaari.library.utils.SaveDataUtils;
 
 
 public class MainActivity extends BaseActivity  implements NavigationDrawerFragment.NavigationDrawerCallbacks{
@@ -37,17 +37,25 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private DrawerLayout drawer;
     private LinearLayout lin_fragments;
+
     //> fragments objects
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
     private BookCategoriesFragment bookCategoriesFragment;
 
+    private SaveDataUtils saveDataUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        saveDataUtils = new SaveDataUtils(this);
+
+        //> from baseActivity
+        txt_title = (TextView)findViewById(R.id.txt_homeTitle);
+        lin_topDone = (LinearLayout)findViewById(R.id.lin_topDone);
 
         //Setup slide drawer
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,6 +84,8 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         fragmentTransaction.addToBackStack("BookCategories");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
+
+
 
 
     }
@@ -181,7 +191,7 @@ public class MainActivity extends BaseActivity  implements NavigationDrawerFragm
         fragmentTransaction.commit();*/
 
         // Create and show the dialog.
-        DialogFragment dFragment =  UserDetailsFragment.newInstance(ParseUser.getCurrentUser().getString("name"),ParseUser.getCurrentUser().getEmail(),"0000","Rohni Delhi","Male");
+        DialogFragment dFragment =  UserDetailsFragment.newInstance(ParseUser.getCurrentUser().getString("name"),ParseUser.getCurrentUser().getEmail(),"0000","Rohni Delhi","Male",false);
 
         // Show DialogFragment
         dFragment.show(fragmentManager, "UserDetailsDialog");

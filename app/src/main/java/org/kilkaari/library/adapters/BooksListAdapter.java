@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.parse.FindCallback;
@@ -95,12 +96,12 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_bookIcon = (ImageView)convertView.findViewById(R.id.img_bookIcon);
             viewHolder.txt_bookName = (TextView)convertView.findViewById(R.id.txt_bookName);
             viewHolder.txt_authorName  = (TextView)convertView.findViewById(R.id.txt_authorName);
-            viewHolder.txt_availability  = (TextView)convertView.findViewById(R.id.txt_availability);
             viewHolder.ratingBar  = (RatingBar)convertView.findViewById(R.id.ratingBar);
             viewHolder.img_toread  = (ImageView)convertView.findViewById(R.id.img_toread);
             viewHolder.img_alreadyRead  = (ImageView)convertView.findViewById(R.id.img_alreadyRead);
             viewHolder.img_requested  = (ImageView)convertView.findViewById(R.id.img_requested);
             viewHolder.img_moreOptions  = (ImageView)convertView.findViewById(R.id.img_moreOptions);
+            viewHolder.img_availability  = (ImageView)convertView.findViewById(R.id.img_availability);
             viewHolder.lin_bookOptions = (LinearLayout)convertView.findViewById(R.id.lin_bookOptions);
 
             convertView.setTag(viewHolder);
@@ -108,8 +109,28 @@ public class BooksListAdapter extends BaseAdapter {
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        /*----- Add data into view controls ----------*/
+
         viewHolder.txt_bookName.setText(model.getName());
         viewHolder.txt_authorName.setText(model.getAuthor());
+
+        //> set requested icon based on requests
+        if(context.getList_requestBooksCurrentUser().size()!=0)
+        {
+            //> if request for this book has already been made
+            if(context.getList_requestBooksCurrentUser().contains(model.getObjectId()))
+            {
+                //> then show different drawable
+                viewHolder.img_requested.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_confirmation));
+                viewHolder.img_requested.setTag("Requested");
+            }
+            else
+            {
+                //> then show different drawable
+                viewHolder.img_requested.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_requested));
+                viewHolder.img_requested.setTag(null);
+            }
+        }
 
         //> set Photo Url if available , else set Default icon
         if(model.getPhotoUrl()!=null) {
@@ -131,37 +152,27 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.lin_bookOptions.setVisibility(View.VISIBLE);
         }
 
+        //> set availability tags according to the data received from server
+
         if(hash_booksAvailability.get(model.getObjectId())!=null)
         {
             if(hash_booksAvailability.get(model.getObjectId())) {
-                //> programmatically set rounded corners and background color
-                GradientDrawable shape =  new GradientDrawable();
-                shape.setCornerRadius(px);
-                shape.setColor(context.getResources().getColor(R.color.available));
-                viewHolder.txt_availability.setTextColor(Color.WHITE);
-                viewHolder.txt_availability.setText("A");
-                viewHolder.txt_availability.setBackgroundDrawable(shape);
-                viewHolder.txt_availability.setBackground(shape);
+
+                //> if hash map has this value , it indicates that the book is available
+                viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_available));
             }
             else {
-                GradientDrawable shape = new GradientDrawable();
-                shape.setCornerRadius(px);
-                shape.setColor(context.getResources().getColor(R.color.inQueue));
-                viewHolder.txt_availability.setTextColor(Color.WHITE);
-                viewHolder.txt_availability.setText("Q");
-                viewHolder.txt_availability.setBackgroundDrawable(shape);
-                viewHolder.txt_availability.setBackground(shape);
+
+
+                //> if hash map has doesn't have true for this books , it indicates that the book is not available
+                viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_queue));
             }
         }
         else {
-            //> regret
-            GradientDrawable shape = new GradientDrawable();
-            shape.setCornerRadius(px);
-            shape.setColor(context.getResources().getColor(R.color.regret));
-            viewHolder.txt_availability.setTextColor(Color.WHITE);
-            viewHolder.txt_availability.setText("R");
-            viewHolder.txt_availability.setBackgroundDrawable(shape);
-            viewHolder.txt_availability.setBackground(shape);
+
+            //> if hash map has doesn't contain this value , it indicates that the book is not available and not in list
+            viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_queue));
+
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -215,17 +226,30 @@ public class BooksListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if(viewHolder.img_requested.getTag() == null)
                 {
-                    //> save request data with isRequest == true
-                    saveDataUtils.saveRequest(model.getObjectId(),true,"12/05/2015","2 weeks");
+                    //> check if the book is not available then show Toast , informing user for same
+                    if(hash_booksAvailability.get(model.getObjectId())!=null && hash_booksAvailability.get(model.getObjectId()))
+                    {
+                        //> save request data with isRequest == true
+                        saveDataUtils.saveRequest(model.getObjectId(), true, "12/05/2015", "2 weeks");
+                        viewHolder.img_requested.setTag("Requested");
 
+                        //> change its drawable when request is been made
+                        viewHolder.img_requested.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_confirmation));
 
-                    viewHolder.img_requested.setTag("Requested");
+                    }
+                    else {
+
+                        Toast.makeText(context,R.string.cannotBeRequested,Toast.LENGTH_LONG).show();
+                    }
                 }
                 else
                 {
                     //> save request data with isRequest = false;
                     saveDataUtils.saveRequest(model.getObjectId(),false,"12/05/2015","2 weeks");
                     viewHolder.img_requested.setTag(null);
+
+                    //> change its drawable when request has been changed
+                    viewHolder.img_requested.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_requested));
 
                 }
 
@@ -260,7 +284,7 @@ public class BooksListAdapter extends BaseAdapter {
         ImageView img_bookIcon;
         TextView txt_bookName;
         TextView txt_authorName;
-        TextView txt_availability;
+        ImageView img_availability;
         RatingBar ratingBar;
         ImageView img_toread;
         ImageView img_alreadyRead;

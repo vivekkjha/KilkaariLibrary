@@ -117,20 +117,22 @@ public class IssueListAdapter extends BaseAdapter {
         viewHolder.txt_userEmail.setText(userObject.getString(Constants.DataColumns.USER_EMAIL));
 
 
-
-
+        //> set availability icon as per data received from server
         if(context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())!=null) {
             if (context.getFragmentIssueBooks().getHash_booksAvailability().get(model.getBookObject().getObjectId())) {
 
-                viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_admin));
+                //> book is available
+                viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_available));
             }
             else
             {
+                //> book is not available
                 viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_queue));
             }
         }
         else
         {
+            //> This book has no entry in the list
             viewHolder.img_availability.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_queue));
         }
 

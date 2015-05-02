@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/img_alertIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="@dimen/mediumMargin"
             android:src="@drawable/icon_back"/>
         <View

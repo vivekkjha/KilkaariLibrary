@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
@@ -54,6 +56,10 @@ public class UpdateBooksFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity)getActivity();
+
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Update Books");
+        activity.showHideDone(true);
 
     }
 

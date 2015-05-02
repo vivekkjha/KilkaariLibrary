@@ -22,12 +22,12 @@ public class UserDetailsFragment extends android.support.v4.app.DialogFragment {
 
 
     private View rootView;
-    private ImageView img_userImage;
-    private TextView txt_userName,txt_userEmail,txt_phone,txt_gender,txt_address;
+    private ImageView img_userImage,img_editUserDetails;
+    private TextView txt_userName,txt_userEmail,txt_gender,txt_address;
 
     private Prefs prefs;
 
-    public static UserDetailsFragment newInstance(String name, String email, String phone,String address,String gender) {
+    public static UserDetailsFragment newInstance(String name, String email, String phone,String address,String gender, boolean isDiffUser) {
         UserDetailsFragment f = new UserDetailsFragment();
 
 
@@ -38,6 +38,7 @@ public class UserDetailsFragment extends android.support.v4.app.DialogFragment {
         args.putString("phone",phone);
         args.putString("address",address);
         args.putString("gender",gender);
+        args.putBoolean("isDiffUser", isDiffUser);
         f.setArguments(args);
 
         return f;
@@ -61,18 +62,28 @@ public class UserDetailsFragment extends android.support.v4.app.DialogFragment {
 
         rootView = inflater.inflate(R.layout.layout_user_details,container,false);
         img_userImage = (ImageView)rootView.findViewById(R.id.img_userImage);
+        img_editUserDetails = (ImageView)rootView.findViewById(R.id.img_editUserDetails);
         txt_userName = (TextView)rootView.findViewById(R.id.txt_userName);
         txt_userEmail = (TextView)rootView.findViewById(R.id.txt_userEmail);
-        txt_phone = (TextView)rootView.findViewById(R.id.txt_phone);
         txt_gender = (TextView)rootView.findViewById(R.id.txt_gender);
         txt_address = (TextView)rootView.findViewById(R.id.txt_address);
 
 
         txt_userName.setText(this.getArguments().getString("name"));
         txt_userEmail.setText(this.getArguments().getString("email"));
-        txt_phone.setText(this.getArguments().getString("phone"));
         txt_gender.setText(this.getArguments().getString("gender"));
-        txt_address.setText(this.getArguments().getString("address"));
+        txt_address.setText(this.getArguments().getString("address" + " | " + this.getArguments().getString("phone")));
+
+        //> set visibility of edit icon
+        if(this.getArguments().getBoolean("isDiffUser"))
+        {
+            img_editUserDetails.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            img_editUserDetails.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }

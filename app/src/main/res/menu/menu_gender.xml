@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <item
+        android:id="@+id/menuMale"
+        android:title="@string/male"
+        />
+    <item
+        android:id="@+id/menuFemale"
+        android:title="@string/female"
+        />
+
+</menu>

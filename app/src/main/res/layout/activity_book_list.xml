@@ -4,19 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="@dimen/smallPadding">
 
         <AutoCompleteTextView
             android:id="@+id/autoTxt_searchBooks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/drawable_search"
             android:hint="Search books"
-            android:padding="@dimen/mediumPadding"/>
+            android:paddingBottom="@dimen/smallPadding"
+            android:paddingLeft="30dp"
+            android:paddingRight="@dimen/smallPadding"
+            android:paddingTop="@dimen/smallPadding"
+            android:singleLine="true"/>
+        <ImageView
+            android:layout_width="@dimen/smallSizeIcon"
+            android:layout_height="@dimen/smallSizeIcon"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/smallPadding"
+            android:src="@drawable/icon_search"/>
 
-        </LinearLayout>
+        </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -1,38 +1,28 @@
-package org.kilkaari.library.fragments;
+package org.kilkaari.library.activities;
 
-import android.app.DialogFragment;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.codec.binary.Base64;
 
 import org.kilkaari.library.R;
-import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.constants.Constants;
-import org.kilkaari.library.models.RequestQueueModel;
 import org.kilkaari.library.utils.LogUtil;
-
-import java.util.List;
 
 /**
  * Created by vivek on 28/04/15.
  */
-public class LibrarianCodeDialog extends DialogFragment implements View.OnClickListener {
+public class LibrarianCodeDialog extends BaseActivity implements View.OnClickListener {
 
     TextWatcher watcher1 = new TextWatcher() {
 
@@ -44,6 +34,7 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 
         }
 
@@ -113,33 +104,36 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
 
         }
     };
-    private MainActivity activity;
-    private View rootView;
+
+
     private TextView txt_alertOk,txt_alertCancel,txt_enterCorrectCode;
     private EditText edt_safeCode1,edt_safeCode2,edt_safeCode3,edt_safeCode4;
+    private LinearLayout lin_loading;
+    private int pos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        pos = getIntent().getIntExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,-1);
 
-        rootView = inflater.inflate(R.layout.layout_librarian_code,container,false);
+        setContentView(R.layout.layout_librarian_code);
 
-        txt_alertOk = (TextView)rootView.findViewById(R.id.txt_alertOk);
+        txt_alertOk = (TextView)findViewById(R.id.txt_alertOk);
         txt_alertOk.setOnClickListener(this);
 
-        txt_alertCancel = (TextView)rootView.findViewById(R.id.txt_alertCancel);
+        txt_alertCancel = (TextView)findViewById(R.id.txt_alertCancel);
         txt_alertCancel.setOnClickListener(this);
 
-        txt_enterCorrectCode = (TextView)rootView.findViewById(R.id.txt_enterCorrectCode);
-        edt_safeCode1 = (EditText)rootView.findViewById(R.id.edt_safeCode1);
-        edt_safeCode2 = (EditText)rootView.findViewById(R.id.edt_safeCode2);
-        edt_safeCode3 = (EditText)rootView.findViewById(R.id.edt_safeCode3);
-        edt_safeCode4 = (EditText)rootView.findViewById(R.id.edt_safeCode4);
+        txt_enterCorrectCode = (TextView)findViewById(R.id.txt_enterCorrectCode);
+        lin_loading = (LinearLayout)findViewById(R.id.lin_loading);
+
+        edt_safeCode1 = (EditText)findViewById(R.id.edt_safeCode1);
+        edt_safeCode2 = (EditText)findViewById(R.id.edt_safeCode2);
+        edt_safeCode3 = (EditText)findViewById(R.id.edt_safeCode3);
+        edt_safeCode4 = (EditText)findViewById(R.id.edt_safeCode4);
+
+        edt_safeCode1.requestFocus();
 
         edt_safeCode1.addTextChangedListener(watcher1);
         edt_safeCode2.addTextChangedListener(watcher2);
@@ -151,22 +145,6 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
         edt_safeCode3.setOnFocusChangeListener(ofcListener);
         edt_safeCode4.setOnFocusChangeListener(ofcListener);
 
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        activity = (MainActivity)getActivity();
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
     }
 
     @Override
@@ -174,16 +152,23 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
 
         if(v.getId() == R.id.txt_alertOk)
         {
-            checkAuthenticity(edt_safeCode1.getText().toString() + edt_safeCode2.getText().toString()+ edt_safeCode3.getText().toString()+ edt_safeCode4.getText().toString());
+            //>show progress layout
+            lin_loading.setVisibility(View.VISIBLE);
+            checkAuthenticity(edt_safeCode1.getText().toString() + edt_safeCode2.getText().toString() + edt_safeCode3.getText().toString() + edt_safeCode4.getText().toString());
+
         }
         else if(v.getId() == R.id.txt_alertCancel)
         {
-            dismiss();
+            setResult(RESULT_CANCELED);
+            this.finish();
+
         }
     }
 
     private void checkAuthenticity(String code)
     {
+
+        //> get encoded string
         final String encoded  = convertIntoBase64(code);
 
 
@@ -193,12 +178,32 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
                 @Override
                 public void done(ParseObject parseObject, ParseException e) {
 
+                    //>hide progress layout
+                    lin_loading.setVisibility(View.GONE);
+
                     if(parseObject!=null)
                     {
+                        //> compare code with encoded value from server
                         if(encoded.equals(parseObject.getString("code")))
                         {
-
+                            //> prepare bundle to send data back to calling activity
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX,pos);
+                            Intent myIntent = new Intent(LibrarianCodeDialog.this, BaseActivity.class);
+                            myIntent.putExtras(bundle);
+                            LibrarianCodeDialog.this.setResult(RESULT_OK,myIntent);
+                            LibrarianCodeDialog.this.finish();
                         }
+                        else
+                        {
+                            txt_enterCorrectCode.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else
+                    {
+                        txt_enterCorrectCode.setVisibility(View.VISIBLE);
+                        LibrarianCodeDialog.this.setResult(RESULT_CANCELED);
+                        LibrarianCodeDialog.this.finish();
                     }
                 }
             });
@@ -207,6 +212,7 @@ public class LibrarianCodeDialog extends DialogFragment implements View.OnClickL
 
     }
 
+    //> get code into base64 format
     private String convertIntoBase64(String code)
     {
         byte[] encodedBytes = Base64.encodeBase64(code.getBytes());

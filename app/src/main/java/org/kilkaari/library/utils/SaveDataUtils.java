@@ -13,6 +13,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.models.RequestQueueModel;
@@ -25,8 +26,8 @@ import java.util.List;
  */
 public class SaveDataUtils {
 
-    Context context;
-    public SaveDataUtils(Context context)
+    BaseActivity context;
+    public SaveDataUtils(BaseActivity context)
     {
         this.context = context;
     }
@@ -47,29 +48,43 @@ public class SaveDataUtils {
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_BOOK, bookObject);
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_TIMESTAMP, timestamp);
                 newRequest.put(Constants.DataColumns.REQUEST_QUEUE_TIME_PERIOD, timePeriod);
-                newRequest.saveInBackground();
-                LogUtil.d("Request Queue Row ", "Created");
+                newRequest.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null)
+                        {
+                            LogUtil.w("Request Queue Row ", "Created");
+                        }
+                    }
+                });
+
             }
             //>  check if the request existed previously , delete request from table
             else {
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_REQUEST_QUEUE);
-                query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_USER,ParseUser.getCurrentUser());
-                query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_BOOK,bookObject);
+                query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_USER, ParseUser.getCurrentUser());
+                query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_BOOK, bookObject);
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> requestList, ParseException e) {
 
                         if (e == null) {
                             Log.d("Request Queue List ", "Retrieved " + requestList.size() + " rows");
-                            if(requestList.size()!=0)
-                            {
+                            if (requestList.size() != 0) {
                                 //> get first object as logiclly there should be only one with above request
                                 //> delete that object in background
                                 ParseObject object = requestList.get(0);
-                                object.deleteInBackground();
-                            }
-                            else {
-                                LogUtil.e("Request Queue List","Database returned 0 list ");
+                                object.deleteInBackground(new DeleteCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            LogUtil.e("Request Queue List", "Deleted ");
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                LogUtil.e("Request Queue List", "Database returned 0 list ");
                             }
                         } else {
                             Log.d("Request Queue List", "Error: " + e.getMessage());
@@ -77,6 +92,9 @@ public class SaveDataUtils {
                     }
                 });
             }
+
+            //> update request queue
+            getRequestedBooksCurrentUser();
 
         }
     }
@@ -213,4 +231,92 @@ public class SaveDataUtils {
         });
 
     }
+
+    //> get Request queue for current user as filter
+    public void getRequestedBooksCurrentUser()
+    {
+        //> proceed only if current user is available
+        if(ParseUser.getCurrentUser() != null) {
+
+            //> clear requested books list before getting list of request
+            context.getList_requestBooksCurrentUser().clear();
+
+            //> get data from request queue table
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_REQUEST_QUEUE);
+
+            //> filter request list based on current user only
+            query.whereEqualTo(Constants.DataColumns.REQUEST_QUEUE_USER, ParseUser.getCurrentUser());
+
+            //> include data for books associated
+            query.include(Constants.DataColumns.REQUEST_QUEUE_BOOK);
+            query.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> requestList, ParseException e) {
+                    if (e == null) {
+                        Log.d("Request Queue List ", "Retrieved " + requestList.size() + " rows");
+                        if (requestList.size() != 0) {
+
+                            //> parse through all the list received and add object id into requestedBooksList
+                            for(int i=0;i<requestList.size();i++)
+                            {
+                                ParseObject bookObject = requestList.get(i).getParseObject(Constants.DataColumns.REQUEST_QUEUE_BOOK);
+                                if(bookObject!=null)
+                                {
+                                    context.getList_requestBooksCurrentUser().add(bookObject.getObjectId());
+                                }
+                            }
+
+                        } else {
+                            LogUtil.e("Request Queue List", "Parse returned 0 list ");
+                        }
+
+                    } else {
+                        Log.d("Request Queue List", "Error: " + e.getMessage());
+                    }
+                }
+            });
+        }
+
+
+    }
+
+    //> delete a book in background
+    public void deleteBookBackground(String objectId)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_BOOKS);
+        query.whereEqualTo("objectId",objectId);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> bookList, ParseException e) {
+
+                if (e == null) {
+                    Log.d("Book Data", "Retrieved " + bookList.size() + " row(s)");
+                    if(bookList.size()!=0)
+                    {
+                        //> get first object as logiclly there should be only one with above request
+                        //> delete that object in background
+
+                        ParseObject object = bookList.get(0);
+                        object.deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                if(e == null)
+                                {
+                                    LogUtil.e("SaveDataUtils","Book Row deleted successfully ");
+
+                                }
+
+                            }
+                        });
+                    }
+                    else {
+                        LogUtil.e("Book List","Database returned 0 list ");
+                    }
+                } else {
+                    Log.d("Book List", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+
 }

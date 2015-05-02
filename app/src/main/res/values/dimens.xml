@@ -59,4 +59,8 @@
 
     <!--issue layout-->
     <dimen name="addOfflineRequestHeight">40dp</dimen>
+
+    <dimen name="edtCodeWidth">40dp</dimen>
+
+    <dimen name="smallSizeIcon">30dp</dimen>
 </resources>

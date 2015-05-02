@@ -11,13 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
+import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.adapters.BooksListAdapter;
 import org.kilkaari.library.constants.Constants;
@@ -25,6 +29,7 @@ import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
 import org.kilkaari.library.utils.SaveDataUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class BookListFragment extends Fragment {
 
     //> hash to store availability of books with Object id as key and boolean as value
     private HashMap<String,Boolean> hash_booksAvailability;
+
+    private List<String> requestedBooksList;
 
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
@@ -59,7 +66,8 @@ public class BookListFragment extends Fragment {
         category = getArguments().getString(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
 
         hash_booksAvailability = new HashMap<String,Boolean>();
-        saveDataUtils  = new SaveDataUtils(getActivity());
+        requestedBooksList = new ArrayList<String>();
+
 
     }
 
@@ -79,6 +87,15 @@ public class BookListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         activity = (BaseActivity)getActivity();
+        saveDataUtils  = new SaveDataUtils(activity);
+
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading(category);
+        activity.showHideDone(false);
+
+
+        //> get requested book list for current user in SaveDataUtils
+        saveDataUtils.getRequestedBooksCurrentUser();
 
     }
 
@@ -200,5 +217,9 @@ public class BookListFragment extends Fragment {
             }
         });
     }
+
+
+
+
 
 }

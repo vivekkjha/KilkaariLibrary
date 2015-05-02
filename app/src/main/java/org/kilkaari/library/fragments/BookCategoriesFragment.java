@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.parse.CountCallback;
 import com.parse.FindCallback;
@@ -40,7 +41,8 @@ public class BookCategoriesFragment extends Fragment {
     //> layout related objects
     private View rootView;
     private GridView gridViewCategories;
-    private LinearLayout lin_topDone;
+
+
 
     //> program objects
     private BooksCategoriesAdapter adapter;
@@ -85,8 +87,9 @@ public class BookCategoriesFragment extends Fragment {
 
         activity = (BaseActivity)getActivity();
 
-        lin_topDone = (LinearLayout)getActivity().findViewById(R.id.lin_topDone);
-        //lin_topDone.setVisibility(View.GONE);
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Book Shelf");
+        activity.showHideDone(false);
 
         //> getCategories from server
         activity.showProgressLayout();

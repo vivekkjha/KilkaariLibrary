@@ -9,6 +9,8 @@ public interface Constants {
     public boolean IS_RETURNED = true;
     public boolean IS_ISSUED = false;
 
+    public int RESULT_YES = 1;
+
     public interface Folders
     {
         public String FOLDER_KILKAARI = "Kilkaari";
@@ -89,10 +91,20 @@ public interface Constants {
         public String EXTRAS_OBJECT_ID = "objectId";
         public String EXTRAS_SELECTED_BOOK_INDEX = "selectedBookIndex";
         public String EXTRAS_BOOK_IS_EDIT = "isEdit";
+
+        public String EXTRAS_ALERT_TITLE = "alert.title";
+        public String EXTRAS_ALERT_OK_TEXT = "alert.OkText";
+        public String EXTRAS_ALERT_MSSG = "alert.Message";
+        public String EXTRAS_ALERT_CANCEL_TEXT = "alert.CancelText";
+        public String EXTRAS_ALERT_ICON_RESOURCE = "alert.resourceIcon";
+
+
+
     }
 
     public interface REQUEST_CODE
     {
         public static int REQUEST_OPEN_ALERT = 111;
+        public static int REQUEST_LIBRARY_CODE = 112;
     }
 }

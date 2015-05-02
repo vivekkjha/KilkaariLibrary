@@ -63,6 +63,12 @@ public class BookDetailsFragment extends Fragment{
         activity = (BaseActivity)getActivity();
         initializeLayout();
 
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Book Details");
+        activity.showHideDone(false);
+
+
+
     }
 
     @Override

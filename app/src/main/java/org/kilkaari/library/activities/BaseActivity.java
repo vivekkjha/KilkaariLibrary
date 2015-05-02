@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.kilkaari.library.R;
@@ -26,6 +27,8 @@ import org.kilkaari.library.fragments.BookDetailsFragment;
 import org.kilkaari.library.fragments.UpdateBooksFragment;
 import org.kilkaari.library.fragments.UserDetailsFragment;
 import org.kilkaari.library.models.BooksModel;
+import org.kilkaari.library.utils.LogUtil;
+import org.kilkaari.library.utils.SaveDataUtils;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -36,6 +39,8 @@ import java.util.List;
 public class BaseActivity extends FragmentActivity {
 
     public Prefs prefs;
+    public TextView txt_title;
+    public LinearLayout lin_topDone;
     private LinearLayout progressLayout;
     private TextView txt_plsWait;
     private PopupMenu popupDetails;
@@ -43,12 +48,16 @@ public class BaseActivity extends FragmentActivity {
     private LinearLayout fragmentContainer;
     private FragmentManager fragmentManager;
 
+    private SaveDataUtils saveDataUtils;
+
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getPref();
+
+        saveDataUtils = new SaveDataUtils(this);
 
     }
 
@@ -94,6 +103,12 @@ public class BaseActivity extends FragmentActivity {
         return getLibraryApplication().getList_books();
     }
 
+
+    //> get list of requested books filtered by current user
+    public List<String> getList_requestBooksCurrentUser() {
+        return getLibraryApplication().getList_requestBooksCurrentUser();
+    }
+
     //> Show popup on click of option icon in book list , and click listener on its item
     public void showBookPopupList(View view, final int pos, final boolean isEdit)
     {
@@ -137,6 +152,14 @@ public class BaseActivity extends FragmentActivity {
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     fragmentTransaction.commit();
 
+                }
+                else if(item.getTitle().toString().equals(getString(R.string.deleteBook)))
+                {
+                    //> delete books from the Parse database
+
+                    Intent intent = new Intent(BaseActivity.this, LibrarianCodeDialog.class);
+                    intent.putExtra(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX, pos);
+                    startActivityForResult(intent, Constants.REQUEST_CODE.REQUEST_LIBRARY_CODE);
                 }
 
                 return true;
@@ -209,4 +232,53 @@ public class BaseActivity extends FragmentActivity {
         dFragment.show(fragmentManager, "alertDialog");
     }
 
+    //> method to set heading
+    public void setHeading(String title)
+    {
+       if(txt_title!=null) {
+           txt_title.setText(title);
+       }
+    }
+
+    public void showHideDone(boolean show)
+    {
+        if(lin_topDone !=null) {
+            if (show) {
+                lin_topDone.setVisibility(View.VISIBLE);
+            } else {
+                lin_topDone.setVisibility(View.GONE);
+            }
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == Constants.REQUEST_CODE.REQUEST_LIBRARY_CODE)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                //> get bundle and position to delete
+                Bundle bundle = data.getExtras();
+                int pos = bundle != null ? bundle.getInt(Constants.EXTRAS.EXTRAS_SELECTED_BOOK_INDEX): -1;
+
+                //> if bundle has some data
+                if(pos!=-1)
+                {
+                    //> id size of the application list is not 0
+                    if(getList_books().size()!=0)
+                    {
+                        //> get objectId of that book and delete book
+                        String objectId = getList_books().get(pos).getObjectId();
+                        saveDataUtils.deleteBookBackground(objectId);
+                    }
+
+                }
+
+                LogUtil.i("BaseActivity","Deleting ");
+            }
+        }
+    }
 }

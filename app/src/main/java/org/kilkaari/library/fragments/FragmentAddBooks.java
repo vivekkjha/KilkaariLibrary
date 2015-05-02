@@ -24,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -32,6 +33,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.activities.AlertActivity;
 import org.kilkaari.library.activities.LibrarianActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.utils.LogUtil;
@@ -68,6 +70,8 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
     private Uri capturedFileUri = null;
     private Bitmap bookBitmapImage = null;
     private boolean isCategoryImageSaved = false;
+
+    private int CONFIRMATION_REQUEST  = 152;
 
 
     //> get categories from parse
@@ -164,6 +168,11 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
         super.onStart();
 
         activity = (LibrarianActivity)getActivity();
+
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Add New Book");
+        activity.showHideDone(true);
+
         //> get Categories list from parse server
         activity.showProgressLayout();
         getCategories();
@@ -186,6 +195,7 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
 
     }
@@ -248,11 +258,16 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
         else if(v.getId() == R.id.lin_topDone)
         {
 
-            //> save entered category ind atabase
-            saveCategories();
+            //> show alert activity on addition of new book
+            Intent intent  = new Intent(activity, AlertActivity.class);
+            intent.putExtra(Constants.EXTRAS.EXTRAS_ALERT_TITLE,"Confirmation");
+            intent.putExtra(Constants.EXTRAS.EXTRAS_ALERT_ICON_RESOURCE,R.drawable.icon_alert);
+            intent.putExtra(Constants.EXTRAS.EXTRAS_ALERT_MSSG,getString(R.string.addBookConfirmation));
+            intent.putExtra(Constants.EXTRAS.EXTRAS_ALERT_OK_TEXT,"SAVE");
+            intent.putExtra(Constants.EXTRAS.EXTRAS_ALERT_CANCEL_TEXT,getString(R.string.cancel));
 
-            //> save details of book entered
-            saveBookDetails();
+            FragmentAddBooks.this.startActivityForResult(intent,CONFIRMATION_REQUEST);
+
         }
     }
 
@@ -452,6 +467,18 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
                 bookBitmapImage.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 
                 imageBytes = stream.toByteArray();
+
+            }
+        }
+        else if(requestCode == CONFIRMATION_REQUEST)
+        {
+            if(resultCode == Constants.RESULT_YES)
+            {
+                //> save entered category ind atabase
+                saveCategories();
+
+                //> save details of book entered
+                saveBookDetails();
 
             }
         }

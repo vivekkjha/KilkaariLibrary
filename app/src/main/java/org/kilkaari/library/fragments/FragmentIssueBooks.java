@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class FragmentIssueBooks extends ListFragment{
     private IssueListAdapter adapter;
     private LibrarianActivity activity;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,10 @@ public class FragmentIssueBooks extends ListFragment{
         super.onActivityCreated(savedInstanceState);
 
         activity = (LibrarianActivity)getActivity();
+
+        //> actions on top title bar and done layout from baseActivity
+        activity.setHeading("Requested Books");
+        activity.showHideDone(false);
     }
 
     @Override
@@ -239,7 +246,7 @@ public class FragmentIssueBooks extends ListFragment{
                 if(item.getTitle().toString().equals(getString(R.string.userDetails)))
                 {
                     ParseObject userObject = requestQueueList.get(pos).getUserObject();
-                    activity.showUserDetailsDialog(userObject);
+                    activity.showUserDetailsDialog(userObject,true);
                 }
                 else if(item.getTitle().toString().equals(getString(R.string.bookDetails)))
                 {

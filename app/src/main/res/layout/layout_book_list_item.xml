@@ -68,23 +68,11 @@
 
                 <ImageView
                     android:id="@+id/img_moreOptions"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/icon_menu_active"/>
 
-                <TextView
-                    android:id="@+id/txt_availability"
-                    android:layout_width="@dimen/availabilityHeightWidth"
-                    android:layout_height="@dimen/availabilityHeightWidth"
-                    android:background="@drawable/availability_round_bg"
-                    android:gravity="center"
-                    android:minHeight="@dimen/availabilityHeightWidth"
-
-                    android:minWidth="@dimen/availabilityHeightWidth"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -115,8 +103,8 @@
                     android:src="@drawable/icon_toread"/>
                 <ImageView
                     android:id="@+id/img_alreadyRead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="@dimen/smallMargin"
                     android:layout_marginRight="@dimen/smallMargin"
                     android:clickable="true"
@@ -124,8 +112,8 @@
                     android:src="@drawable/icon_already_read_inactive"/>
                 <ImageView
                     android:id="@+id/img_requested"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="@dimen/smallMargin"
                     android:layout_marginRight="@dimen/smallMargin"
                     android:clickable="true"
@@ -136,6 +124,7 @@
     </LinearLayout>
     </LinearLayout>
         <ImageView
+            android:id="@+id/img_availability"
             android:layout_width="@dimen/availabilityIconWidth"
             android:layout_height="@dimen/availabilityIconHeight"
             android:layout_alignParentRight="true"

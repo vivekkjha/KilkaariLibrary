@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -17,11 +20,11 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import org.kilkaari.library.R;
+import org.kilkaari.library.activities.LibrarianCodeDialog;
 import org.kilkaari.library.activities.LoginActivity;
 import org.kilkaari.library.activities.MainActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.utils.ValidationUtil;
-import org.w3c.dom.Text;
 
 /**
  * Created by vivek on 28/04/15.
@@ -32,6 +35,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private View rootView;
     private EditText edt_userName,edt_userEmail,edt_userPassword,edt_userConfirmPassword,edt_userPhone;
     private TextView txt_gender,txt_signUp;
+
+    private PopupMenu popupGender;
 
     //> instance of activity called this fragment
     private LoginActivity activity;
@@ -53,6 +58,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         txt_gender = (TextView)rootView.findViewById(R.id.txt_gender);
         txt_signUp = (TextView)rootView.findViewById(R.id.txt_signUp);
         txt_signUp.setOnClickListener(this);
+        txt_gender.setOnClickListener(this);
 
         return rootView;
     }
@@ -99,7 +105,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
 
         }
+        else if(v.getId() == R.id.txt_gender)
+        {
+            showGenderPopup(v);
+        }
     }
+
+
 
     public void signUpUser()
     {
@@ -114,6 +126,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         if(!edt_userPhone.getText().toString().equals("")) {
             user.put(Constants.DataColumns.USER_PHONE, edt_userPhone.getText().toString());
+        }
+
+        if(!txt_gender.getText().toString().equals("")) {
+            user.put(Constants.DataColumns.USER_GENDER, txt_gender.getText().toString());
         }
 
         user.signUpInBackground(new SignUpCallback() {
@@ -157,4 +173,25 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+    public void showGenderPopup(View view)
+    {
+        popupGender = new PopupMenu(activity,view);
+
+        popupGender.getMenuInflater().inflate(R.menu.menu_gender, popupGender.getMenu());
+
+        popupGender.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                //> set selected gender
+                txt_gender.setTextColor(activity.getResources().getColor(R.color.black));
+                txt_gender.setText(item.getTitle().toString());
+
+                return true;
+            }
+        });
+        popupGender.show();
+
+    }
+
 }

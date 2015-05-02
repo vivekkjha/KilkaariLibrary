@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/baseColor">
+    android:background="@color/baseColor"
+    android:orientation="vertical">
     <TextView
+        android:id="@+id/txt_homeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title text"
         android:layout_centerInParent="true"
-        android:textSize="@dimen/topBarTextSize"
         android:padding="@dimen/mediumPadding"
-        android:textColor="@color/white"/>
+        android:text="Title text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/topBarTextSize"/>
     <ImageView
+        android:id="@+id/img_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_menu"
-        android:id="@+id/img_menu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:onClick="onClick"
         android:padding="@dimen/mediumMargin"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
+        android:src="@drawable/icon_menu"/>
     <LinearLayout
+        android:id="@+id/lin_topDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:id="@+id/lin_topDone"
-        android:visibility="visible"
-        android:clickable="true"
-        android:onClick="onClick"
-        android:padding="@dimen/smallPadding"
-        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:orientation="horizontal"
+        android:padding="@dimen/smallPadding"
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_done"/>
         <TextView
+            android:id="@+id/txt_topComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/txt_topComplete"
-            android:layout_margin="@dimen/smallMargin"
             android:layout_centerInParent="true"
+            android:layout_margin="@dimen/smallMargin"
+            android:text="Next"
             android:textColor="@color/white"/>
 
 

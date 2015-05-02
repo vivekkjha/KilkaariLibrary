@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -34,6 +35,9 @@ public class LibrarianActivity extends BaseActivity {
     //> linear layout to add fragments in activity
     private LinearLayout lin_fragments;
 
+    //> prevents to load same fragment/ view
+    private View selectedView;
+
     //> fragments objects
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -51,6 +55,10 @@ public class LibrarianActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_librarian);
+
+        //> from baseActivity
+        txt_title = (TextView)findViewById(R.id.txt_titleBar);
+        lin_topDone = (LinearLayout)findViewById(R.id.lin_topDone);
 
         lin_fragments = (LinearLayout)findViewById(R.id.lin_fragments);
         fragmentManager = getSupportFragmentManager();
@@ -73,65 +81,91 @@ public class LibrarianActivity extends BaseActivity {
 
     public void onBottomClick(View v)
     {
+        if(selectedView!= null) {
+            ((LinearLayout) selectedView).setBackgroundColor(getResources().getColor(R.color.white));
+        }
+
         if(v.getId() == R.id.lin_addBooks)
         {
+            if(selectedView== null || selectedView != v) {
 
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentAddBooks);
-
+/*
                 Fragment prev = fragmentManager.findFragmentByTag("AddBooks");
                 if (prev != null) {
                     fragmentManager.popBackStack();
                 }
-                fragmentTransaction.addToBackStack("AddBooks");
+                fragmentTransaction.addToBackStack("AddBooks");*/
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
 
 
+                selectedView = v;
+            }
+            ((LinearLayout)v).setBackgroundColor(getResources().getColor(R.color.lightGrayBg));
 
         }
         else if(v.getId() == R.id.lin_updateBooks)
         {
-            //startActivity(new Intent(this,AlertActivity.class));
+            if(selectedView== null ||  selectedView!=v) {
+                //startActivity(new Intent(this,AlertActivity.class));
 
-            //> create bundle to transfer data to fragment
-            Bundle editBundle = new Bundle();
-            editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, true);
+                //> create bundle to transfer data to fragment
+                Bundle editBundle = new Bundle();
+                editBundle.putBoolean(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT, true);
 
-            //> open Book Shelf means categories list
-            fragmentTransaction = fragmentManager.beginTransaction();
-            bookCategoriesFragment.setArguments(editBundle);
-            fragmentTransaction.replace(R.id.lin_fragments, bookCategoriesFragment,"BookCategories");
-            Fragment prev = fragmentManager.findFragmentByTag("BookCategories");
-            if (prev != null) {
-                fragmentManager.popBackStack();
+                //> open Book Shelf means categories list
+                fragmentTransaction = fragmentManager.beginTransaction();
+                bookCategoriesFragment.setArguments(editBundle);
+                fragmentTransaction.replace(R.id.lin_fragments, bookCategoriesFragment);
+             /*   Fragment prev = fragmentManager.findFragmentByTag("updateBooks");
+                if (prev != null) {
+                    fragmentManager.popBackStack();
+                }
+                fragmentTransaction.addToBackStack(null);*/
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+
+                selectedView = v;
             }
-            fragmentTransaction.addToBackStack("BookCategories");
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+            ((LinearLayout)v).setBackgroundColor(getResources().getColor(R.color.lightGrayBg));
         }
         else if(v.getId() == R.id.lin_issueBooks)
         {
-
+            if(selectedView== null ||  selectedView!=v) {
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentIssueBooks);
-                fragmentTransaction.addToBackStack("IssueBooks");
+               /* fragmentTransaction.addToBackStack("IssueBooks");*/
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
+
+
+                selectedView = v;
+            }
+            ((LinearLayout)v).setBackgroundColor(getResources().getColor(R.color.lightGrayBg));
 
 
         }
         else if(v.getId() == R.id.lin_returnBooks)
         {
-
+            if(selectedView== null ||  selectedView!=v) {
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.lin_fragments, fragmentReturnBooks);
-                fragmentTransaction.addToBackStack("ReturnBooks");
+                //fragmentTransaction.addToBackStack("ReturnBooks");
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
 
 
+                selectedView = v;
+            }
+            ((LinearLayout)v).setBackgroundColor(getResources().getColor(R.color.lightGrayBg));
+
         }
+
+
+
+
     }
 
 
@@ -148,7 +182,7 @@ public class LibrarianActivity extends BaseActivity {
         return fragmentReturnBooks;
     }
 
-    public void showUserDetailsDialog(ParseObject parseObject) {
+    public void showUserDetailsDialog(ParseObject parseObject,boolean isDifferentUser) {
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
@@ -175,8 +209,10 @@ public class LibrarianActivity extends BaseActivity {
         String address = parseObject.getString(Constants.DataColumns.USER_ADDRESS);
         String gender = parseObject.getString(Constants.DataColumns.USER_GENDER);
 
+
+
         DialogFragment dFragment =  UserDetailsFragment.newInstance((name!=null)?name:"",(email!= null)?email:"",
-                (phone!=null)?phone:"",(address!=null)?address:"",(gender!=null)?gender:"");
+                (phone!=null)?phone:"",(address!=null)?address:"",(gender!=null)?gender:"",isDifferentUser);
 
         // Show DialogFragment
         dFragment.show(fragmentManager, "UserDetailsDialog");
@@ -191,4 +227,7 @@ public class LibrarianActivity extends BaseActivity {
             LogUtil.e("Librarian Activity","Control returned");
         }
     }
+
+
+
 }

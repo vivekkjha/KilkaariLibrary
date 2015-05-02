@@ -10,4 +10,9 @@
         android:id="@+id/menuBookEdit"
         android:title="@string/editDetails"
         />
+
+    <item
+        android:id="@+id/menuBookDelete"
+        android:title="@string/deleteBook"
+        />
 </menu>

@@ -6,6 +6,7 @@ import android.os.Environment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
@@ -21,7 +22,13 @@ import java.util.List;
 public class LibraryApplication extends Application {
 
     //> List to get book list for specific category
-    private static List<BooksModel> list_books;
+    private  List<BooksModel> list_books;
+
+
+    //> List to store requested books for current user (Only book object id)
+    private List<String> list_requestBooksCurrentUser;
+
+
     private Prefs prefs;
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
@@ -32,6 +39,7 @@ public class LibraryApplication extends Application {
 
         prefs = new Prefs(this);
         list_books = new ArrayList<BooksModel>();
+        list_requestBooksCurrentUser = new ArrayList<String>();
 
         //> create kilkaari folder
         createAppFolders();
@@ -80,5 +88,9 @@ public class LibraryApplication extends Application {
     {
         return  list_books;
     }
+    public List<String> getList_requestBooksCurrentUser() {
+        return list_requestBooksCurrentUser;
+    }
+
 
 }
