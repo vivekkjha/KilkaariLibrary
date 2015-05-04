@@ -292,6 +292,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
             LayoutInflater layoutInflater = (LayoutInflater)activity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             popupView = layoutInflater.inflate(R.layout.layout_search_filter, null);
 
+            //> fnd view in layout
             LinearLayout bookName = (LinearLayout)popupView.findViewById(R.id.lin_bookName);
             LinearLayout authorName = (LinearLayout)popupView.findViewById(R.id.lin_authorName);
             LinearLayout publisher = (LinearLayout)popupView.findViewById(R.id.lin_publisher);

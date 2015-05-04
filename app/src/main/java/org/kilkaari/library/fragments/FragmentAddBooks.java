@@ -196,8 +196,6 @@ public class FragmentAddBooks extends android.support.v4.app.Fragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-
     }
 
     @Override

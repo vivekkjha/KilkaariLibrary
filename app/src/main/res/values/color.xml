@@ -5,6 +5,8 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="titleBottomBar">#ff58a2ca</color>
+    <color name="titleBottomBarDark">#ff0076d3</color>
+
     <color name="listViewSeparator">#ffe0e0e0</color>
     <color name="blackOverlay">#55000000</color>
     <color name="blackGradient">#99000000</color>
