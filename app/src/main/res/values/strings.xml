@@ -34,6 +34,8 @@
     <string name="category">Category</string>
     <string name="donorName">Donor Name</string>
     <string name="dateAdded">Date Added</string>
+    <string name="isbn">ISBN</string>
+    <string name="quantity">Quantity</string>
     <string name="viewInBrowser">View in Browser</string>
 
     <string name="donatedBy">Donated by &#160;:&#160; </string>

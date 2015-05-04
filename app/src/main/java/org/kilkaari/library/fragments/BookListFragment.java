@@ -321,7 +321,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
 
     }
     // > Hide Popup Window of groups
-    private void hideFilterPopup() {
+    public void hideFilterPopup() {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
             //popupWindow = null;
@@ -329,6 +329,8 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
 
         }
     }
+
+
 
 
 

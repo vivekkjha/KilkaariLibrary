@@ -53,6 +53,7 @@
                         android:gravity="center_vertical"
                         android:hint="@string/donorName"
                         android:padding="@dimen/mediumPadding"
+                        android:singleLine="true"
                         android:textSize="@dimen/edtBookTextSize" />
 
                     <EditText
@@ -60,6 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_edt_add_books"
+                        android:singleLine="true"
+                        android:inputType="date"
                         android:gravity="center_vertical"
                         android:hint="@string/dateAdded"
                         android:padding="@dimen/mediumPadding"
@@ -89,18 +92,20 @@
                 <EditText
                     android:id="@+id/edt_bookName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edtAddBooksHeight"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:hint="@string/bookName"
                     android:padding="@dimen/mediumPadding"
-                    android:textSize="@dimen/edtBookTextSize" />
+                    android:textSize="@dimen/edtBookTextSize"
+                    android:background="@drawable/selector_edt_add_books"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/edt_authorName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edtAddBooksHeight"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_edt_add_books"
+                    android:singleLine="true"
                     android:gravity="center_vertical"
                     android:hint="@string/authorName"
                     android:padding="@dimen/mediumPadding"
@@ -118,8 +123,9 @@
                         <EditText
                             android:id="@+id/edt_language"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/edtAddBooksHeight"
-                            android:background="@color/white"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
                             android:gravity="center_vertical"
                             android:hint="@string/language"
                             android:padding="@dimen/mediumPadding"
@@ -135,8 +141,9 @@
                         <EditText
                             android:id="@+id/edt_pageCount"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/edtAddBooksHeight"
-                            android:background="@color/white"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
                             android:gravity="center_vertical"
                             android:hint="@string/pageCount"
                             android:inputType="number"
@@ -158,8 +165,8 @@
                         <EditText
                             android:id="@+id/edt_publisher"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/edtAddBooksHeight"
-                            android:background="@color/white"
+                            android:layout_height="wrap_content"                            android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
                             android:gravity="center_vertical"
                             android:hint="@string/publisher"
                             android:padding="@dimen/mediumPadding"
@@ -175,8 +182,8 @@
                         <EditText
                             android:id="@+id/edt_publishingYear"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/edtAddBooksHeight"
-                            android:background="@color/white"
+                            android:layout_height="wrap_content"                           android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
                             android:gravity="center_vertical"
                             android:hint="@string/year"
                             android:inputType="number"
@@ -189,12 +196,54 @@
                 <AutoCompleteTextView
                     android:id="@+id/autoTxt_category"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edtAddBooksHeight"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_edt_add_books"
+                    android:singleLine="true"
                     android:gravity="center_vertical"
                     android:hint="@string/category"
-                    android:paddingLeft="@dimen/mediumPadding"
+                    android:padding="@dimen/mediumPadding"
                     android:textSize="@dimen/edtBookTextSize" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+                        <EditText
+                            android:id="@+id/edt_isbn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"                            android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
+                            android:gravity="center_vertical"
+                            android:hint="@string/isbn"
+                            android:padding="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/smallMargin"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <Spinner
+                            android:id="@+id/spinner_quantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"                           android:background="@drawable/selector_edt_add_books"
+                            android:singleLine="true"
+                            android:gravity="center_vertical"
+                            android:hint="@string/quantity"
+                            android:padding="@dimen/mediumPadding"
+                            android:textSize="@dimen/edtBookTextSize" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -224,9 +273,9 @@
                     android:id="@+id/edt_description"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@color/white"
+                    android:background="@drawable/selector_edt_add_books"
                     android:gravity="top|left"
-                    android:hint="write here..."
+                    android:hint="Write here..."
                     android:padding="@dimen/mediumPadding"
                     android:textSize="@dimen/edtBookTextSize"  />
 

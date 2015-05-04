@@ -107,8 +107,7 @@ public class FragmentIssueBooks extends ListFragment{
     {
         //> clear the availability hash
         hash_booksAvailability.clear();
-
-
+        requestQueueList.clear();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_REQUEST_QUEUE);
         query.addDescendingOrder("createdAt"); //> show in descending order of createdAt
