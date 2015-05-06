@@ -23,4 +23,37 @@
     </layer-list>
     </item>
 
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:left="-10dp" android:right="-10dp" android:top="-10dp">
+                <shape android:shape="rectangle">
+
+                    <stroke android:width="2dp" android:color="@color/titleBottomBar" />
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:left="-10dp" android:right="-10dp" android:top="-10dp">
+                <shape android:shape="rectangle">
+
+                    <stroke android:width="2dp" android:color="@color/titleBottomBar" />
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:left="-10dp" android:right="-10dp" android:top="-10dp">
+                <shape android:shape="rectangle">
+
+                    <stroke android:width="2dp" android:color="@color/grayBg" />
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
 </selector>
