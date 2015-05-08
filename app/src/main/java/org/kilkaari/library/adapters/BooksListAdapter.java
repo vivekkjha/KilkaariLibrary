@@ -45,6 +45,7 @@ public class BooksListAdapter extends BaseAdapter {
 
     private List<BooksModel> listBooks;
     private HashMap<String,Boolean> hash_booksAvailability;
+    private HashMap<String,Float> hash_booksRating;
     private boolean isEdit = false;
     private float px;
 
@@ -56,10 +57,11 @@ public class BooksListAdapter extends BaseAdapter {
     private com.nostra13.universalimageloader.core.ImageLoader loader;
 
 
-    public BooksListAdapter(BaseActivity context,HashMap<String,Boolean> hash_booksAvailability, boolean isEdit){
+    public BooksListAdapter(BaseActivity context,HashMap<String,Boolean> hash_booksAvailability,HashMap<String,Float> hash_booksRating,List<BooksModel> listBooks, boolean isEdit){
 
-        this.listBooks = context.getList_books();
+        this.listBooks = listBooks;
         this.hash_booksAvailability = hash_booksAvailability;
+        this.hash_booksRating = hash_booksRating;
         this.context = context;
         this.isEdit = isEdit;
         inflater = (LayoutInflater) context
@@ -141,6 +143,18 @@ public class BooksListAdapter extends BaseAdapter {
             viewHolder.img_bookIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_book_default));
 
         }
+
+        //> set start rating , if got data from server
+        if(hash_booksRating.get(model.getObjectId())!=null)
+        {
+
+            viewHolder.ratingBar.setRating(hash_booksRating.get(model.getObjectId()));
+        }
+        else {
+
+            viewHolder.ratingBar.setRating(1.5f);
+        }
+
 
         //> if in edit Mode , librarian don't need to see all the book options for user
         if(isEdit)

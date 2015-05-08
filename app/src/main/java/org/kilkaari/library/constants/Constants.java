@@ -22,6 +22,7 @@ public interface Constants {
         public String TABLE_USER = "_User";
         public String TABLE_BOOKS = "Books";
         public String TABLE_AVAILABILITY = "Availability";
+        public String TABLE_RATING = "Rating";
         public String TABLE_ISSUE = "Issue";
         public String TABLE_READ = "Read";
         public String TABLE_REQUEST_QUEUE = "RequestQueue";
@@ -80,6 +81,9 @@ public interface Constants {
         public String ISSUE_RETURN_TIMESTAMP = "returnTimestamp";
         public String ISSUE_FEES = "fees";
 
+        public String RATING_BOOK = "book";
+        public String RATING_NET_RATING = "netRating";
+        public String RATING_RATING_ARRAY = "ratingArray";
 
 
 

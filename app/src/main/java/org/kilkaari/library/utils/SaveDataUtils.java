@@ -318,5 +318,90 @@ public class SaveDataUtils {
         });
     }
 
+    //> method to update Rating table in Parse server
+    public void createUpdateBookRating(final String bookObjectId, final double ratingValue)
+    {
+        //> make parse object for book with its object id
+        ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
+
+        //> get the already filled rating data for this book
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_RATING);
+        query.whereEqualTo(Constants.DataColumns.RATING_BOOK,bookObject);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("Rating", "Retrieved " + list.size() + " row(s)");
+                    if(list.size()!=0)
+                    {
+                        // > update row
+                        ParseObject parseObject = list.get(0);
+
+
+
+                        //> append current rating value to existing string
+                        String rating =  parseObject.getString(Constants.DataColumns.RATING_RATING_ARRAY)+"##"+ Double.toString(ratingValue);
+
+
+                        //> calculate net rated value from server
+                        String[] ratingArray = parseObject.getString(Constants.DataColumns.RATING_RATING_ARRAY).split("##");
+
+                        double netRating =  calculateAvg(ratingArray);
+                        LogUtil.i("SaveDataUtils","Net Rating value "+ netRating);
+
+
+                        parseObject.put(Constants.DataColumns.RATING_RATING_ARRAY, rating);
+                        parseObject.put(Constants.DataColumns.RATING_NET_RATING, Double.toString(netRating));
+                        parseObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                LogUtil.d("SaveDataUtils", "Rating Table updated");
+                            }
+                        });
+
+
+                    }
+                    else
+                    {
+                        //> create new row in Rating
+                        ParseObject bookObject = ParseObject.createWithoutData(Constants.Table.TABLE_BOOKS,bookObjectId);
+
+                        ParseObject newRating = new ParseObject(Constants.Table.TABLE_RATING);
+                        newRating.put(Constants.DataColumns.RATING_BOOK, bookObject);
+                        newRating.put(Constants.DataColumns.RATING_RATING_ARRAY, Double.toString(ratingValue));
+                        newRating.put(Constants.DataColumns.RATING_NET_RATING, Double.toString(ratingValue));
+                        newRating.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null)
+                                {
+                                    LogUtil.w("Rating Queue Row ", "Created");
+                                }
+                            }
+                        });
+
+                    }
+
+                } else {
+
+                    Log.d("Categories", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+    }
+
+    private double calculateAvg(String[] values)
+    {
+        double sum =0, result;
+
+        for(int i=0;i<values.length;i++)
+        {
+            sum += Double.parseDouble(values[i]);
+        }
+        result =  sum/values.length;
+
+        return result;
+    }
+
 
 }

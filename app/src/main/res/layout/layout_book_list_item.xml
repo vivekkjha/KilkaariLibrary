@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+       >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,27 +69,31 @@
 
                 <ImageView
                     android:id="@+id/img_moreOptions"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/smallPadding"
+                    android:paddingLeft="@dimen/smallPadding"
+                    android:paddingTop="@dimen/smallPadding"
                     android:src="@drawable/icon_menu_active"/>
 
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smallMargin">
             <RatingBar
                 android:id="@+id/ratingBar"
                 style="@style/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallPadding"
+                android:isIndicator="true"
                 android:rating="3.5" />
             <LinearLayout
                 android:id="@+id/lin_bookOptions"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
                 android:gravity="center">
@@ -103,8 +108,8 @@
                     android:src="@drawable/icon_toread"/>
                 <ImageView
                     android:id="@+id/img_alreadyRead"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/smallMargin"
                     android:layout_marginRight="@dimen/smallMargin"
                     android:clickable="true"
@@ -112,8 +117,8 @@
                     android:src="@drawable/icon_already_read_inactive"/>
                 <ImageView
                     android:id="@+id/img_requested"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/smallMargin"
                     android:layout_marginRight="@dimen/smallMargin"
                     android:clickable="true"
@@ -136,5 +141,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/grayBg"/>
+        android:background="@drawable/shadow"/>
 </LinearLayout>

@@ -69,4 +69,15 @@
     <string name="hint_searchPublisher">Search books by publisher</string>
     <string name="hint_searchDonor">Search books by donor name</string>
 
+    <string name="bookName_caps">BOOK NAME</string>
+    <string name="authorName_caps">AUTHOR NAME</string>
+    <string name="publisher_caps">PUBLISHER</string>
+    <string name="pageCount_caps">PAGE COUNT</string>
+    <string name="publishingYear_caps">PUBLISHING YEAR</string>
+    <string name="language_caps">LANGUAGE</string>
+    <string name="donor_caps">DONOR NAME</string>
+    <string name="donatedOn_caps">DONATED ON</string>
+    <string name="isbn_caps">ISBN</string>
+    <string name="category_caps">CATEGORY</string>
+
 </resources>

@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +29,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.apache.http.auth.AUTH;
 import org.kilkaari.library.R;
 import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.adapters.BooksListAdapter;
@@ -41,15 +47,18 @@ import java.util.List;
  */
 public class BookListFragment extends Fragment implements View.OnClickListener{
 
+    private final String AUTHOR  = "A";
+    private final String NAME  = "N";
+    private final String PUBLISHER  = "P";
+    private final String DONOR  = "D";
     //> hash to store availability of books with Object id as key and boolean as value
     private HashMap<String,Boolean> hash_booksAvailability;
-
+    private HashMap<String,Float> hash_booksRating;
     private List<String> requestedBooksList;
-
+    private List<String> searchAutoCompleteList;
+    private List<BooksModel> search_listBooks;
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
-
-
     private ListView listView_listBooks;
     private AutoCompleteTextView autoTxt_searchBooks;
     private View rootView;
@@ -58,13 +67,80 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
     private View popupView;
     private LinearLayout lin_overlay;
     private TextView txt_filterSearch;
-
-
     private BaseActivity activity;
-
     private boolean isEdit = false;
-    private String category;
+    TextWatcher watcher = new TextWatcher() {
 
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String keyword = autoTxt_searchBooks.getText().toString();
+            if (!keyword.equals("")) {
+                if(search_listBooks!=null) {
+                    search_listBooks.clear();
+                }
+
+
+                for (BooksModel infoObj : activity.getList_books()) {
+
+                    String item = txt_filterSearch.getText().toString();
+                    switch (item)
+                    {
+                        case NAME :
+                            if (infoObj.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                                search_listBooks.add(infoObj);
+                            }
+                            break;
+
+                        case AUTHOR:  if (infoObj.getAuthor().toLowerCase().contains(keyword.toLowerCase())) {
+                            search_listBooks.add(infoObj);
+                            }
+                            break;
+
+                        case DONOR : if (infoObj.getDonatedBy().toLowerCase().contains(keyword.toLowerCase())) {
+                            search_listBooks.add(infoObj);
+                        }
+                            break;
+
+                        case PUBLISHER: if (infoObj.getPublisher().toLowerCase().contains(keyword.toLowerCase())) {
+                            search_listBooks.add(infoObj);
+                        }
+                            break;
+
+                        default: if (infoObj.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                            search_listBooks.add(infoObj);
+                        }
+                            break;
+                    }
+                }
+
+                adapter = new BooksListAdapter(activity,hash_booksAvailability,hash_booksRating,search_listBooks,isEdit);
+                listView_listBooks.setAdapter(adapter);
+            }
+            else
+            {
+                if(activity.getList_books()!=null)
+                {
+                    // > send data to adapter for population of gridView
+                    adapter = new BooksListAdapter(activity,hash_booksAvailability,hash_booksRating,activity.getList_books(),isEdit);
+                    listView_listBooks.setAdapter(adapter);
+
+                }
+            }
+        }
+    };
+    private String category;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +151,10 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
         category = getArguments().getString(Constants.EXTRAS.EXTRAS_SELECTED_CATEGORY);
 
         hash_booksAvailability = new HashMap<String,Boolean>();
+        hash_booksRating = new HashMap<String,Float>();
         requestedBooksList = new ArrayList<String>();
+        searchAutoCompleteList = new ArrayList<String>();
+        search_listBooks = new ArrayList<BooksModel>();
 
 
     }
@@ -94,6 +173,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
         img_filterSearch.setOnClickListener(this);
         lin_overlay.setOnClickListener(this);
 
+
         //> hide popup window when vieew loaded first time
         hideFilterPopup();
         return rootView;
@@ -105,6 +185,8 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
 
         activity = (BaseActivity)getActivity();
         saveDataUtils  = new SaveDataUtils(activity);
+
+
 
         //> actions on top title bar and done layout from baseActivity
         activity.setHeading(category);
@@ -126,6 +208,58 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
             activity.showProgressLayout();
             getBooksDetails(category);
         }
+
+
+    }
+
+    private void getSearchAutoCompleteItems(String itemType)
+    {
+
+        searchAutoCompleteList.clear();
+
+        for(int i=0;i<activity.getList_books().size();i++)
+        {
+            String item;
+            switch (itemType)
+            {
+                case NAME : item = activity.getList_books().get(i).getName();
+                    break;
+
+                case AUTHOR: item = activity.getList_books().get(i).getAuthor();
+                    break;
+
+                case DONOR : item = activity.getList_books().get(i).getDonatedBy();
+                    break;
+
+                case PUBLISHER: item = activity.getList_books().get(i).getPublisher();
+                    break;
+
+                default: item = activity.getList_books().get(i).getName();
+                    break;
+            }
+
+            if(!searchAutoCompleteList.contains(item))
+            {
+                searchAutoCompleteList.add(item);
+                LogUtil.i("BookListFragment","Item added in list for search purpose "+ item);
+            }
+        }
+
+        //> add adapter for auto-complete
+
+        ArrayAdapter adapterAutoSearch = new ArrayAdapter(activity,android.R.layout.simple_list_item_1,searchAutoCompleteList);
+
+        autoTxt_searchBooks.setAdapter(adapterAutoSearch);
+        autoTxt_searchBooks.setThreshold(1);
+        autoTxt_searchBooks.addTextChangedListener(watcher);
+        autoTxt_searchBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                autoTxt_searchBooks.setText(parent.getItemAtPosition(position).toString());
+                autoTxt_searchBooks.setSelection(autoTxt_searchBooks.getText().length());
+            }
+        });
+
     }
 
     @Override
@@ -146,32 +280,48 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
             txt_filterSearch.setText("N");
             txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.regret));
             autoTxt_searchBooks.setHint(R.string.hint_searchBookName);
+            getSearchAutoCompleteItems(NAME);
+
             hideFilterPopup();
             lin_overlay.setVisibility(View.GONE);
+
+
+
         }
         else  if(v.getId() == R.id.lin_authorName)
         {
             txt_filterSearch.setText("A");
             txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.available));
             autoTxt_searchBooks.setHint(R.string.hint_searchAuthorName);
+
+            getSearchAutoCompleteItems(AUTHOR);
             hideFilterPopup();
             lin_overlay.setVisibility(View.GONE);
+
+
         }
         else  if(v.getId() == R.id.lin_publisher)
         {
             txt_filterSearch.setText("P");
             txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.inQueue));
             autoTxt_searchBooks.setHint(R.string.hint_searchPublisher);
+            getSearchAutoCompleteItems(PUBLISHER);
             hideFilterPopup();
             lin_overlay.setVisibility(View.GONE);
+
+
         }
         else  if(v.getId() == R.id.lin_donor)
         {
             txt_filterSearch.setText("D");
             txt_filterSearch.setBackgroundColor(getResources().getColor(R.color.facebookSignIn));
             autoTxt_searchBooks.setHint(R.string.hint_searchDonor);
+
+            getSearchAutoCompleteItems(DONOR);
             hideFilterPopup();
             lin_overlay.setVisibility(View.GONE);
+
+
         }
 
     }
@@ -225,8 +375,13 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
                                 adapter.notifyDataSetChanged();
                             }
                         }
+                        //> get ratings of all the books
                         //> get availability once all books list has been fetched
+                        getRatings();
                         getAvailability();
+
+                        //> apply auto fill in search editText after getting book details
+                        getSearchAutoCompleteItems(NAME);
                     }
                     else {
                         LogUtil.e("BooksCategories","Database returned 0 list ");
@@ -268,8 +423,55 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
 
                         //> hide progress layout when all the fetching operations gets completed
 
-                        adapter = new BooksListAdapter(activity,hash_booksAvailability,isEdit);
+                        adapter = new BooksListAdapter(activity,hash_booksAvailability,hash_booksRating,activity.getList_books(),isEdit);
                         listView_listBooks.setAdapter(adapter);
+                        activity.hideProgressLayout();
+                    }
+                    else {
+                        LogUtil.e("BooksCategories","Database returned 0 list ");
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    //> get rating for each book
+    public void getRatings()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_RATING);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseList, ParseException e) {
+                if (e == null) {
+                    Log.d("Ratings List ", "Retrieved " + parseList.size() + " rows");
+                    if(parseList.size()!=0)
+                    {
+                        for (int i=0;i<parseList.size();i++) {
+
+                            ParseObject parseObject = parseList.get(i);
+                            LogUtil.w("Ratings BookListActivity", "Object " + i );
+
+                            //> add data from sever into the list
+                            String rating  = parseObject.getString(Constants.DataColumns.RATING_NET_RATING);
+
+                            ParseObject po = parseObject.getParseObject(Constants.DataColumns.RATING_BOOK);
+
+                            hash_booksRating.put(po.getObjectId(),Float.parseFloat(rating));
+
+                            //> notify adapter whenever new row gets added
+                            if(adapter!=null)
+                            {
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        //> hide progress layout when all the fetching operations gets completed
+
+                       /* adapter = new BooksListAdapter(BookListActivity.this,hash_booksAvailability,isEdit);
+                        listView_listBooks.setAdapter(adapter);*/
                         activity.hideProgressLayout();
                     }
                     else {
@@ -304,34 +506,40 @@ public class BookListFragment extends Fragment implements View.OnClickListener{
             donor.setOnClickListener(this);
 
             // > draw a popup menu
-            popupWindow = new PopupWindow(
+
+            popupWindow = new PopupWindow(activity);
+            popupWindow.setContentView(popupView);
+            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setFocusable(true);
+
+          /*  popupWindow = new PopupWindow(
                     popupView,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams.WRAP_CONTENT);*/
         }
 
         // > Toggle behaviour of popup window
         if (!popupWindow.isShowing()) {
-            popupWindow.showAsDropDown(view,0,4);
-            lin_overlay.setVisibility(View.VISIBLE);
+           // popupWindow.showAsDropDown(view,0,4);
+             popupWindow.showAsDropDown(view);
+           // lin_overlay.setVisibility(View.VISIBLE);
 
         } else {
             hideFilterPopup();
         }
 
     }
+
     // > Hide Popup Window of groups
     public void hideFilterPopup() {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
             //popupWindow = null;
-            lin_overlay.setVisibility(View.GONE);
+           // lin_overlay.setVisibility(View.GONE);
 
         }
     }
-
-
-
 
 
 

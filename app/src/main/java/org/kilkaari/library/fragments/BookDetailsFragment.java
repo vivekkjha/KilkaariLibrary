@@ -18,6 +18,7 @@ import org.kilkaari.library.activities.BaseActivity;
 import org.kilkaari.library.constants.Constants;
 import org.kilkaari.library.models.BooksModel;
 import org.kilkaari.library.utils.LogUtil;
+import org.kilkaari.library.utils.SaveDataUtils;
 
 /**
  * Created by vivek on 30/04/15.
@@ -34,6 +35,7 @@ public class BookDetailsFragment extends Fragment{
 
     private DisplayImageOptions options;
     private com.nostra13.universalimageloader.core.ImageLoader loader;
+    private SaveDataUtils saveDataUtils;
     private BaseActivity activity;
     private int pos = -1;
     private boolean isEdit = false;
@@ -61,6 +63,8 @@ public class BookDetailsFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
 
         activity = (BaseActivity)getActivity();
+        saveDataUtils =  new SaveDataUtils(activity);
+
         initializeLayout();
 
         //> actions on top title bar and done layout from baseActivity
@@ -78,6 +82,8 @@ public class BookDetailsFragment extends Fragment{
         if(pos!=-1) {
             getBookDetails(pos);
         }
+
+
 
 
     }
@@ -118,11 +124,15 @@ public class BookDetailsFragment extends Fragment{
         options = activity.getLibraryApplication().getImageLoaderOptions();
         loader = activity.getLibraryApplication().getImageLoader();
 
+
+
+
+
     }
 
     public void getBookDetails(int pos)
     {
-        BooksModel model = activity.getList_books().get(pos);
+        final BooksModel model = activity.getList_books().get(pos);
         //> set different layouts elements with data in model
         LogUtil.w("BookDetailsActivity", "Model object " + model);
 
@@ -143,5 +153,22 @@ public class BookDetailsFragment extends Fragment{
         else {
             img_bookDetailsImage.setImageDrawable(getResources().getDrawable(R.drawable.icon_book_default));
         }
+
+
+        //> rating bar changed listner
+        ratingBarDetails.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                LogUtil.e("DetaislFragment","Rating bar value "+ rating +  " Rating bar details "+ ratingBarDetails.getRating());
+
+                if(fromUser)
+                {
+                    //> Create or update rating bar values
+                    saveDataUtils.createUpdateBookRating(model.getObjectId(),rating);
+                }
+
+            }
+        });
     }
 }

@@ -34,7 +34,7 @@ public class UpdateBooksFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.layout_add_books,container,false);
+        rootView = inflater.inflate(R.layout.layout_update_books,container,false);
 
         edt_donorName = (EditText)rootView.findViewById(R.id.edt_donorName);
         edt_date = (EditText)rootView.findViewById(R.id.edt_date);

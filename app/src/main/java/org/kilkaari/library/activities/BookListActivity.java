@@ -42,6 +42,7 @@ public class BookListActivity extends BaseActivity {
 
     //> hash to store availability of books with Object id as key and boolean as value
     public HashMap<String,Boolean> hash_booksAvailability;
+    public HashMap<String,Integer> hash_booksRating;
 
     private BooksListAdapter adapter;
     private SaveDataUtils saveDataUtils;
@@ -62,6 +63,7 @@ public class BookListActivity extends BaseActivity {
         autoTxt_searchBooks = (AutoCompleteTextView)findViewById(R.id.autoTxt_searchBooks);
 
         hash_booksAvailability = new HashMap<String,Boolean>();
+        hash_booksRating = new HashMap<String,Integer>();
         saveDataUtils  = new SaveDataUtils(this);
 
         isEdit = getIntent().getBooleanExtra(Constants.EXTRAS.EXTRAS_BOOK_IS_EDIT,false);
@@ -165,8 +167,54 @@ public class BookListActivity extends BaseActivity {
 
                         //> hide progress layout when all the fetching operations gets completed
 
-                        adapter = new BooksListAdapter(BookListActivity.this,hash_booksAvailability,isEdit);
-                        listView_listBooks.setAdapter(adapter);
+                       /* adapter = new BooksListAdapter(BookListActivity.this,hash_booksAvailability,isEdit);
+                        listView_listBooks.setAdapter(adapter);*/
+                        hideProgressLayout();
+                    }
+                    else {
+                        LogUtil.e("BooksCategories","Database returned 0 list ");
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void getRatings()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.Table.TABLE_RATING);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseList, ParseException e) {
+                if (e == null) {
+                    Log.d("Ratings List ", "Retrieved " + parseList.size() + " rows");
+                    if(parseList.size()!=0)
+                    {
+                        for (int i=0;i<parseList.size();i++) {
+
+                            ParseObject parseObject = parseList.get(i);
+                            LogUtil.w("Ratings BookListActivity", "Object " + i );
+
+                            //> add data from sever into the list
+                            int rating  = Integer.parseInt(parseObject.getString(Constants.DataColumns.RATING_NET_RATING));
+
+                            ParseObject po = parseObject.getParseObject(Constants.DataColumns.RATING_BOOK);
+
+                            hash_booksRating.put(po.getObjectId(),rating);
+
+                            //> notify adapter whenever new row gets added
+                            if(adapter!=null)
+                            {
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        //> hide progress layout when all the fetching operations gets completed
+
+                       /* adapter = new BooksListAdapter(BookListActivity.this,hash_booksAvailability,isEdit);
+                        listView_listBooks.setAdapter(adapter);*/
                         hideProgressLayout();
                     }
                     else {

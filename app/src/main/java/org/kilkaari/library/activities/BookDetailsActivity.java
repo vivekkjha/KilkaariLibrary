@@ -40,6 +40,8 @@ public class BookDetailsActivity extends BaseActivity {
             getBookDetails(position);
         }
 
+
+
     }
 
     //> initialize layout parameters
@@ -100,5 +102,7 @@ public class BookDetailsActivity extends BaseActivity {
 
 
     }
+
+
 
 }
