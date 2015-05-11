@@ -71,7 +71,8 @@ public class SaveDataUtils {
                         if (e == null) {
                             Log.d("Request Queue List ", "Retrieved " + requestList.size() + " rows");
                             if (requestList.size() != 0) {
-                                //> get first object as logiclly there should be only one with above request
+
+                                //> get first object as logically there should be only one with above request
                                 //> delete that object in background
                                 ParseObject object = requestList.get(0);
                                 object.deleteInBackground(new DeleteCallback() {
